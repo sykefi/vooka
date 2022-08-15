@@ -4,7 +4,7 @@ Created on Fri Aug 12 14:07:51 2022
 
 @author: smassine
 """
-from shapely.validation import explain_validity
+from shapely.validation import explain_validity, make_valid
 
 def checkGeometryValidity(data, geom_column):
     
@@ -79,3 +79,31 @@ def calculateGeometryValidityPercentage(data):
     answer = str(round(validity_percent, 2))
     
     return(print(answer + " %"))
+
+def makeGeometryValid(data, geom_column):
+    
+    """
+    A Function for making geometry valid.
+
+    Parameters
+    ----------
+    data: <geopandas.GeoDataFrame>
+
+        A GeoDataFrame containing Shapely geometries in a geometry column.
+        
+    geom_column: <str>
+    
+        Name of the geometry column in GeoDataFrame.
+    
+    Output
+    ------
+    <geopandas.GeoDataFrame>
+    
+        A GeoDataFrame containing valid geometries.
+ 
+    """
+    
+    data[geom_column] = data.apply(lambda row: make_valid(row[geom_column]) if not row[geom_column].is_valid else row[geom_column], axis=1)
+    
+    return(data)
+    
