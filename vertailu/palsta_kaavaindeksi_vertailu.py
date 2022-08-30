@@ -10,42 +10,69 @@ import os
 
 def calculateIntersectionPercentage(kaava, kaava_nro_column, palstat, outfp):
     
+    """
+    A Function for calculating an intersection percentage for two Shapely Polygons.
+    
+    Parameters
+    ----------
+    kaava: <gpd.GeoDataFrane>
+        Yleis- or asemakaava data. Serving as a mask for kiinteistöpalstat.
+    kaava_nro_column: <str>
+        Name of the column in kaava parameter that individualises each kaavaindex.
+    palstat: <gpd.GeoDataFrane>
+        Palsta data. Used to store calculated intersection percentages and kaavaindex information.
+    outfp: <str>
+        Full output filepath with filename and output format (.shp or .gpkg). E.g. r"C:\Files\juva_palstat_asemakaava_vertailu_TM35.gpkg" 
+            
+    Output
+    ------
+    <GeoDataFrame>
+        Saved shp-file as a geopandas GeoDataFrame.
+    """    
+    
+    # Check to see if kaava and palstadata have the same CRS system
     if kaava.crs['init'] != palstat.crs['init']:
+        # If not, comparison cannot be made. Sys exit.
         sys.exit("Your data must have the same coordinate reference system!")
     
+    # Retrieve kaava bbox to use as a mask
     xmin, ymin, xmax, ymax = kaava.total_bounds
+    # Clip kaavadata with bbox
     palstat_rajaus = palstat.cx[xmin:xmax, ymin:ymax]
-
+    
+    # Store kiinteistötunnus in an own columns
     palstat_rajaus['kiinttunnus'] = None
     
     for index, row in palstat_rajaus.iterrows():
-        
         palstat_rajaus.at[index, 'kiinttunnus'] = row['properties']['kiinteistotunnus']
-
+    
+    # Drop unnecessary columns and create columns for storing intersection percentages and kaavaindex information
     palstat_rajaus_drop = palstat_rajaus.drop(columns=['type', 'id', 'properties'])
     palstat_rajaus_drop['iou_1'] = None
     palstat_rajaus_drop['knro_1'] = None
     palstat_rajaus_drop['iou_2'] = None
     palstat_rajaus_drop['knro_2'] = None
+    
+    # Group data by kiinteistötunnus
     grouped = palstat_rajaus_drop.groupby('kiinttunnus')
 
+    # Loop through each kiinteistötunnus in palstadata and see if the geometry intersects with kaavaindex
+    # Store intersection percentages and kaavaindex information
     i = 1
-
+    
     for key, value in grouped:
             
         print("Processing " + str(i) + "/" + str(len(grouped)))
         
         for index, row in value.iterrows():
-
             item_dict = {"knro":[], "iou":[]}
             
             for idx, rivi in kaava.iterrows():
                     
                 if row['geometry'].intersects(rivi['geometry']) == True:
-                        
-                    iou = round((row['geometry'].intersection(rivi['geometry']).area / row['geometry'].area)*100, 2)
+                    intersection_per = round((row['geometry'].intersection(rivi['geometry']).area / row['geometry'].area)*100, 2)
                     item_dict['knro'].append(str(rivi[kaava_nro_column]))
-                    item_dict['iou'].append(iou)
+                    item_dict['iou'].append(intersection_per)
                     
             if len(item_dict['iou']) == 1:
                 grouped.obj.at[index, 'iou_1'] = max(item_dict['iou'])
@@ -72,9 +99,11 @@ def calculateIntersectionPercentage(kaava, kaava_nro_column, palstat, outfp):
                 grouped.obj.at[index, 'knro_2'] = None
                 
         i = i + 1
-            
-    iou_shp = grouped.obj
-    iou_shp_rajaus = iou_shp.loc[iou_shp['iou_1'] != 0.00]
+    
+    # Ungroup data
+    intersection_shp = grouped.obj
+    # Drop rows that didn't intersect with kaavadata
+    intersection_shp_rajaus = intersection_shp.loc[intersection_shp['iou_1'] != 0.00]
     
     # Save outfile
     # If file already exists, don't copy it again:
@@ -85,6 +114,6 @@ def calculateIntersectionPercentage(kaava, kaava_nro_column, palstat, outfp):
     else:
         print("")
         print("Saving file...")        
-        iou_shp_rajaus.to_file(outfp)
+        intersection_shp_rajaus.to_file(outfp)
 
-    return(iou_shp_rajaus)
+    return(intersection_shp_rajaus)
