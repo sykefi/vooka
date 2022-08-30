@@ -53,17 +53,17 @@ def topologically_equal_DE9IM(geom1, geom2):
 def calculate_iou(geom1, geom2):
 
     """
-    A Function for calculating an intersection percentage (iou) for two Shapely geometries.
+    A Function to calculate an intersection of union (iou) for two Shapely Polygons.
     
     Parameters
     ----------
     geom1, geom2: <shapely.geometry>
-        A Shapely geometry. Either Point, LineString, Polygon, MultiPoint, MultiLineString, or MultiPolygon.
+        A Shapely geometry. Either Polygon or MultiPolygon.
     
     Output
     ------
     <float>
-        An intersection percentage between two Shapely geometries rounded to two decimals.
+        An iou as a percentage between two Shapely Polygons rounded to two decimals.
     """
     
     iou = round((geom1.intersection(geom2).area / geom1.union(geom2).area)*100, 2)
