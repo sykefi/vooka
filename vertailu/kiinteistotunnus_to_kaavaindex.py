@@ -4,10 +4,12 @@ Created on Mon Aug 22 16:22:43 2022
 
 @author: smassine
 """
+
 import os
 import geopandas as gpd
 import pickle
 from shapely.geometry import box
+import sys
 
 def kiinteistotunnusToKaavaIndex(kiinttunnus_data, kaava_data, outfp):
 
@@ -28,7 +30,12 @@ def kiinteistotunnusToKaavaIndex(kiinttunnus_data, kaava_data, outfp):
     <GeoDataFrame>
         Saved shp-file as a geopandas GeoDataFrame.
     """    
-
+    
+    # Check to see if kaava and kiinteistötunnus data have the same CRS system
+    if kaava_data.crs['init'] != kiinttunnus_data.crs['init']:
+        # If not, comparison cannot be made. Sys exit.
+        sys.exit("Your data must have the same coordinate reference system!")
+    
     # Define bbox for kiinteistotunnukset based on kaavadata
     bounds = kaava_data.total_bounds
     bbox = box(*bounds)
@@ -70,7 +77,7 @@ def kiinteistotunnusToKaavaIndex(kiinttunnus_data, kaava_data, outfp):
                 kiinttunnus_list.append(row.kiinteistotunnus)
         
         if len(kiinttunnus_list) != 0:
-            kaava_data.at[index, 'kiinttunnus'] = str(kiinttunnus_list)
+            kaava_data.at[index, 'kiinttunnus'] = kiinttunnus_list
         
         i = i + 1
     
