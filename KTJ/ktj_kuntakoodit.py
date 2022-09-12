@@ -22,7 +22,7 @@ def updateOldKuntakoodi(ktj_data):
             ktj_data.at[index, 'validkuntanro'] ='491'
             
         #Savonlinna
-        elif row['kaavatunnuksenkuntanumero'] == '246' or row['kaavatunnuksenkuntanumero'] == '681' or row['kaavatunnuksenkuntanumero'] == '741':
+        elif row['kaavatunnuksenkuntanumero'] == '246' or row['kaavatunnuksenkuntanumero'] == '618' or row['kaavatunnuksenkuntanumero'] == '741':
             ktj_data.at[index, 'validkuntanro'] = '740'
        
         #Pieksämäki
