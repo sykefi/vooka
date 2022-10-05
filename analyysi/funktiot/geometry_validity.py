@@ -4,7 +4,6 @@ Created on Fri Aug 12 14:07:51 2022
 
 @author: smassine
 """
-from shapely.validation import explain_validity, make_valid
 
 def checkGeometryValidity(data, geom_column):
     
@@ -28,6 +27,8 @@ def checkGeometryValidity(data, geom_column):
         A GeoDataFrame containing a column named 'validity' with validity explanations.
  
     """
+    
+    from shapely.validation import explain_validity
     
     #data['validity'] = data.apply(lambda row: explain_validity(row[geom_column]), axis=1)
     
@@ -103,7 +104,8 @@ def makeGeometryValid(data, geom_column):
  
     """
     
+    from shapely.validation import make_valid
+    
     data[geom_column] = data.apply(lambda row: make_valid(row[geom_column]) if not row[geom_column].is_valid else row[geom_column], axis=1)
     
     return(data)
-    
