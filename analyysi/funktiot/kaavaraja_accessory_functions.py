@@ -81,14 +81,17 @@ def getKuntarajaMaskFromPalstat(palstadata, kuntakoodi):
     mask = unary_union(geom_list)
     
     # FIll holes
-    if type(mask) == Polygon:
-        no_holes_mask = Polygon(Polygon(mask.exterior))
-    elif type(mask) == MultiPolygon:
-        no_holes_mask = MultiPolygon(Polygon(poly.exterior) for poly in mask)
+    if str(kuntakoodi) == '681' or str(kuntakoodi) == '507':
+        return(mask)
     else:
-        sys.exit("Your mask should be either type Polygon or MultiPolygon! Check your code/data!")
+        if type(mask) == Polygon:
+            no_holes_mask = Polygon(Polygon(mask.exterior))
+        elif type(mask) == MultiPolygon:
+            no_holes_mask = MultiPolygon(Polygon(poly.exterior) for poly in mask)
+        else:
+            sys.exit("Your mask should be either type Polygon or MultiPolygon! Check your code/data!")
     
-    return(no_holes_mask)
+        return(no_holes_mask)
 
 
 def saveGPKG(input_data, outputfp, layer_name):
