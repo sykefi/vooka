@@ -47,14 +47,8 @@ def getArcgisFeatureLayer(layer_url):
 
 # Rantasalmi WFS
 # WORKING FINE!
-getWFSlayers("https://kunnat.navici.com/geoserver/rantasalmi/wfs")
-"""
-['rantasalmi:aseman_kaavarajat', 'rantasalmi:aseman_kaavarajat_preview',
- 'rantasalmi:kaavarajat_haukivesi_haapaselka', 'rantasalmi:kaavarajat_haukivesi_haapaselka_preview',
- 'rantasalmi:kirkonkylan_ajantasakaavan_kaavarajat', 'rantasalmi:kirkonkylan_ajantasakaavan_kaavarajat_preview',
- 'rantasalmi:sisajarvet_kaavarajat', 'rantasalmi:sisajarvet_kaavarajat_preview']
-"""
-data = getWFSdata("https://kunnat.navici.com/geoserver/rantasalmi/wfs", "rantasalmi:kaavarajat_haukivesi_haapaselka")
+getWFSlayers("https://kuntanetcloud01.cgisaas.fi/geoserver.g1/kuntanet_rantasalmi/wms")
+data = getWFSdata("https://kuntanetcloud01.cgisaas.fi/geoserver.g1/kuntanet_rantasalmi/wms", "kuntanet_rantasalmi:MI_OSAYLEISKAAVARAJAT")
 
 # Sulkava WFS
 # WORKING FINE!
