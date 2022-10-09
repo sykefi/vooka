@@ -48,7 +48,7 @@ def snapMunicipalityKaavaToKuntaraja(kaavadata, palstadata, kuntakoodi, toleranc
     kuntakaava = kaavadata.loc[kaavadata['kuntakoodi'] == str(kuntakoodi)]
     kunta_copy = kuntakaava.copy()
     
-    if palstat.crs['init'] != 'epsg:3067':
+    if palstadata.crs['init'] != 'epsg:3067':
         sys.exit("Your palstadata must have EPSG:3067 (EUREF-TM35FIN) as CRS!")
     
     geom_kunta = getKuntarajaMaskFromPalstat(palstadata=palstadata, kuntakoodi=kuntakoodi)
