@@ -8,7 +8,7 @@ Created on Tue Sep 27 13:24:17 2022
 import geopandas as gpd
 from shapely.geometry import MultiPolygon, Polygon
 import sys
-from kaavaraja_accessory_functions import readPickleData, getKuntarajaMaskFromPalstat, saveGPKG
+from accessory_functions import readPickleData, getKuntarajaMaskFromPalstat, saveGPKG
 
 def snapMunicipalityKaavaToKuntaraja(kaavadata, palstadata, kuntakoodi, tolerance):
     
