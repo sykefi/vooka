@@ -10,7 +10,7 @@ from shapely.geometry import MultiPolygon, Polygon
 import sys
 from accessory_functions import readPickleData, getKuntarajaMaskFromPalstat, saveGPKG
 
-def snapMunicipalityKaavaToKuntaraja(kaavadata, palstadata, kuntakoodi, tolerance):
+def snapKuntakaavaToKuntaraja(kaavadata, palstadata, kuntakoodi, tolerance):
     
     """
     Parameters
@@ -148,7 +148,7 @@ def snapMunicipalityKaavaToKuntaraja(kaavadata, palstadata, kuntakoodi, toleranc
 palstat = readPickleData(inputfp=r"<insert filepath here>.pkl")
 kaava_data = gpd.read_file(r"<insert filepath here>.gpkg", layer="<insert layer name here>")
 
-kunta_snapped = snapMunicipalityKaavaToKuntaraja(kaavadata=kaava_data,
+kunta_snapped = snapKuntakaavaToKuntaraja(kaavadata=kaava_data,
                                                  palstadata=palstat,
                                                  kuntakoodi='<insert kuntakoodi here>',
                                                  tolerance=0.015)  #Change according to municipality !!
