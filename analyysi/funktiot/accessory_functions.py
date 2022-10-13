@@ -135,3 +135,52 @@ def clipSavonlinnaByEnonkoski(sln_data, enonkoski_data):
     clipped = sln_data.difference(enonkoski_data)
     
     return(clipped[0])
+
+def setupMasterGDF(data, geom_column):
+    
+    """
+    Parameters
+    ----------
+    data: <gpd.GeoDataFrame>
+        Input data to set up master dataframe schema. Schema will be created based on data's coordinate reference system and columns.
+    geom_column: <str>
+        Data's geometry column name as a string value.
+    
+    Output
+    ------
+    <gpd.GeoDataFrame>
+        An empty Geopandas GeoDataFrame.
+    """
+    
+    import geopandas as gpd
+    
+    master_df = gpd.GeoDataFrame(columns=list(data.columns), geometry=geom_column, crs=data.crs)
+    
+    return(master_df)
+
+def appendDataToMaster(master_data, append_data):
+    
+    """
+    Parameters
+    ----------
+    master_data: <gpd.GeoDataFrame> or <pp.Dataframe>
+        Master dataframe. Can be an empty dataframe or including value rows.
+    append_data: <str>
+        Data to be appended to master.
+    
+    Output
+    ------
+    <gpd.GeoDataFrame> or <pd.Dataframe>
+        Master dataframe with appended value rows.
+    """
+    
+    import sys
+    import pandas as pd
+    
+    if master_data.crs['init'] != append_data.crs['init']:
+        sys.exit("Your data must have the same coordinate reference system as master dataframe!")
+    if list(master_data.columns) != list(append_data.columns):
+        sys.exit("Data to be appended must have same schema as master dataframe!")
+    master = pd.concat([master_data, append_data], ignore_index=True)
+    
+    return(master)
