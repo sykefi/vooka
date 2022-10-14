@@ -27,17 +27,23 @@ def readPickleData(inputfp):
     return(palstat)
 
 
-def getKuntarajaMaskFromPalstat(palstadata, kuntakoodi):
+def getKuntarajaMaskFromPalstat(palstadata, kuntakoodi, remove_exclaves=False):
     
     """
     A function for clipping kuntaraja mask from MML palstadata.
     
-    Parameters
-    ----------
+    Mandatory parameters
+    --------------------
     palstadata: <gpd.GeoDataFrame>
         Input data as a Geopandas Geodataframe.
     kuntakoodi: <str> or <int>
         Kuntakoodi for the wanted municipality.
+        
+    Optional parameters
+    -------------------
+    remove_exclaves <boolean>
+        True/False (False default).
+        Removes small exclaves outside the municipality if True.
     
     Output
     ------
@@ -79,6 +85,34 @@ def getKuntarajaMaskFromPalstat(palstadata, kuntakoodi):
     geom_list = list(master_df['geometry'])
     mask = unary_union(geom_list)
     
+    if remove_exclaves == True:
+        poly_list = list(mask)
+        max_value = 0
+        max_index = None
+        
+        for idx, poly in enumerate(poly_list):
+            if poly.area > max_value:
+                max_value = poly.area
+                max_index = idx
+        
+        mother_poly = Polygon(poly_list[max_index].exterior)
+        del_list = []
+        
+        for idxx, item in enumerate(poly_list):
+            if item.within(mother_poly) == False:
+                del_list.append(poly_list[idxx])
+        
+        new_list = []
+            
+        for item in poly_list:
+            if item not in del_list:
+                new_list.append(item)
+        
+        if len(new_list) == 1:
+            mask = Polygon(new_list[0])
+        else:
+            mask = MultiPolygon(new_list)
+        
     # FIll holes
     if str(kuntakoodi) == '681' or str(kuntakoodi) == '507':
         return(mask)
@@ -91,72 +125,6 @@ def getKuntarajaMaskFromPalstat(palstadata, kuntakoodi):
             sys.exit("Your mask should be either type Polygon or MultiPolygon! Check your code/data!")
     
         return(no_holes_mask)
-    
-def removeExclaves(wfs_handler_folder, kaavadata, kuntanimi):
-    
-    """
-    A function for removing exclaves that are outside of municipality outlines.
-    
-    Parameters
-    ----------
-    wfs_handler_folder: <str>
-        Path to folder where get_feature_data.py is stored.
-    kaavadata: <gpd.GeoDataFrame>
-        Input kaavadata from wanted municipality.
-    Kuntanimi <str>
-        Name of the municipality.
-        
-    Output
-    ------
-    <gpd.GeoDataFrame>
-        Kaavadata from wanted municipality. Exclaves excluded.
-    """
-    
-    
-    import sys
-    sys.path.append(wfs_handler_folder)
-    from get_feature_data import getWFSdata
-    from shapely.geometry import MultiPolygon, Polygon
-    
-    mask_data = getWFSdata("https://geo.stat.fi/geoserver/tilastointialueet/wfs", 'tilastointialueet:kunta1000k_2022')
-    mask_df = mask_data.loc[mask_data['nimi'] == kuntanimi]
-    mask_df_reset = mask_df.reset_index()
-    mask = mask_df_reset.at[0, 'geometry']
-    
-    copy_df = kaavadata.copy()
-    
-    for index, row in copy_df.iterrows():
-        
-        if type(row['geometry']) == MultiPolygon:
-            
-            palat = list(row['geometry'])
-            del_list = []
-            
-            for idx, poly in enumerate(palat):
-                if poly.intersects(mask) == False:
-                    del_list.append(palat[idx])
-            
-            new_list = []
-            
-            for item in palat:
-                if item not in del_list:
-                    new_list.append(item)
-            
-            if len(new_list) == 1:
-                copy_df.at[index, 'geometry'] = Polygon(new_list[0])
-            else:
-                copy_df.at[index, 'geometry'] = MultiPolygon(new_list)
-            
-        elif type(row['geometry']) == Polygon:
-            
-            if row['geometry'].intersects(mask) == False:
-                copy_df.drop(index)
-                
-        else:
-            sys.exit("Geometry has to be either type Polygon or MultiPolygon!")
-    
-    return(copy_df)
-
 
 def saveGPKG(input_data, outputfp, layer_name):
     
