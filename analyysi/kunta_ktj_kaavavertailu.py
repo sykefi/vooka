@@ -26,13 +26,13 @@ def compareKuntadataToKTJ(kunta_data, ktj_data, kuntanimi, kaavalajit, dissolve_
     kaavalajit <list>, list item <str>
         A list including kaavalaji numbers to be examined. E.g. asemakaavat ['31', '33']
         Check all numbers from: https://koodistot.suomi.fi/codescheme;registryCode=rytj;schemeCode=RY_Kaavalaji
-    dissolve_kunta <boolean>
-        True/False.
-        True if there is a need to group kaavaindex rows to form a kaava.
-        False (default) if input data already has an individual kaava as a row.
 
     Optional parameters
     ----------
+    dissolve_kunta <boolean>
+        True/False (default False).
+        True if there is a need to group kaavaindex rows to form a kaava.
+        False if input data already has an individual kaava as a row.
     dissolve_column
         When dissolve_kunta=True
         Name of the column to be used when dissolving the data.
@@ -129,7 +129,7 @@ kunta_data = gpd.read_file(r"<insert filepath here>.gpkg", layer="<insert layer 
 ktj_data = gpd.read_file(r"<insert filepath here>.gpkg", layer="<insert layer name here>")
 
 # Example
-results = compareKuntadataToKTJ(kunta_data=kunta_data, ktj_data=ktj_data, kuntanimi='Sulkava', kaavalajit=['33'], dissolve_kunta=True, dissolve_column='kaavatunnus')
+results = compareKuntadataToKTJ(kunta_data=kunta_data, ktj_data=ktj_data, kuntanimi='Sulkava', kaavalajit=['31', '39'], dissolve_kunta=True, dissolve_column='kaavatunnus')
 
 master = setupMasterGDF(data=results, geom_column='geometry')
 master_appended = appendDataToMaster(master_data=master, append_data=results)
