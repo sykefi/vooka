@@ -10,7 +10,7 @@ from shapely.geometry import MultiPolygon, Polygon
 import sys
 from funktiot.accessory_functions import readPickleData, getKuntarajaMaskFromPalstat, saveGPKG
 
-def snapKuntakaavaToKuntaraja(kaavadata, palstadata, kuntakoodi, tolerance):
+def snapKuntakaavaToKuntaraja(kaavadata, palstadata, kuntakoodi, tolerance, remove_exclaves=False):
     
     """
     Parameters
@@ -34,6 +34,13 @@ def snapKuntakaavaToKuntaraja(kaavadata, palstadata, kuntakoodi, tolerance):
             Rantasalmi: 0.015
             Sulkava: 0.0005
             <TO BE CONTINUED>
+            
+    Optional parameters
+    -------------------
+    remove_exclaves <boolean>
+        True/False (False default).
+        Removes small exclaves outside the municipality if True.
+        In Etelä-Savo, True is to be used for Rantasalmi.
     
     Output
     ------
@@ -50,7 +57,7 @@ def snapKuntakaavaToKuntaraja(kaavadata, palstadata, kuntakoodi, tolerance):
     if palstadata.crs['init'] != 'epsg:3067':
         sys.exit("Your palstadata must have EPSG:3067 (EUREF-TM35FIN) as CRS!")
     
-    geom_kunta = getKuntarajaMaskFromPalstat(palstadata=palstadata, kuntakoodi=kuntakoodi)
+    geom_kunta = getKuntarajaMaskFromPalstat(palstadata=palstadata, kuntakoodi=kuntakoodi, remove_exclaves=remove_exclaves)
     
     i = 1
     
@@ -150,6 +157,6 @@ kaava_data = gpd.read_file(r"<insert filepath here>.gpkg", layer="<insert layer 
 kunta_snapped = snapKuntakaavaToKuntaraja(kaavadata=kaava_data,
                                                  palstadata=palstat,
                                                  kuntakoodi='<insert kuntakoodi here>',
-                                                 tolerance=0.015)  #Change according to municipality !!
+                                                 tolerance=0.015) #Change according to municipality !! Add remove_exclaves if necessary !!
 
 saveGPKG(kunta_snapped, outputfp=r"<insert filepath here>.gpkg", layer_name="<insert layer name here>")
