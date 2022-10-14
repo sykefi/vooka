@@ -49,7 +49,6 @@ def getKuntarajaMaskFromPalstat(palstadata, kuntakoodi):
     from shapely.ops import unary_union
     from shapely.geometry import MultiPolygon, Polygon
     import sys
-    
 
     if palstadata.crs['init'] != 'epsg:3067':
         sys.exit("Your data must have EPSG:3067 (EUREF-TM35FIN) as CRS!")
@@ -92,6 +91,71 @@ def getKuntarajaMaskFromPalstat(palstadata, kuntakoodi):
             sys.exit("Your mask should be either type Polygon or MultiPolygon! Check your code/data!")
     
         return(no_holes_mask)
+    
+def removeExclaves(wfs_handler_folder, kaavadata, kuntanimi):
+    
+    """
+    A function for removing exclaves that are outside of municipality outlines.
+    
+    Parameters
+    ----------
+    wfs_handler_folder: <str>
+        Path to folder where get_feature_data.py is stored.
+    kaavadata: <gpd.GeoDataFrame>
+        Input kaavadata from wanted municipality.
+    Kuntanimi <str>
+        Name of the municipality.
+        
+    Output
+    ------
+    <gpd.GeoDataFrame>
+        Kaavadata from wanted municipality. Exclaves excluded.
+    """
+    
+    
+    import sys
+    sys.path.append(wfs_handler_folder)
+    from get_feature_data import getWFSdata
+    from shapely.geometry import MultiPolygon, Polygon
+    
+    mask_data = getWFSdata("https://geo.stat.fi/geoserver/tilastointialueet/wfs", 'tilastointialueet:kunta1000k_2022')
+    mask_df = mask_data.loc[mask_data['nimi'] == kuntanimi]
+    mask_df_reset = mask_df.reset_index()
+    mask = mask_df_reset.at[0, 'geometry']
+    
+    copy_df = kaavadata.copy()
+    
+    for index, row in copy_df.iterrows():
+        
+        if type(row['geometry']) == MultiPolygon:
+            
+            palat = list(row['geometry'])
+            del_list = []
+            
+            for idx, poly in enumerate(palat):
+                if poly.intersects(mask) == False:
+                    del_list.append(palat[idx])
+            
+            new_list = []
+            
+            for item in palat:
+                if item not in del_list:
+                    new_list.append(item)
+            
+            if len(new_list) == 1:
+                copy_df.at[index, 'geometry'] = Polygon(new_list[0])
+            else:
+                copy_df.at[index, 'geometry'] = MultiPolygon(new_list)
+            
+        elif type(row['geometry']) == Polygon:
+            
+            if row['geometry'].intersects(mask) == False:
+                copy_df.drop(index)
+                
+        else:
+            sys.exit("Geometry has to be either type Polygon or MultiPolygon!")
+    
+    return(copy_df)
 
 
 def saveGPKG(input_data, outputfp, layer_name):
