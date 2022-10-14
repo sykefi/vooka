@@ -38,9 +38,8 @@ def snapKuntakaavaToKuntaraja(kaavadata, palstadata, kuntakoodi, tolerance):
     Output
     ------
     <gpd.GeoDataFrame>
-        Original kaavadta with updated geometry information (snapped to municipality border)
+        Original kaavadata with updated geometry information (snapped to municipality border)
     """
-    
     
     if kaavadata.crs['init'] != 'epsg:3067':
         sys.exit("Your kaavadata must have EPSG:3067 (EUREF-TM35FIN) as CRS!")
