@@ -7,13 +7,41 @@ Created on Fri Sep 16 09:47:07 2022
 import sys
 from de9im_functions import get_DE9IM_pattern, topologically_equal_DE9IM, calculate_iou
 from accessory_functions import setupMasterGDF, appendDataToMaster, saveGPKG
-
 import geopandas as gpd
 
 #import warnings
 #warnings.filterwarnings("ignore")
 
-def compareKuntadataToKTJ(kunta_data, ktj_data, kuntanimi, kaavalajit, dissolve_kunta, **kwargs):
+def compareKuntadataToKTJ(kunta_data, ktj_data, kuntanimi, kaavalajit, dissolve_kunta=False, **kwargs):
+    
+    """
+    Mandatory parameters
+    ----------
+    kunta_data: <gpd.GeoDataFrame>
+        Input kaavadata from a municipality as a Geopandas Geodataframe.
+    ktj_data: <gpd.GeoDataFrame>
+        Input KTJ-data from MML as a Geopandas Geodataframe.
+    kuntanimi: <str>
+        Name of the wanted municipality.
+    kaavalajit <list>, list item <str>
+        A list including kaavalaji numbers to be examined. E.g. asemakaavat ['31', '33']
+        Check all numbers from: https://koodistot.suomi.fi/codescheme;registryCode=rytj;schemeCode=RY_Kaavalaji
+    dissolve_kunta <boolean>
+        True/False.
+        True if there is a need to group kaavaindex rows to form a kaava.
+        False (default) if input data already has an individual kaava as a row.
+
+    Optional parameters
+    ----------
+    dissolve_column
+        When dissolve_kunta=True
+        Name of the column to be used when dissolving the data.
+    
+    Output
+    ------
+    <gpd.GeoDataFrame>
+        Municipality's kaavadata with comparison information included.
+    """
     
     dissolve_column = kwargs.get('dissolve_column', None)
 
@@ -100,7 +128,7 @@ def compareKuntadataToKTJ(kunta_data, ktj_data, kuntanimi, kaavalajit, dissolve_
 kunta_data = gpd.read_file(r"<insert filepath here>.gpkg", layer="<insert layer name here>")
 ktj_data = gpd.read_file(r"<insert filepath here>.gpkg", layer="<insert layer name here>")
 
-# Esimerkki
+# Example
 results = compareKuntadataToKTJ(kunta_data=kunta_data, ktj_data=ktj_data, kuntanimi='Sulkava', kaavalajit=['33'], dissolve_kunta=True, dissolve_column='kaavatunnus')
 
 master = setupMasterGDF(data=results, geom_column='geometry')
