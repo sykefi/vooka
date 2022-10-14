@@ -15,7 +15,7 @@ import geopandas as gpd
 def compareKuntadataToKTJ(kunta_data, ktj_data, kuntanimi, kaavalajit, dissolve_kunta=False, **kwargs):
     
     """
-    Mandatory parameters
+    Parameters
     ----------
     kunta_data: <gpd.GeoDataFrame>
         Input kaavadata from a municipality as a Geopandas Geodataframe.
@@ -28,7 +28,7 @@ def compareKuntadataToKTJ(kunta_data, ktj_data, kuntanimi, kaavalajit, dissolve_
         Check all numbers from: https://koodistot.suomi.fi/codescheme;registryCode=rytj;schemeCode=RY_Kaavalaji
 
     Optional parameters
-    ----------
+    -------------------
     dissolve_kunta <boolean>
         True/False (default False).
         True if there is a need to group kaavaindex rows to form a kaava.
