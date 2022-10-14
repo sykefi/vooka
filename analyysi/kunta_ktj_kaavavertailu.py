@@ -5,8 +5,8 @@ Created on Fri Sep 16 09:47:07 2022
 @author: smassine
 """
 import sys
-from de9im_functions import get_DE9IM_pattern, topologically_equal_DE9IM, calculate_iou
-from accessory_functions import setupMasterGDF, appendDataToMaster, saveGPKG
+from funktiot.de9im_functions import get_DE9IM_pattern, topologically_equal_DE9IM, calculate_iou
+from funktiot.accessory_functions import setupMasterGDF, appendDataToMaster, saveGPKG
 import geopandas as gpd
 
 #import warnings
