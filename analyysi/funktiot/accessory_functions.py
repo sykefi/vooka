@@ -250,7 +250,7 @@ def stringColumnToDate(input_df, date_column):
             date_str = row[date_column]
             
             if date_str != None:
-                # Juvalta yksi merilliskäsittely
+                # Juvalta yksi erilliskäsittely
                 if date_str[0:5] == 'xx.xx' and row['kaavaselite'] == 'Kirkonseutu Jukajärvi rakennuskaavan muutos':
                     date_str = '10.2.1983'
                 # Kangasniemeltä kirjausvirhe
