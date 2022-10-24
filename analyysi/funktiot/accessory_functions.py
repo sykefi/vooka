@@ -216,3 +216,86 @@ def appendDataToMaster(master_data, append_data):
     master = pd.concat([master_data, append_data], ignore_index=True)
     
     return(master)
+
+def stringColumnToDate(input_df, date_column):
+    
+    """
+    A function for changing string date values to date values in a Pandas Dataframe.
+    
+    Parameters
+    --------------------
+    input_df: <pd.Dataframe> or <gpd.GeoDataFrame>
+        Input data as a Pandas Dataframe or Geopandas Geodataframe.
+    date_column: <str>
+        Name of the date column in which the string date values to be transformed are.
+    
+    Output
+    ------
+    <pd.Dataframe> or <gpd.GeoDataFrame>
+        Input dataframe with altered date values in a column.
+    """
+    
+    import sys
+    from dateutil import parser
+    
+    def contains_number(string):
+        return any(char.isdigit() for char in string)
+    
+    input_df['new_date_column'] = None
+    
+    for index, row in input_df.iterrows():
+        
+        try:
+        
+            date_str = row[date_column]
+            
+            if date_str != None:
+                # Juvalta yksi merilliskäsittely
+                if date_str[0:5] == 'xx.xx' and row['kaavaselite'] == 'Kirkonseutu Jukajärvi rakennuskaavan muutos':
+                    date_str = '10.2.1983'
+                # Kangasniemeltä kirjausvirhe
+                elif date_str == '20042208' and row['kaavaselite'] == 'Reinikkalan ranta-asemakaavan muutos 2004':
+                    date_str = '20041108'
+                # Pertunmaalta pari erilliskäsittelyä
+                elif date_str[0:8].lower() == 'e-sympk.' and row['kuntanimi'] == 'Pertunmaa':
+                    date_str = date_str[0:-14]
+                elif date_str[0:20].lower() == 'osittain vahv. ymp.k' and row['kuntanimi'] == 'Pertunmaa':
+                    date_str = date_str[-9:]
+                else:
+                    None
+            
+            if str(date_str) == '0':
+                date_str = None
+                    
+            if contains_number(date_str) == True:
+                
+                try:
+                    res = parser.parse(date_str, fuzzy=True)
+                    res_date = res.date()
+                    input_df.at[index, 'new_date_column'] = res_date
+                        
+                except ValueError:
+                    date_str = date_str[0:-4]
+                    res = parser.parse(date_str, fuzzy=True)
+                    res_date = res.date()
+                    input_df.at[index, 'new_date_column'] = res_date
+                        
+            else:
+                res_date = None
+                input_df.at[index, 'new_date_column'] = res_date
+            
+        except TypeError:
+            if type(date_str) == type(None):
+                res_date = None
+                input_df.at[index, 'new_date_column'] = res_date
+            else:
+                sys.exit("TypeError occured that is not NoneType. Check your data on index " + str(index) + ".")
+        
+        #if date_str is not None:
+            #print("Old string date: " + row[date_column])
+            #print("New date as datetime.date: " + str(res_date))
+    
+    input_df = input_df.drop([date_column], axis=1)
+    input_df = input_df.rename(columns={'new_date_column': date_column})
+
+    return(input_df)
