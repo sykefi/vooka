@@ -25,6 +25,7 @@ def snapKuntakaavaToKuntaraja(kaavadata, palstadata, kuntakoodi, tolerance, remo
         Tolerance value to filter out unwanted difference indices.
         
         Best threshold values in Etelä-Savo ELY identified in VOOKA project (PLEASE USE):
+            Hirvensalmi: 0.00009
             Juva: 0.015
             Kangasniemi: 0.015
             Mikkeli: 0.005
