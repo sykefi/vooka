@@ -261,6 +261,12 @@ def stringColumnToDate(input_df, date_column):
                     date_str = date_str[0:-14]
                 elif date_str[0:20].lower() == 'osittain vahv. ymp.k' and row['kuntanimi'] == 'Pertunmaa':
                     date_str = date_str[-9:]
+                # Hirvensalmelta yksi erilliskäsittely
+                elif date_str == '1977, 1988' and row['kaavaselite'] == 'ETUNIEMEN RANTAKAAVAN MUUTOS':
+                    date_str = '1.1.' + date_str[-4:]
+                # Vain vuosi ilmoitettu
+                elif len(date_str) == 4 and contains_number(date_str) == True:
+                    date_str = '1.1.' + date_str
                 else:
                     None
             
@@ -272,27 +278,27 @@ def stringColumnToDate(input_df, date_column):
                 try:
                     res = parser.parse(date_str, fuzzy=True)
                     res_date = res.date()
-                    input_df.at[index, 'new_date_column'] = res_date
+                    input_df.at[index, 'new_date_column'] = str(res_date)
                         
                 except ValueError:
                     date_str = date_str[0:-4]
                     res = parser.parse(date_str, fuzzy=True)
                     res_date = res.date()
-                    input_df.at[index, 'new_date_column'] = res_date
+                    input_df.at[index, 'new_date_column'] = str(res_date)
                         
             else:
                 res_date = None
-                input_df.at[index, 'new_date_column'] = res_date
+                input_df.at[index, 'new_date_column'] = str(res_date)
             
         except TypeError:
             if type(date_str) == type(None):
                 res_date = None
-                input_df.at[index, 'new_date_column'] = res_date
+                input_df.at[index, 'new_date_column'] = str(res_date)
             else:
                 sys.exit("TypeError occured that is not NoneType. Check your data on index " + str(index) + ".")
         
         #if date_str is not None:
-            #print("Old string date: " + row[date_column])
+            #print("Old string date: " + str(row[date_column]))
             #print("New date as datetime.date: " + str(res_date))
     
     input_df = input_df.drop([date_column], axis=1)
