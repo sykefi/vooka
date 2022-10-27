@@ -73,11 +73,20 @@ merged = spatialJoinAttributes(merged, kaavatunnus, 'kaavatunnu')
 merged = spatialJoinAttributes(merged, nimi, 'nimi')
 merged = spatialJoinAttributes(merged, area, 'pintaAla')
 
-# Lastly project geometries to TM35
+# Project geometries to TM35
 merged_proj = merged.to_crs(epsg=3067)
 
 # Drop unnecessary columns
 merged_pro = merged_proj.drop('id_ei_voitu_maarittaa', axis=1)
 
+### 3. DROP GHOST GEOMETRIES
+drop_list = []
+
+for index, row in merged_pro.iterrows():
+    if row.kaavatunnu == None and row.hyvaksymis == None:
+        drop_list.append(index)
+
+merged_pro_filtered = merged_pro.drop(drop_list)
+        
 # Save
-merged_pro.to_file(outfp, layer=out_layer, driver="GPKG")
+merged_pro_filtered.to_file(outfp, layer=out_layer, driver="GPKG")
