@@ -38,12 +38,12 @@ def checkGeometryValidity(data, geom_column):
         
         try:
             validity = explain_validity(row[geom_column])
-            data[index:index+1]['validity'] = validity
+            data.at[index, 'validity'] = validity
         
         except OSError:
             print("Exception")
             print(row[geom_column])
-            data[index:index+1]['validity'] = 'Valid Geometry'
+            data.at[index, 'validity'] = 'Valid Geometry'
     
     return(data)
 
