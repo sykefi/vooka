@@ -132,6 +132,11 @@ ktj_data = gpd.read_file(r"<insert filepath here>.gpkg", layer="<insert layer na
 results = compareKuntadataToKTJ(kunta_data=kunta_data, ktj_data=ktj_data, kuntanimi='Sulkava', kaavalajit=['31', '39'], dissolve_kunta=True, dissolve_column='kaavatunnus')
 
 master = setupMasterGDF(data=results, geom_column='geometry')
-master_appended = appendDataToMaster(master_data=master, append_data=results)
+
+try:
+    master_appended = appendDataToMaster(master_data=master, append_data=results)
+except SystemExit:
+    results = results[list(master.columns)]
+    master_appended = appendDataToMaster(master_data=master, append_data=results)
 
 saveGPKG(master_appended, outputfp=r"<insert filepath here>", layer_name="<insert layer name here>")
