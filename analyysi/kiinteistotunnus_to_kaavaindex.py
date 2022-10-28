@@ -27,9 +27,12 @@ def kiinteistotunnusToKaavaIndex(kiinttunnus_data, kaava_data):
         Combined data as a geopandas GeoDataFrame.
     """    
     
-    # Check to see if kaava and kiinteistötunnus data have the same CRS system
-    if kaava_data.crs['init'] != kiinttunnus_data.crs['init']:
-        # If not, comparison cannot be made. Sys exit.
+    try:
+        # Check to see if kaava and kiinteistötunnus data have the same CRS system
+        if kaava_data.crs['init'] != kiinttunnus_data.crs['init']:
+            # If not, comparison cannot be made. Sys exit.
+            sys.exit("Your data must have the same coordinate reference system!")
+    except KeyError:
         sys.exit("Your data must have the same coordinate reference system!")
     
     # Define bbox for kiinteistotunnukset based on kaavadata
