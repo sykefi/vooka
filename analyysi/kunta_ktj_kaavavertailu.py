@@ -86,6 +86,9 @@ def compareKuntadataToKTJ(kunta_data, ktj_data, kuntanimi, kaavalajit, dissolve_
                 print(iou)
                 pattern = get_DE9IM_pattern(geom1, geom2)
                 topo_equal = topologically_equal_DE9IM(geom1, geom2)
+                if topo_equal == False:
+                    if iou >= 98:
+                        topo_equal = True
                 ktj_area = geom2.area / 10000
                 try:
                     delta = round(((ktj_area - (geom1.area / 10000)) / (geom1.area / 10000)) * 100, 2)
