@@ -21,7 +21,7 @@ def appendKuntaToMaster(masterdf, kaavadata, kaavalaji, geometry, kuntakoodi, ku
     --------------------
     master_df: <gpd.GeoDataFrame>
         Master dataframe. Can be an empty GeoDataFrame or including value rows.
-    kaavaata: <gpd.GeoDataFrame>
+    kaavadata: <gpd.GeoDataFrame>
         Input kaavadata as a Geopandas GeoDataFrame.
     kaavalaji: <str>
         Either "asemakaava" or "yleiskaava".
@@ -153,7 +153,7 @@ with open(r"<insert filepath here>.pkl", "rb") as f:
 kunta_data = kiinteistotunnusToKaavaIndex(kiinttunnus_data=kiinttunnukset, kaava_data=kunta_kaavadata)
 
 # Prosessointi
-master_df = setupMasterDataframe() # Korvaa "kaava_processed" ensimmäisen appendin jälkeen!
+master_df = setupMasterDataframe() # Korvaa "kaavat_processed" ensimmäisen appendin jälkeen!
 kaavat_processed = appendKuntaToMaster(masterdf=master_df, kaavadata=kunta_kaavadata, kaavalaji='yleiskaava', geometry='geometry', kuntakoodi='097', kuntanimi='Hirvensalmi', kaavaselite='nimi', hyvaksymispvm='pvm')
 
 saveGPKG(kaavat_processed, outputfp=r"<insert filepath here>.gpkg", layer_name="<insert layer name here>")
