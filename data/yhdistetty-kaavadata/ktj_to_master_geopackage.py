@@ -19,7 +19,7 @@ def appendKTJToMaster(masterdf, ktjdata, geometry, originalref=None, kohderekist
     """
     Mandatory parameters
     --------------------
-    master_df: <gpd.GeoDataFrame>
+    masterdf: <gpd.GeoDataFrame>
         Master dataframe. Can be an empty GeoDataFrame or including value rows.
     ktjdata: <gpd.GeoDataFrame>
         Input KTJ data as a Geopandas GeoDataFrame.
