@@ -19,7 +19,7 @@ def appendKuntaToMaster(masterdf, kaavadata, kaavalaji, geometry, kuntakoodi, ku
     """
     Mandatory parameters
     --------------------
-    master_df: <gpd.GeoDataFrame>
+    masterdf: <gpd.GeoDataFrame>
         Master dataframe. Can be an empty GeoDataFrame or including value rows.
     kaavadata: <gpd.GeoDataFrame>
         Input kaavadata as a Geopandas GeoDataFrame.
