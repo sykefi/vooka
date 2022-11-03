@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+ Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="0.9.4" use-changelog="false" last-position="0,0" last-zoom="1" max-obj-count="4"
+	 default-schema="public" default-owner="postgres"
+	 layers="Default layer"
+	 active-layers="0"
+	 layer-name-colors="#000000"
+	 layer-rect-colors="#b4b4b4"
+	 show-layer-names="false" show-layer-rects="false">
+<database name="kaavakanta" is-template="false" allow-conns="true">
+</database>
+
+<schema name="public" layers="0" fill-color="#e1e1e1" sql-disabled="true">
+</schema>
+
+<schema name="kaavatiedot" layers="0" rect-visible="true" fill-color="#e1e1e1">
+	<role name="postgres"/>
+</schema>
+
+<textbox name="Kaavatietomallin implementointi" layers="0" bold="true" color="#005500" z-value="0" font-size="9">
+	<position x="20" y="20"/>
+	<comment><![CDATA[Projekti: VOOKA: Voimassa olevat kaavat rakennetun ympäristön tietojärjestelmään -pilotti
+Tilaaja: Suomen Ympäristökeskus SYKE
+Malli: PostgreSQL
+Luoja: Samuli Massinen
+Yritys: Ubigu Oy
+Versio: 1.0
+Pvm: 3.11.2022
+Muokattu: 3.11.2022]]></comment>
+</textbox>
+
+<table name="Kaava" layers="0" collapse-mode="2" max-obj-count="7" z-value="0">
+	<schema name="kaavatiedot"/>
+	<role name="postgres"/>
+	<comment><![CDATA[Kaavoituksen lopputuloksena syntyvä säännöstö ja suunnitelma, joka on alueellaan maankäytön ja rakentamisen tarkempaa suunnittelua ja toteuttamista juridisesti velvoittava.]]></comment>
+	<position x="140" y="260"/>
+	<column name="id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="kaavatunnus">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="elinkaaren_tila">
+		<type name="varchar" length="2"/>
+		<comment><![CDATA[Elinkaaren tila, jossa kaavan versio on.]]></comment>
+	</column>
+	<column name="kaavalaji">
+		<type name="varchar" length="2"/>
+		<comment><![CDATA[Alueiden käytön ohjaustarpeeseen, kaavaan sisältövaatimuksiin, prosessiin ja vastuulliseen hallintoviranomaiseen perustuva luokittelu]]></comment>
+	</column>
+	<column name="kaavatiedosto">
+		<type name="varchar" length="0"/>
+		<comment><![CDATA[Viittaus kaavatietomallin mukaiseen kaavatiedostoon.]]></comment>
+	</column>
+	<column name="maanalaisuus">
+		<type name="varchar" length="2"/>
+		<comment><![CDATA[Koskeeko kaava maanalaista vai maanpäällistä rakentamista ja maankäyttöä.]]></comment>
+	</column>
+	<constraint name="PK_kaava" type="pk-constr" table="kaavatiedot.&quot;Kaava&quot;">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="Kaavaselostus" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
+	<schema name="kaavatiedot"/>
+	<role name="postgres"/>
+	<position x="620" y="260"/>
+	<column name="id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="tiedosto">
+		<type name="varchar" length="0"/>
+		<comment><![CDATA[Kaavaan liittyvä selostus, jossa esitetään kaavan tavoitteiden, mahdollisten vaihtoehtojen ja niiden vaikutusten sekä ratkaisujen perusteiden arvioimiseksi tarpeelliset tiedot.]]></comment>
+	</column>
+	<constraint name="PK_kaavaselostus" type="pk-constr" table="kaavatiedot.&quot;Kaavaselostus&quot;">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="id_Kaava" index="2"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="Kaava_fk" index="0"/>
+		<object name="Kaavaselostus_uq" index="1"/>
+	</customidxs>
+</table>
+
+<relationship name="Kaavaselostus_has_one_Kaava" type="rel11" layers="0"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#3e58ab"
+	 src-table="kaavatiedot.&quot;Kaava&quot;"
+	 dst-table="kaavatiedot.&quot;Kaavaselostus&quot;"
+	 src-required="false" dst-required="false"/>
+
+</dbmodel>
