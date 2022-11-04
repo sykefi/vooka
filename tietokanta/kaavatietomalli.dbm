@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
  Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="0.9.4" use-changelog="false" last-position="7,0" last-zoom="1" max-obj-count="4"
+<dbmodel pgmodeler-ver="0.9.4" use-changelog="false" last-position="5,0" last-zoom="1" max-obj-count="6"
 	 default-schema="public" default-owner="postgres"
 	 layers="Default layer"
 	 active-layers="0"
@@ -21,7 +21,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 </schema>
 
 <textbox name="Kaavatietomallin implementointi" layers="0" bold="true" color="#005500" z-value="0" font-size="9">
-	<position x="20" y="20"/>
+	<position x="40" y="40"/>
 	<comment><![CDATA[Projekti: VOOKA: Voimassa olevat kaavat rakennetun ympäristön tietojärjestelmään -pilotti
 Tilaaja: Suomen ympäristökeskus SYKE
 Malli: PostgreSQL
@@ -36,7 +36,7 @@ Muokattu: 4.11.2022]]></comment>
 	<schema name="kaavatiedot"/>
 	<role name="postgres"/>
 	<comment><![CDATA[Kaavoituksen lopputuloksena syntyvä säännöstö ja suunnitelma, joka on alueellaan maankäytön ja rakentamisen tarkempaa suunnittelua ja toteuttamista juridisesti velvoittava.]]></comment>
-	<position x="160" y="280"/>
+	<position x="180" y="280"/>
 	<column name="id" not-null="true">
 		<type name="bigint" length="0"/>
 	</column>
@@ -67,7 +67,7 @@ Muokattu: 4.11.2022]]></comment>
 <table name="Kaavaselostus" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
 	<schema name="kaavatiedot"/>
 	<role name="postgres"/>
-	<position x="640" y="300"/>
+	<position x="740" y="280"/>
 	<column name="id" not-null="true">
 		<type name="bigint" length="0"/>
 	</column>
@@ -84,7 +84,7 @@ Muokattu: 4.11.2022]]></comment>
 	<schema name="kaavatiedot"/>
 	<role name="postgres"/>
 	<comment><![CDATA[Kaavaan sisältyvä ei-velvoittava ohje, joka ilmentää esimerkiksi toteutuksen tapaa ja tavoitetta.]]></comment>
-	<position x="160" y="620"/>
+	<position x="180" y="620"/>
 	<column name="id" not-null="true">
 		<type name="bigint" length="0"/>
 	</column>
@@ -126,7 +126,7 @@ Muokattu: 4.11.2022]]></comment>
 	<schema name="kaavatiedot"/>
 	<role name="postgres"/>
 	<comment><![CDATA[Tieto kaavan hyväksymisen johdosta kumoutuvasta aiemmasta kaavasta, sen sisältämistä yksittäisistä kaavamääräyskohteista tai kaavamääräyksistä.]]></comment>
-	<position x="640" y="500"/>
+	<position x="660" y="780"/>
 	<column name="id" not-null="true">
 		<type name="bigint" length="0"/>
 	</column>
@@ -180,6 +180,32 @@ Muokattu: 4.11.2022]]></comment>
 	 custom-color="#b3efc3"
 	 src-table="kaavatiedot.&quot;Kaava&quot;"
 	 dst-table="kaavatiedot.&quot;Kaavaselostus&quot;"
+	 src-required="false" dst-required="false"/>
+
+<table name="Osallistumis_ja_arviointisuunnitelma" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
+	<schema name="kaavatiedot"/>
+	<role name="postgres"/>
+	<comment><![CDATA[Kaavoituksen alkuvaiheessa laadittava suunnitelma, jossa kuvataan kaavoituksen lähtökohdat ja tavoitteet, suunniteltu aikataulu, osallistumis- ja vuorovaikutusmuodot sekä kaavan vaikutusten arviointitavat.]]></comment>
+	<position x="760" y="500"/>
+	<column name="id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="tiedosto">
+		<type name="varchar" length="0"/>
+		<comment><![CDATA[Liittyvä asiakirja]]></comment>
+	</column>
+	<constraint name="PK_osallistumis_ja_arviointisuunnitelma" type="pk-constr" table="kaavatiedot.&quot;Osallistumis_ja_arviointisuunnitelma&quot;">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<relationship name="Osallistumis_ja_arviointisuunnitelma_has_one_Kaava" type="rel11" layers="0"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#b90876"
+	 src-table="kaavatiedot.&quot;Kaava&quot;"
+	 dst-table="kaavatiedot.&quot;Osallistumis_ja_arviointisuunnitelma&quot;"
 	 src-required="false" dst-required="false"/>
 
 </dbmodel>

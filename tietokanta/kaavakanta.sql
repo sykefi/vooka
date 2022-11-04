@@ -149,4 +149,32 @@ ON DELETE SET NULL ON UPDATE CASCADE;
 ALTER TABLE kaavatiedot."Kaavaselostus" ADD CONSTRAINT "Kaavaselostus_uq" UNIQUE ("id_Kaava");
 -- ddl-end --
 
+-- object: kaavatiedot."Osallistumis_ja_arviointisuunnitelma" | type: TABLE --
+-- DROP TABLE IF EXISTS kaavatiedot."Osallistumis_ja_arviointisuunnitelma" CASCADE;
+CREATE TABLE kaavatiedot."Osallistumis_ja_arviointisuunnitelma" (
+	id bigint NOT NULL,
+	tiedosto varchar,
+	"id_Kaava" bigint,
+	CONSTRAINT "PK_osallistumis_ja_arviointisuunnitelma" PRIMARY KEY (id)
+);
+-- ddl-end --
+COMMENT ON TABLE kaavatiedot."Osallistumis_ja_arviointisuunnitelma" IS E'Kaavoituksen alkuvaiheessa laadittava suunnitelma, jossa kuvataan kaavoituksen lähtökohdat ja tavoitteet, suunniteltu aikataulu, osallistumis- ja vuorovaikutusmuodot sekä kaavan vaikutusten arviointitavat.';
+-- ddl-end --
+COMMENT ON COLUMN kaavatiedot."Osallistumis_ja_arviointisuunnitelma".tiedosto IS E'Liittyvä asiakirja';
+-- ddl-end --
+ALTER TABLE kaavatiedot."Osallistumis_ja_arviointisuunnitelma" OWNER TO postgres;
+-- ddl-end --
+
+-- object: "Kaava_fk" | type: CONSTRAINT --
+-- ALTER TABLE kaavatiedot."Osallistumis_ja_arviointisuunnitelma" DROP CONSTRAINT IF EXISTS "Kaava_fk" CASCADE;
+ALTER TABLE kaavatiedot."Osallistumis_ja_arviointisuunnitelma" ADD CONSTRAINT "Kaava_fk" FOREIGN KEY ("id_Kaava")
+REFERENCES kaavatiedot."Kaava" (id) MATCH FULL
+ON DELETE SET NULL ON UPDATE CASCADE;
+-- ddl-end --
+
+-- object: "Osallistumis_ja_arviointisuunnitelma_uq" | type: CONSTRAINT --
+-- ALTER TABLE kaavatiedot."Osallistumis_ja_arviointisuunnitelma" DROP CONSTRAINT IF EXISTS "Osallistumis_ja_arviointisuunnitelma_uq" CASCADE;
+ALTER TABLE kaavatiedot."Osallistumis_ja_arviointisuunnitelma" ADD CONSTRAINT "Osallistumis_ja_arviointisuunnitelma_uq" UNIQUE ("id_Kaava");
+-- ddl-end --
+
 
