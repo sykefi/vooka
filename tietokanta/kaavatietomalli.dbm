@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
  Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="0.9.4" use-changelog="false" last-position="5,0" last-zoom="1" max-obj-count="6"
+<dbmodel pgmodeler-ver="0.9.4" use-changelog="false" last-position="2,0" last-zoom="1" max-obj-count="6"
 	 default-schema="public" default-owner="postgres"
 	 layers="Default layer"
 	 active-layers="0"
@@ -101,16 +101,24 @@ Muokattu: 4.11.2022]]></comment>
 		<comment><![CDATA[Kaavasuosituksen suositusnumero]]></comment>
 	</column>
 	<column name="voimassaoloaika">
-		<type name="text" length="0"/>
+		<type name="varchar" length="0"/>
 		<comment><![CDATA[Aikaväli, jona asiasta tehty päätös suunnitelmineen ja säännöksineen on lainvoimainen.]]></comment>
 	</column>
 	<column name="arvo">
-		<type name="text" length="0"/>
+		<type name="varchar" length="0"/>
 		<comment><![CDATA[Kaavasuosituksen lajia tarkentava tekstiarvo]]></comment>
 	</column>
 	<constraint name="PK_kaavasuositus" type="pk-constr" table="kaavatiedot.&quot;Kaavasuositus&quot;">
 		<columns names="id" ref-type="src-columns"/>
 	</constraint>
+
+	<customidxs object-type="column">
+		<object name="id_Kaava" index="6"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="Kaava_fk" index="1"/>
+	</customidxs>
 </table>
 
 <relationship name="Kaava_has_many_Kaavasuositus" type="rel1n" layers="0"

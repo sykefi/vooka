@@ -2,7 +2,7 @@
 -- pgModeler version: 0.9.4
 -- PostgreSQL version: 13.0
 -- Project Site: pgmodeler.io
--- Model Author: Samuli Massinen
+-- Model Author: ---
 
 -- Database creation must be performed outside a multi lined SQL file. 
 -- These commands were put in this file only as a convenience.
@@ -69,8 +69,8 @@ CREATE TABLE kaavatiedot."Kaavasuositus" (
 	elinkaaren_tila varchar(2),
 	kaavoitusteema varchar(2),
 	suositusnumero bigint,
-	voimassaoloaika text,
-	arvo text,
+	voimassaoloaika varchar,
+	arvo varchar,
 	"id_Kaava" bigint,
 	CONSTRAINT "PK_kaavasuositus" PRIMARY KEY (id)
 );
