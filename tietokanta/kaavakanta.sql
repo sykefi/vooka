@@ -27,7 +27,7 @@ SET search_path TO pg_catalog,public,kaavatiedot;
 -- DROP TABLE IF EXISTS kaavatiedot."Kaava" CASCADE;
 CREATE TABLE kaavatiedot."Kaava" (
 	id bigint NOT NULL,
-	kaavatunnus varchar,
+	kaavatunnus uuid,
 	elinkaaren_tila varchar(2),
 	kaavalaji varchar(2),
 	kaavatiedosto varchar,
@@ -60,6 +60,81 @@ CREATE TABLE kaavatiedot."Kaavaselostus" (
 COMMENT ON COLUMN kaavatiedot."Kaavaselostus".tiedosto IS E'Kaavaan liittyvä selostus, jossa esitetään kaavan tavoitteiden, mahdollisten vaihtoehtojen ja niiden vaikutusten sekä ratkaisujen perusteiden arvioimiseksi tarpeelliset tiedot.';
 -- ddl-end --
 ALTER TABLE kaavatiedot."Kaavaselostus" OWNER TO postgres;
+-- ddl-end --
+
+-- object: kaavatiedot."Kaavasuositus" | type: TABLE --
+-- DROP TABLE IF EXISTS kaavatiedot."Kaavasuositus" CASCADE;
+CREATE TABLE kaavatiedot."Kaavasuositus" (
+	id bigint NOT NULL,
+	elinkaaren_tila varchar(2),
+	kaavoitusteema varchar(2),
+	suositusnumero bigint,
+	voimassaoloaika text,
+	arvo text,
+	"id_Kaava" bigint,
+	CONSTRAINT "PK_kaavasuositus" PRIMARY KEY (id)
+);
+-- ddl-end --
+COMMENT ON TABLE kaavatiedot."Kaavasuositus" IS E'Kaavaan sisältyvä ei-velvoittava ohje, joka ilmentää esimerkiksi toteutuksen tapaa ja tavoitetta.';
+-- ddl-end --
+COMMENT ON COLUMN kaavatiedot."Kaavasuositus".elinkaaren_tila IS E'Elinkaaren tila, jossa kaavan versio on.';
+-- ddl-end --
+COMMENT ON COLUMN kaavatiedot."Kaavasuositus".kaavoitusteema IS E'Kaavoituksen piiriin kuuluva temaattinen aihealue.';
+-- ddl-end --
+COMMENT ON COLUMN kaavatiedot."Kaavasuositus".suositusnumero IS E'Kaavasuosituksen suositusnumero';
+-- ddl-end --
+COMMENT ON COLUMN kaavatiedot."Kaavasuositus".voimassaoloaika IS E'Aikaväli, jona asiasta tehty päätös suunnitelmineen ja säännöksineen on lainvoimainen.';
+-- ddl-end --
+COMMENT ON COLUMN kaavatiedot."Kaavasuositus".arvo IS E'Kaavasuosituksen lajia tarkentava tekstiarvo';
+-- ddl-end --
+ALTER TABLE kaavatiedot."Kaavasuositus" OWNER TO postgres;
+-- ddl-end --
+
+-- object: "Kaava_fk" | type: CONSTRAINT --
+-- ALTER TABLE kaavatiedot."Kaavasuositus" DROP CONSTRAINT IF EXISTS "Kaava_fk" CASCADE;
+ALTER TABLE kaavatiedot."Kaavasuositus" ADD CONSTRAINT "Kaava_fk" FOREIGN KEY ("id_Kaava")
+REFERENCES kaavatiedot."Kaava" (id) MATCH FULL
+ON DELETE SET NULL ON UPDATE CASCADE;
+-- ddl-end --
+
+-- object: kaavatiedot."Kaavan_kumoamistieto" | type: TABLE --
+-- DROP TABLE IF EXISTS kaavatiedot."Kaavan_kumoamistieto" CASCADE;
+CREATE TABLE kaavatiedot."Kaavan_kumoamistieto" (
+	id bigint NOT NULL,
+	kumottavan_kaavan_tunnus varchar,
+	kumoaa_kaavan_kokonaan boolean,
+	kumottavan_kaavan_alue geometry(POLYGON, 3067),
+	kumottavan_maarayksen_tunnus varchar,
+	kumottavan_suosituksen_tunnus varchar,
+	"id_Kaava" bigint,
+	CONSTRAINT "PK_kaavan_kumoamistieto" PRIMARY KEY (id)
+);
+-- ddl-end --
+COMMENT ON TABLE kaavatiedot."Kaavan_kumoamistieto" IS E'Tieto kaavan hyväksymisen johdosta kumoutuvasta aiemmasta kaavasta, sen sisältämistä yksittäisistä kaavamääräyskohteista tai kaavamääräyksistä.';
+-- ddl-end --
+COMMENT ON COLUMN kaavatiedot."Kaavan_kumoamistieto".kumottavan_kaavan_tunnus IS E'Sen kaavan kaavatunnus, joka kumotaan kokonaan tai osittain tämän kaavan tullessa voimaan.';
+-- ddl-end --
+COMMENT ON COLUMN kaavatiedot."Kaavan_kumoamistieto".kumoaa_kaavan_kokonaan IS E'Viitattu kaava kumoutuu kokonaisuudessaan tämän kaavan tullessa voimaan.';
+-- ddl-end --
+COMMENT ON COLUMN kaavatiedot."Kaavan_kumoamistieto".kumottavan_kaavan_alue IS E'Aluemainen geometria, joka rajaa viitattavan kaavan osan, johon kohdistetut kaavakohteet ja -määräykset kumoutuvat.';
+-- ddl-end --
+COMMENT ON COLUMN kaavatiedot."Kaavan_kumoamistieto".kumottavan_maarayksen_tunnus IS E'Viittaustunnus kumottavalle kaavamääräykselle, joka sisältyy kumottavaan kaavaan.';
+-- ddl-end --
+COMMENT ON COLUMN kaavatiedot."Kaavan_kumoamistieto".kumottavan_suosituksen_tunnus IS E'Viittaustunnus kumottavalle kaavasuositukselle, joka sisältyy kumottavaan kaavaan.';
+-- ddl-end --
+ALTER TABLE kaavatiedot."Kaavan_kumoamistieto" OWNER TO postgres;
+-- ddl-end --
+
+-- object: "Kaava_fk" | type: CONSTRAINT --
+-- ALTER TABLE kaavatiedot."Kaavan_kumoamistieto" DROP CONSTRAINT IF EXISTS "Kaava_fk" CASCADE;
+ALTER TABLE kaavatiedot."Kaavan_kumoamistieto" ADD CONSTRAINT "Kaava_fk" FOREIGN KEY ("id_Kaava")
+REFERENCES kaavatiedot."Kaava" (id) MATCH FULL
+ON DELETE SET NULL ON UPDATE CASCADE;
+-- ddl-end --
+
+-- object: "Kaavan_kumoamistieto_uq" | type: CONSTRAINT --
+-- ALTER TABLE kaavatiedot."Kaavan_kumoamistieto" DROP CONSTRAINT IF EXISTS "Kaavan_kumoamistieto_uq" CASCADE;
+ALTER TABLE kaavatiedot."Kaavan_kumoamistieto" ADD CONSTRAINT "Kaavan_kumoamistieto_uq" UNIQUE ("id_Kaava");
 -- ddl-end --
 
 -- object: "Kaava_fk" | type: CONSTRAINT --
