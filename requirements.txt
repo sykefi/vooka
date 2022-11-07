@@ -7,3 +7,4 @@ owslib==0.26.0
 xmltodict==0.13.0
 psycopg2==2.9.3
 dateutil==2.8.2
+PyPDF2==2.11.1
