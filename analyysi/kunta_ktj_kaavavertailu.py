@@ -128,7 +128,7 @@ def compareKuntadataToKTJ(kunta_data, ktj_data, kuntanimi, kaavalajit, dissolve_
     
     return(kunta_pala)
 
-def compareKTJdataToKunta(base_kaavadata, refe_kaavadata, kuntanimi, kaavalajit, dissolve_refe=False, **kwargs):
+def compareKTJindicesToKunta(base_kaavadata, refe_kaavadata, kuntanimi, kaavalajit, dissolve_refe=False, **kwargs):
     
     """
     Mandatory parameters
@@ -252,7 +252,7 @@ ktj_data = gpd.read_file(r"<insert filepath here>.gpkg", layer="<insert layer na
 
 # Example
 results = compareKuntadataToKTJ(kunta_data=kunta_data, ktj_data=ktj_data, kuntanimi='Sulkava', kaavalajit=['31', '39'], dissolve_kunta=True, dissolve_column='kaavatunnus')
-results2 = compareKTJdataToKunta(base_kaavadata=ktj_data, refe_kaavadata=kunta_data, kuntanimi='Kangasniemi', kaavalajit=['33'])
+results2 = compareKTJindicesToKunta(base_kaavadata=ktj_data, refe_kaavadata=kunta_data, kuntanimi='Kangasniemi', kaavalajit=['33'])
 
 master = setupMasterGDF(data=results, geom_column='geometry')
 
