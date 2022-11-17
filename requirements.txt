@@ -8,3 +8,4 @@ xmltodict==0.13.0
 psycopg2==2.9.3
 dateutil==2.8.2
 PyPDF2==2.11.1
+ghostscript==0.7 #also ghostscript 10.0.0 setup, minimum 9.5
