@@ -9,10 +9,25 @@ import pandas as pd
 import geopandas as gpd
 import sys
 
-data = pd.read_csv(r"G:\Oma Drive\Liiketoiminta\Suomen ympäristökeskus\VOOKA\Python\PDF-linkityskonversio - Master.csv", delimiter=',',  usecols = [i for i in range(12)])
-kaava_data = gpd.read_file(r"G:\Jaetut Drivet\Liiketoiminta\Suomen ympäristökeskus\Voimassa olevat kaavat rakennetun ympäristön tietojärjestelmään -pilotti (VOOKA)\Projekti\02_lähtötiedot\Yhdistetyt kaavatiedot\gpkg-korjattu\master-refined.gpkg", layer="asemakaavat_kunta")
-
 def declareMultipage(data, master_dir, kuntakoodi, kaavalaji):
+    
+    """
+    Parameters
+    --------------------
+    data: <pd.Dataframe>
+        Input data as a Pandas Dataframe containing names of the PDF-files in individual rows.
+    master_dir: <str>
+        Filepath to a directory in which all the PDF-files are. Can include subfolders named 'ak', 'rak', 'yk'.
+    kuntakoodi: <str>
+        Kuntakoodi for the wanted municipality.
+    kaavalaji: <str>
+        Type of kaavadata to be examined. Refers to subfolder names. Either 'ak', 'rak', or 'yk'.
+    
+    Output
+    ------
+    <pd.Dataframe>
+        Output dataframe containing information if PDF-file contains multiple pages.
+    """
     
     import glob, os
     import PyPDF2
@@ -57,8 +72,11 @@ def declareMultipage(data, master_dir, kuntakoodi, kaavalaji):
     
     return(data_copy)
 
+data = pd.read_csv(r"<insert filepath here>", delimiter=',',  usecols = [i for i in range(12)])
+kaava_data = gpd.read_file(r"<insert filepath here>", layer="<insert layer>")
+
 testi = declareMultipage(data=data,
-                         master_dir=r"G:\Jaetut Drivet\Liiketoiminta\Suomen ympäristökeskus\Voimassa olevat kaavat rakennetun ympäristön tietojärjestelmään -pilotti (VOOKA)\Projekti\02_lähtötiedot\Yhdistetyt kaavatiedot\documents\Ladatut",
+                         master_dir=r"<insert filepath here>",
                          kuntakoodi="740",
                          kaavalaji="ak")
 
@@ -67,6 +85,26 @@ testi = declareMultipage(data=data,
 
 def joinPDFsToKaavadata(kaavadata, link_table, kuntakoodi, kaavalaji):
 
+    """
+    A function for linking PDF-appendices to each kaava.
+    
+    Parameters
+    --------------------
+    kaavadata: <gpd.GeoDataframe>
+        Input kaavadata as a GeoPandas GeoDataFrame.
+    link_table: <pd.DataFrame>
+        Input data as a Pandas Dataframe linking kaavatunnus information to PDF-files.
+    kuntakoodi: <str>
+        Kuntakoodi for the wanted municipality.
+    kaavalaji: <str>
+        Type of kaavadata to be examined. Either 'ak', 'rak', or 'yk'.
+    
+    Output
+    ------
+    <pd.Dataframe>
+        Output dataframe containing information if PDF-file contains multiple pages.
+    """ 
+    
     link_pala = link_table.loc[link_table['Kunta'] == float(kuntakoodi)]
     link_pala = link_pala.loc[link_pala['Kaavalaji'] == kaavalaji]
     link_pala = link_pala.loc[link_pala['Tila'] == 'ok'] #selivitettävä myöhemmässä vaiheessa vielä 'ei ok' rivit
@@ -182,10 +220,4 @@ joined = joinPDFsToKaavadata(kaavadata=kaava_data,
                          link_table=data,
                          kuntakoodi="178",
                          kaavalaji="ak")
-    
-    #spatiaalihaku niille, joilla vain ktj-tunnus (tästä jo pohjat) --> uuden tunnuksen luominen
-    #linkityskäsittely (joihin pohjat jo ylhäällä)
-    
-    #''.join([n for n in phone_number if n.isdigit()])
-
-joined.to_file(r"G:\Oma Drive\Liiketoiminta\Suomen ympäristökeskus\VOOKA\Python\testi.gpkg", layer='testimme', driver="GPKG")
+   
