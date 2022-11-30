@@ -34,6 +34,7 @@ def snapKuntakaavaToKuntaraja(kaavadata, palstadata, kuntakoodi, tolerance, remo
             Puumala: 0.015
             Rantasalmi: 0.015
             Sulkava: 0.0005
+            Savonlinna: 0.05
             <TO BE CONTINUED>
             
     Optional parameters
