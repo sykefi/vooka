@@ -111,20 +111,28 @@ def appendKuntaToMaster(masterdf, kaavadata, kaavalaji, geometry, kuntakoodi, ku
             else:
                 kaavalaji_nro = kaavalaji_dict['asemakaava'][0]
         elif kaavalaji == 'yleiskaava':
-            if row[parameter_dict['kaavaselite']] == None:
-                kaavalaji_nro = kaavalaji_dict['yleiskaava'][0]
-            elif 'vaiheyleiskaav' in row[parameter_dict['kaavaselite']].lower():
-                kaavalaji_nro = kaavalaji_dict['yleiskaava'][1]
-            elif 'osayleiskaav' in row[parameter_dict['kaavaselite']].lower():
-                kaavalaji_nro = kaavalaji_dict['yleiskaava'][2]
-            elif 'yhteinen yleiskaava' in row[parameter_dict['kaavaselite']].lower():
-                kaavalaji_nro = kaavalaji_dict['yleiskaava'][3]
-            elif 'oikeusvaikutukset' in row[parameter_dict['kaavaselite']].lower():
-                kaavalaji_nro = kaavalaji_dict['yleiskaava'][4]
-            elif 'maanalai' in row[parameter_dict['kaavaselite']].lower():
-                kaavalaji_nro = kaavalaji_dict['yleiskaava'][5]
+            if kuntanimi == 'Savonlinna':
+                if row['Oikeusvaik'] == 'Oikeusvaikutukseton':
+                    kaavalaji_nro = kaavalaji_dict['yleiskaava'][4]
+                elif row['Oikeusvaik'] == 'Oikeusvaikutteinen':
+                    kaavalaji_nro = kaavalaji_dict['yleiskaava'][2]
+                else:
+                    kaavalaji_nro = kaavalaji_dict['yleiskaava'][2]
             else:
-                kaavalaji_nro = kaavalaji_dict['yleiskaava'][0]
+                if row[parameter_dict['kaavaselite']] == None:
+                    kaavalaji_nro = kaavalaji_dict['yleiskaava'][0]
+                elif 'vaiheyleiskaav' in row[parameter_dict['kaavaselite']].lower():
+                    kaavalaji_nro = kaavalaji_dict['yleiskaava'][1]
+                elif 'osayleiskaav' in row[parameter_dict['kaavaselite']].lower():
+                    kaavalaji_nro = kaavalaji_dict['yleiskaava'][2]
+                elif 'yhteinen yleiskaava' in row[parameter_dict['kaavaselite']].lower():
+                    kaavalaji_nro = kaavalaji_dict['yleiskaava'][3]
+                elif 'oikeusvaikutukset' in row[parameter_dict['kaavaselite']].lower():
+                    kaavalaji_nro = kaavalaji_dict['yleiskaava'][4]
+                elif 'maanalai' in row[parameter_dict['kaavaselite']].lower():
+                    kaavalaji_nro = kaavalaji_dict['yleiskaava'][5]
+                else:
+                    kaavalaji_nro = kaavalaji_dict['yleiskaava'][0]
         else:
             sys.exit("Your kaavalaji parameter must be either 'asemakaava' or 'yleiskaava'!")
             
