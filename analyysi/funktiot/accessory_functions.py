@@ -288,12 +288,12 @@ def stringColumnToDate(input_df, date_column):
                         
             else:
                 res_date = None
-                input_df.at[index, 'new_date_column'] = str(res_date)
+                input_df.at[index, 'new_date_column'] = res_date
             
         except TypeError:
             if type(date_str) == type(None):
                 res_date = None
-                input_df.at[index, 'new_date_column'] = str(res_date)
+                input_df.at[index, 'new_date_column'] = res_date
             else:
                 sys.exit("TypeError occured that is not NoneType. Check your data on index " + str(index) + ".")
         
