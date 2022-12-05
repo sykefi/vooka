@@ -6,7 +6,7 @@ Created on Fri Sep 16 09:47:07 2022
 """
 import sys
 from funktiot.de9im_functions import get_DE9IM_pattern, topologically_equal_DE9IM, calculate_iou
-from funktiot.accessory_functions import setupMasterGDF, appendDataToMaster, saveGPKG
+from funktiot.accessory_functions import setupMasterGDF, appendDataToMaster, saveGPKG, stringColumnToDate
 import geopandas as gpd
 
 #import warnings
@@ -82,14 +82,19 @@ def compareKuntadataToKTJ(kunta_data, ktj_data, kuntanimi, kaavalajit, dissolve_
             geom2 = kaava.at[kaava.index[0], 'geometry']
             
             if geom1.intersects(geom2) == True:
+                
                 iou = calculate_iou(geom1, geom2)
                 print(iou)
+                
                 pattern = get_DE9IM_pattern(geom1, geom2)
+                
                 topo_equal = topologically_equal_DE9IM(geom1, geom2)
                 if topo_equal == False:
                     if iou >= 98:
                         topo_equal = True
+                        
                 ktj_area = geom2.area / 10000
+                
                 try:
                     delta = round(((ktj_area - (geom1.area / 10000)) / (geom1.area / 10000)) * 100, 2)
                 except TypeError:
@@ -178,6 +183,9 @@ def compareKTJindicesToKunta(base_kaavadata, refe_kaavadata, kuntanimi, kaavalaj
     base_pala['iou'] = None
     base_pala['refe_kaavatunnus'] = None
     base_pala['a_delta_%'] = None
+    base_pala['kl_equal'] = None
+    base_pala['hyv_equal'] = None
+    base_pala['voim_equal'] = None
     
     if dissolve_refe == True:
         refe_pala = refe_pala.dissolve(by=dissolve_column)
@@ -190,7 +198,7 @@ def compareKTJindicesToKunta(base_kaavadata, refe_kaavadata, kuntanimi, kaavalaj
         
         geom1 = row['geometry']
         base_pala.at[index, 'area_ha'] = geom1.area / 10000
-        item_dict = {"knro":[], "iou":[], "pattern": [], "topo_equal": [], "refe_area": [], "a_delta": []}
+        item_dict = {"knro":[], "iou":[], "pattern": [], "topo_equal": [], "refe_area": [], "a_delta": [], "kl_equal": [], "hyv_equal": [], "voim_equal": []}
         print("---------")
         
         for idx, rivi in refe_pala.iterrows():
@@ -198,18 +206,59 @@ def compareKTJindicesToKunta(base_kaavadata, refe_kaavadata, kuntanimi, kaavalaj
             geom2 = rivi['geometry']
                 
             if geom1.intersects(geom2) == True:
+                
                 iou = calculate_iou(geom1, geom2)
                 print(iou)
+                
                 pattern = get_DE9IM_pattern(geom1, geom2)
+                
                 topo_equal = topologically_equal_DE9IM(geom1, geom2)
                 if topo_equal == False:
                     if iou >= 98:
                         topo_equal = True
+                        
                 refe_area = geom2.area / 10000
+                
                 try:
                     delta = round(((refe_area - (geom1.area / 10000)) / (geom1.area / 10000)) * 100, 2)
                 except TypeError:
                     delta = None
+                
+                # Kaavalaji
+                if row['kaavalaji'] == rivi['kaavalaji']:
+                    kl_equal = True
+                else:
+                    kl_equal = False
+                
+                # Hyvaksymispvm
+                if row['hyvaksymispvm'] == None:
+                    if rivi['hyvaksymispvm'] == None:
+                        hyv_equal = 'Hyvpvm puuttuu molemmista'
+                    else:
+                        hyv_equal = 'Hyvpvm puuttuu KTJ'
+                else:
+                    if rivi['hyvaksymispvm'] != None:
+                        if row['hyvaksymispvm'] == rivi['hyvaksymispvm']:
+                            hyv_equal = '1'
+                        else:
+                            hyv_equal = '0'
+                    else:
+                        hyv_equal = 'Hyvpvm puuttuu kunta'
+                
+                # Voimaantulopvm
+                if row['voimaantulopvm'] == None:
+                    if rivi['voimaantulopvm'] == None:
+                        voim_equal = 'Voimpvm puuttuu molemmista'
+                    else:
+                        voim_equal = 'Voimpvm puuttuu KTJ'
+                else:
+                    if rivi['voimaantulopvm'] != None:
+                        if row['voimaantulopvm'] == rivi['voimaantulopvm']:
+                            voim_equal = '1'
+                        else:
+                            voim_equal = '0'
+                    else:
+                        voim_equal = 'Voimpvm puuttuu kunta'
                 
                 item_dict['knro'].append(rivi['kaavatunnus'])
                 item_dict['iou'].append(iou)
@@ -217,6 +266,9 @@ def compareKTJindicesToKunta(base_kaavadata, refe_kaavadata, kuntanimi, kaavalaj
                 item_dict['topo_equal'].append(topo_equal)
                 item_dict['refe_area'].append(refe_area)
                 item_dict['a_delta'].append(delta)
+                item_dict['kl_equal'].append(kl_equal)
+                item_dict['hyv_equal'].append(hyv_equal)
+                item_dict['voim_equal'].append(voim_equal)
         
         if len(item_dict['iou']) >= 1:
             base_pala.at[index, 'iou'] = max(item_dict['iou'])
@@ -226,6 +278,9 @@ def compareKTJindicesToKunta(base_kaavadata, refe_kaavadata, kuntanimi, kaavalaj
             base_pala.at[index, 'de9im_pattern'] = item_dict['pattern'][indeksimme]
             base_pala.at[index, 'refe_area_ha'] = item_dict['refe_area'][indeksimme]
             base_pala.at[index, 'a_delta_%'] = item_dict['a_delta'][indeksimme]
+            base_pala.at[index, 'kl_equal'] = item_dict['kl_equal'][indeksimme]
+            base_pala.at[index, 'hyv_equal'] = item_dict['hyv_equal'][indeksimme]
+            base_pala.at[index, 'voim_equal'] = item_dict['voim_equal'][indeksimme]
         else:
             None
     
@@ -247,8 +302,15 @@ def compareKTJindicesToKunta(base_kaavadata, refe_kaavadata, kuntanimi, kaavalaj
     
     return(base_exp)
 
+# Read data
 kunta_data = gpd.read_file(r"<insert filepath here>.gpkg", layer="<insert layer name here>")
 ktj_data = gpd.read_file(r"<insert filepath here>.gpkg", layer="<insert layer name here>")
+
+# Date handling in order to compare them
+kunta_data_pvm1 = stringColumnToDate(kunta_data, 'hyvaksymispvm')
+kunta_data_pvm2 = stringColumnToDate(kunta_data_pvm1, 'voimaantulopvm')
+ktj_data_pvm1 = stringColumnToDate(ktj_data, 'hyvaksymispvm')
+ktj_data_pvm2 = stringColumnToDate(ktj_data_pvm1, 'voimaantulopvm')
 
 # Example
 results = compareKuntadataToKTJ(kunta_data=kunta_data, ktj_data=ktj_data, kuntanimi='Sulkava', kaavalajit=['31', '39'], dissolve_kunta=True, dissolve_column='kaavatunnus')
