@@ -41,24 +41,3 @@ def getArcgisFeatureLayer(layer_url):
     gdf = esri2gpd.get(layer_url)
     
     return(gdf)
-
-# Some tests with Etelä-Savo ELY web services
-#--------------------------------------------
-
-# Rantasalmi WFS
-# WORKING FINE!
-getWFSlayers("https://kuntanetcloud01.cgisaas.fi/geoserver.g1/kuntanet_rantasalmi/wms")
-data = getWFSdata("https://kuntanetcloud01.cgisaas.fi/geoserver.g1/kuntanet_rantasalmi/wms", "kuntanet_rantasalmi:MI_OSAYLEISKAAVARAJAT")
-
-# Sulkava WFS
-# WORKING FINE!
-getWFSlayers("https://kunnat.navici.com/geoserver/sulkava/wfs")
-"""
-['sulkava:ajantasakaava_kaavarajat', 'sulkava:ajantasakaava_kaavarajat_preview',
- 'sulkava:kaavarajat_osayleiskaava', 'sulkava:kaavarajat_osayleiskaava_preview']
-"""
-data = getWFSdata("https://kunnat.navici.com/geoserver/sulkava/wfs", "sulkava:ajantasakaava_kaavarajat")
-
-# Mikkeli WFS
-# WORKING FINE!
-kunta = getArcgisFeatureLayer("https://services1.arcgis.com/biwBTnEqa75tyWMg/ArcGIS/rest/services/RAK_indeksi/FeatureServer/0")
