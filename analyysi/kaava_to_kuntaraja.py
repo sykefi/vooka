@@ -31,11 +31,11 @@ def snapKuntakaavaToKuntaraja(kaavadata, palstadata, kuntakoodi, tolerance, remo
             Mikkeli: 0.005
             Mäntyharju: 0.015
             Pertunmaa: 0.0005
+            Pieksämäki: no data
             Puumala: 0.015
             Rantasalmi: 0.015
             Sulkava: 0.0005
             Savonlinna: 0.05
-            <TO BE CONTINUED>
             
     Optional parameters
     -------------------
