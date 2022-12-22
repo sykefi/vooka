@@ -60,7 +60,7 @@
       <a href="#aloitus">Aloitus</a>
       <ul>
         <li><a href="#ennakkoehdot">Ennakkoehdot</a></li>
-        <li><a href="#installation">Installation</a></li>
+        <li><a href="#asennus">Asennus</a></li>
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
@@ -97,27 +97,21 @@ Lopputuloksena on kattava kaavojen vektorimuotoinen hakemistokartta. Yksittäise
 <!-- ALOITUS -->
 ## Aloitus
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
-
 ### Ennakkoehdot
 
 Katso [requirements.txt](https://github.com/ubigu/vooka/blob/master/requirements.txt)
 
-### Installation
+### Asennus
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Kloonaa repo
    ```sh
-   git clone https://github.com/github_username/repo_name.git
+   git clone https://github.com/ubigu/vooka.git
    ```
-3. Install NPM packages
+2. Asenna ennakkoehtoihin listatut moduulit
+3. Käynnistä jupyter notebook
    ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
+   conda activate <käyttämäsi python>
+   jupyter notebook
    ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
