@@ -53,7 +53,7 @@
     <li>
       <a href="#projektista">Projektista</a>
       <ul>
-        <li><a href="#ohjelmointityokalut-ja-kielet">Ohjelmointityökalut ja kielet</a></li>
+        <li><a href="#ohjelmointi">Ohjelmointi</a></li>
       </ul>
     </li>
     <li>
@@ -85,7 +85,7 @@ Lopputuloksena on kattava kaavojen vektorimuotoinen hakemistokartta. Yksittäise
 
 
 
-### Ohjelmointityökalut ja kielet
+### Ohjelmointi
 
 * [![Jupyter][Jupyter-shield]][Jupyter-url]
 * [![Python][Python-shield]][Python-url]
