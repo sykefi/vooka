@@ -46,14 +46,14 @@
 
 
 
-<!-- TABLE OF CONTENTS -->
+<!-- SISALLYSLUETTELO -->
 <details>
   <summary>Sisällysluettelo</summary>
   <ol>
     <li>
       <a href="#about-the-project">Projektista</a>
       <ul>
-        <li><a href="#built-with">Built With</a></li>
+        <li><a href="#built-with">Rakennettu</a></li>
       </ul>
     </li>
     <li>
@@ -85,7 +85,7 @@ Lopputuloksena on kattava kaavojen vektorimuotoinen hakemistokartta. Yksittäise
 
 
 
-### Built With
+### Rakennettu
 
 * [![Jupyter][Jupyter-shield]][Jupyter-url]
 * [![Python][Python-shield]][Python-url]
