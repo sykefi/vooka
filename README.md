@@ -140,7 +140,7 @@ ETL-työkalua ajetaan notebook-järjestyksessä 1-6. Kussakin ipynb-tiedostossa 
   </a>
 </div>
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+_Esimerkki ETL-työkalun ajettavista koodeista Jupyter Notebookissa._
 
 <p align="right"><a href="#readme-top">Takaisin alkuun</a></p>
 
