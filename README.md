@@ -212,7 +212,7 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 [issues-url]: https://github.com/ubigu/vooka/issues
 [license-shield]: https://img.shields.io/github/license/ubigu/vooka.svg?style=for-the-badge
 [license-url]: https://github.com/ubigu/vooka/blob/master/LICENSE
-[Python-shield]: https://img.shields.io/badge/Python-3.7.11-brightgreen.svg
+[Python-shield]: https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white
 [Python-url]: https://www.python.org/
-[Jupyter-shield]: https://img.shields.io/badge/Jupyter%20Notebook-6.5.2-orange.svg
+[Jupyter-shield]: https://img.shields.io/badge/jupyter-%23FA0F00.svg?style=for-the-badge&logo=jupyter&logoColor=white
 [Jupyter-url]: https://jupyter.org/
