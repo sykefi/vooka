@@ -25,7 +25,7 @@
 
 
 
-<!-- LOGO -->
+<!-- ETUSIVU -->
 <br />
 <div align="center">
   <a href="https://github.com/ubigu/vooka">
@@ -48,7 +48,7 @@
 
 
 
-<!-- SISALLYSLUETTELO -->
+<!-- SISÄLLYSLUETTELO -->
 <details>
   <summary>Sisällysluettelo</summary>
   <ol>
@@ -65,8 +65,7 @@
         <li><a href="#asennus">Asennus</a></li>
       </ul>
     </li>
-    <li><a href="#käyttöesimerkit">Käyttöesimerkit</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#käytöstä">Käytöstä</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -124,26 +123,12 @@ Katso [requirements.txt](https://github.com/ubigu/vooka/blob/master/requirements
 
 
 
-<!-- KÄYTTÖESIMERKIT -->
-## Käyttöesimerkit
+<!-- KÄYTÖSTÄ -->
+## Käytöstä
 
-ETL-työkalua ajetaan notebook-järjestyksessä 1-6. Kussakin ipynb-tiedostossa on kerronnallista tekstiä markdown-muodossa, joka opastaa käyttäjää koodin ajamisessa. Koodisolut on rakennettu notebookeihin esitäytettyinä, joihin tarvitsee käyttäjän toimesta lisätä vain tarvittavat tiedostopolut sekä parametrit. Lisätietoja parametreista löytyy myös kehitettyjen funktioiden docstringeista. Kaikki ETL-työkalussa hyödynnettävät funktiot löytyvät [lib-kansiosta](https://github.com/ubigu/vooka/tree/master/lib).
+ETL-työkalua ajetaan notebook-järjestyksessä 1-6. Kussakin ipynb-tiedostossa on markdown-muotoista kerronnallista tekstiä, joka opastaa käyttäjää koodin ajamisessa. Koodisolut on rakennettu notebookeihin esitäytettyinä. Käyttäjän tarvitsee lisätä niihin ainoastaan tiedostopolut sekä parametrit. Lisätietoja parametreista löytyy myös kehitettyjen funktioiden docstringeista. Kaikki ETL-työkalussa hyödynnettävät funktiot löytyvät [lib-kansiosta](https://github.com/ubigu/vooka/tree/master/lib).
 
 _For more examples, please refer to the [Documentation](https://example.com)_
-
-<p align="right"><a href="#readme-top">Takaisin alkuun</a></p>
-
-
-
-<!-- ROADMAP -->
-## Roadmap
-
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
-
-See the [open issues](https://github.com/github_username/repo_name/issues) for a full list of proposed features (and known issues).
 
 <p align="right"><a href="#readme-top">Takaisin alkuun</a></p>
 
@@ -198,7 +183,7 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 
 
 
-<!-- MARKDOWN LINKS & IMAGES -->
+<!-- MARKDOWN LINKIT & KUVAT -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [contributors-shield]: https://img.shields.io/github/contributors/ubigu/vooka?color=brightgreen&style=for-the-badge
 [contributors-url]: https://github.com/ubigu/vooka/graphs/contributors
