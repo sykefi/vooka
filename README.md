@@ -111,9 +111,9 @@ Katso [requirements.txt](https://github.com/ubigu/vooka/blob/master/requirements
    ```sh
    conda install -c conda-forge geopandas=0.6.1
    ```
-3. Käynnistä Jupyter Notebook
+3. Käynnistä käyttämäsi Python env ja Jupyter Notebook
    ```sh
-   conda activate <käyttämäsi python env>
+   conda activate <python env>
    ```
    ```sh
    jupyter notebook
@@ -127,7 +127,7 @@ Katso [requirements.txt](https://github.com/ubigu/vooka/blob/master/requirements
 <!-- KÄYTTÖESIMERKIT -->
 ## Käyttöesimerkit
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+ETL-työkalua ajetaan notebook-järjestyksessä 1-6. Kussakin ipynb-tiedostossa on kerronnallista tekstiä markdown-muodossa, joka opastaa käyttäjää koodin ajamisessa. Koodisolut on rakennettu notebookeihin esitäytettyinä, joihin tarvitsee käyttäjän toimesta lisätä vain tarvittavat tiedostopolut sekä parametrit. Lisätietoja parametreista löytyy myös kehitettyjen funktioiden docstringeista. Kaikki ETL-työkalussa hyödynnettävät funktiot löytyvät [lib-kansiosta](https://github.com/ubigu/vooka/tree/master/lib).
 
 _For more examples, please refer to the [Documentation](https://example.com)_
 
