@@ -28,7 +28,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/gubigu/vooka">
+  <a href="https://github.com/ubigu/vooka">
     <img src="img/SYKE_tunnus_rgb_vaaka.jpg" alt="Logo">
   </a>
 
