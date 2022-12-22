@@ -28,7 +28,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/github_username/repo_name">
+  <a href="https://github.com/gubigu/vooka">
     <img src="img/SYKE_tunnus_rgb_vaaka.jpg" alt="Logo">
   </a>
 
@@ -40,7 +40,7 @@
     <a href="https://www.syke.fi/fi-FI/Tutkimus__kehittaminen/Tutkimus_ja_kehittamishankkeet/Hankkeet/Voimassa_olevat_kaavat_rakennetun_ympariston_tietojarjestelmaan_VOOKA"><strong>Tutustu hankkeeseen »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/ubigu/vooka/issues">Raportoi bugista</a>
+    <a href="https://github.com/ubigu/vooka/issues">Raportoi bugi</a>
   </p>
 </div>
 
