@@ -143,7 +143,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- JATKOKEHITTÄMINEN -->
 ## Jatkokehittäminen
 
-Kaikki VOOKA-pilotissa kehitetyt ohjelmakoodit ovat avoimesti hyödynnettävissä ja jatkokehitettävissä. **Arvostamme suuresti** kaikkea tulevaisuuden jatkokehittämistä!
+Kaikki VOOKA-pilotissa kehitetyt ohjelmakoodit on avoimesti hyödynnettävissä ja jatkokehitettävissä. **Arvostamme suuresti** kaikkea tulevaisuuden jatkokehittämistä!
 
 Jos sinulla on ehdotuksia, joilla ETL-työkalua voisi parantaa, forkkaa repo ja tee pull request. Voit myös avata issuen tagilla "parannus". Älä unohda antaa projektille tähteä! Kiitos!
 
