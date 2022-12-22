@@ -83,7 +83,7 @@
 <!-- PROJEKTISTA -->
 ## Projektista
 
-VOOKA-hankkeen tavoitteena oli viedä kaikkien Suomessa voimassa olevien asema-, ranta- ja yleiskaavojen kaavarajat valtakunnallisesti yhteentoimivaan tietomallimuotoon ja siirtää aineisto rakennetun ympäristön tietojärjestelmään.
+Suomen ympäristökeskuksen (SYKE) tilaaman VOOKA-hankkeen tavoitteena oli viedä kaikkien Suomessa voimassa olevien asema-, ranta- ja yleiskaavojen kaavarajat valtakunnallisesti yhteentoimivaan tietomallimuotoon ja siirtää aineisto rakennetun ympäristön tietojärjestelmään.
 
 Lopputuloksena on kattava kaavojen vektorimuotoinen hakemistokartta. Yksittäiseen kaavaan liitetään yksilöivä tunniste, muut tunnistetiedot sekä kaavarajaus. Rajaukseen linkitetään kaavakartta, kaavamääräykset ja kaavaselostus. Työ tehdään tiiviissä yhteistyössä kuntien kanssa.
 
