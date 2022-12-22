@@ -173,6 +173,10 @@ Ubigu Oy, pilottivaiheen konsulttiryhmittymän yhteyshenkilö \
 ilpo.tammi@ubigu.fi \
 p. 050 434 7939
 
+Samuli Massinen (paikkatietoarkkitehti) \
+Ubigu Oy, ETL-työkalun kehittäjä \
+samuli.massinen@ubigu.fi \
+p. 040 547 9806
 
 <p align="right"><a href="#readme-top">Takaisin alkuun</a></p>
 
