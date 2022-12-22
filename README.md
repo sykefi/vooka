@@ -53,7 +53,7 @@
     <li>
       <a href="#projektista">Projektista</a>
       <ul>
-        <li><a href="#rakennettu">Rakennettu</a></li>
+        <li><a href="#ohjelmointityokalut-ja-kielet">Ohjelmointityökalut ja kielet</a></li>
       </ul>
     </li>
     <li>
