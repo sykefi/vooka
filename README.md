@@ -28,7 +28,7 @@
 <!-- ETUSIVU -->
 <br />
 <div align="center">
-  <a href="https://github.com/ubigu/vooka">
+  <a href="https://www.syke.fi/fi-FI">
     <img src="img/SYKE_tunnus_rgb_vaaka.jpg" alt="Logo">
   </a>
 
