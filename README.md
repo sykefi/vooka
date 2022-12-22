@@ -35,8 +35,8 @@
 <h3 align="center">VOOKA</h3>
 
   <p align="center">
-    Voimassa olevat kaavat rakennetun ympäristön tietojärjestelmään -pilotti 
-    <a align="center"> 06/2022-02/2023 /a>
+    Voimassa olevat kaavat rakennetun ympäristön tietojärjestelmään -pilotti 06/2022-02/2023
+    <br 06/2022-02/2023 </br>
     <br />
     <a href="https://www.syke.fi/fi-FI/Tutkimus__kehittaminen/Tutkimus_ja_kehittamishankkeet/Hankkeet/Voimassa_olevat_kaavat_rakennetun_ympariston_tietojarjestelmaan_VOOKA"><strong>Tutustu hankkeeseen »</strong></a>
     <br />
