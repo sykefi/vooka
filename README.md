@@ -107,17 +107,18 @@ Katso [requirements.txt](https://github.com/ubigu/vooka/blob/master/requirements
    ```sh
    git clone https://github.com/ubigu/vooka.git
    ```
-2. Asenna ennakkoehtoihin listatut moduulit, esim:
+2. Asenna ennakkoehtoihin listatut moduulit. Esimerkiksi:
    ```sh
    conda install -c conda-forge geopandas=0.6.1
    ```
-3. Käynnistä jupyter notebook
+3. Käynnistä Jupyter Notebook
    ```sh
    conda activate <käyttämäsi python>
    ```
    ```sh
    jupyter notebook
    ```
+4. Käynnistä .ipynb listauksen mukaisesti
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
