@@ -43,8 +43,6 @@
     <br />
     <br />
     <a href="https://github.com/ubigu/vooka/issues">Raportoi bugista</a>
-    ·
-    <a href="https://github.com/ubigu/vooka/issues">Kehityspyynnöt</a>
   </p>
 </div>
 
@@ -52,7 +50,7 @@
 
 <!-- TABLE OF CONTENTS -->
 <details>
-  <summary>Table of Contents</summary>
+  <summary>Sisällysluettelo</summary>
   <ol>
     <li>
       <a href="#about-the-project">About The Project</a>
