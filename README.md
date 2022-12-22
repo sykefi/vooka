@@ -66,8 +66,14 @@
       </ul>
     </li>
     <li><a href="#käytöstä">Käytöstä</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#ota-yhteyttä">Ota yhteyttä</a></li>
+    <li><a href="#jatkokehittäminen">Jatkokehittäminen</a></li>
+    <li>
+      <a href="#ota-yhteyttä">Ota yhteyttä</a>
+      <ul>
+        <li><a href="#tilaaja">Tilaaja</a></li>
+        <li><a href="#konsultti">Konsultti</a></li>
+      </ul>
+    </li>
     <li><a href="#konsulttiryhmittymä">Konsulttiryhmittymä</a></li>
   </ol>
 </details>
@@ -134,8 +140,8 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 
 
 
-<!-- CONTRIBUTING -->
-## Contributing
+<!-- JATKOKEHITTÄMINEN -->
+## Jatkokehittäminen
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
@@ -158,13 +164,13 @@ Don't forget to give the project a star! Thanks again!
 ### Tilaaja
 Kaarina Vartiainen (erikoistutkija) \
 Suomen ympäristökeskus SYKE, VOOKA-hankkeen projektipäällikkö \
-etunimi.sukunimi@syke.fi \
+kaarina.vartiainen@syke.fi \
 p. 050 436 1796
 
 ### Konsultti
 Ilpo Tammi (toimitusjohtaja) \
 Ubigu Oy, pilottivaiheen konsulttiryhmittymän yhteyshenkilö \
-etunimi.sukunimi@ubigu.fi \
+ilpo.tammi@ubigu.fi \
 p. 050 434 7939
 
 
