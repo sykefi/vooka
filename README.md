@@ -31,7 +31,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/github_username/repo_name">
-    <img src="img/SYKE-tunnus_pysty_en.png" alt="Logo">
+    <img src="img/SYKE_tunnus_rgb_vaaka.jpg" alt="Logo">
   </a>
 
 <h3 align="center">VOOKA</h3>
