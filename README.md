@@ -69,7 +69,7 @@
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
+    <li><a href="#osapuolet">Osapuolet</a></li>
   </ol>
 </details>
 
@@ -173,12 +173,13 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 
 
 
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
+<!-- OSAPUOLET -->
+## Osapuolet
 
-* []()
-* []()
-* []()
+* [Suomen ympäristökeskus](https://www.syke.fi/fi-FI)
+* [Ubigu Oy](https://www.ubigu.fi/fi/)
+* [Gispo Oy](https://www.gispo.fi/en/)
+* [PlanDisain Oy](https://www.plandisain.fi/)
 
 <p align="right"><a href="#readme-top">Takaisin alkuun</a></p>
 
