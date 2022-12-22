@@ -67,7 +67,7 @@
     </li>
     <li><a href="#käytöstä">Käytöstä</a></li>
     <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
+    <li><a href="#lisenssi">Lisenssi</a></li>
     <li><a href="#ota-yhteyttä">Ota yhteyttä</a></li>
     <li><a href="#konsultit">Konsultit</a></li>
   </ol>
@@ -98,7 +98,7 @@ Lopputuloksena on kattava kaavojen vektorimuotoinen hakemistokartta. Yksittäise
 
 ### Ennakkoehdot
 
-Katso [requirements.txt](https://github.com/ubigu/vooka/blob/master/requirements.txt)
+Katso `requirements.txt`
 
 ### Asennus
 
@@ -156,7 +156,7 @@ Don't forget to give the project a star! Thanks again!
 <!-- LISENSSI -->
 ## Lisenssi
 
-MIT-lisenssi. Katso lisätietoja `LICENSE`.
+MIT-lisenssi. Katso lisätietoja `LICENSE`
 
 <p align="right"><a href="#readme-top">Takaisin alkuun</a></p>
 
