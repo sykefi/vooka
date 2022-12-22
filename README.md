@@ -25,7 +25,7 @@
 
 
 
-<!-- PROJECT LOGO -->
+<!-- LOGO -->
 <br />
 <div align="center">
   <a href="https://github.com/ubigu/vooka">
@@ -51,9 +51,9 @@
   <summary>Sisällysluettelo</summary>
   <ol>
     <li>
-      <a href="#projektista">Projektista</a>
+      <a href="#projektista">1. Projektista</a>
       <ul>
-        <li><a href="#ohjelmointi">Ohjelmointi</a></li>
+        <li><a href="#ohjelmointi">1.1 Ohjelmointi</a></li>
       </ul>
     </li>
     <li>
