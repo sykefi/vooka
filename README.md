@@ -132,7 +132,9 @@ Katso `requirements.txt`
 <!-- KÄYTÖSTÄ -->
 ## Käytöstä
 
-ETL-työkalua ajetaan notebook-järjestyksessä 1-6. Kussakin ipynb-tiedostossa on markdown-muotoista kerronnallista tekstiä, joka opastaa käyttäjää koodin ajamisessa. Koodisolut on rakennettu notebookeihin esitäytettyinä. Käyttäjän tarvitsee lisätä niihin ainoastaan tiedostopolut sekä parametrit. Lisätietoja parametreista löytyy myös kehitettyjen funktioiden docstringeista. Kaikki ETL-työkalussa hyödynnettävät funktiot löytyvät [lib-kansiosta](https://github.com/ubigu/vooka/tree/master/lib).
+ETL-työkalua ajetaan notebook-järjestyksessä 1-6. Kussakin ipynb-tiedostossa on markdown-muotoista kerronnallista tekstiä, joka opastaa käyttäjää koodin ajamisessa. Koodisolut on rakennettu notebookeihin esitäytettyinä. Käyttäjän tarvitsee lisätä niihin ainoastaan tiedostopolut sekä parametrit. Lisätietoja parametreista löytyy myös kehitettyjen funktioiden docstringeista.
+
+Kaikki ETL-työkalussa hyödynnettävät funktiot löytyvät [lib-kansiosta](https://github.com/ubigu/vooka/tree/master/lib).
 
 <div align="center">
   <a href="https://github.com/ubigu/vooka">
