@@ -69,7 +69,7 @@
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#ota-yhteyttä">Ota yhteyttä</a></li>
-    <li><a href="#osapuolet">Osapuolet</a></li>
+    <li><a href="#konsultit">Konsultit</a></li>
   </ol>
 </details>
 
@@ -173,10 +173,9 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 
 
 
-<!-- OSAPUOLET -->
-## Osapuolet
+<!-- KONSULTIT -->
+## Konsultit
 
-* [Suomen ympäristökeskus (tilaaja)](https://www.syke.fi/fi-FI)
 * [Ubigu Oy](https://www.ubigu.fi/fi/)
 * [Gispo Oy](https://www.gispo.fi/en/)
 * [PlanDisain Oy](https://www.plandisain.fi/)
