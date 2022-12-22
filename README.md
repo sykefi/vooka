@@ -87,8 +87,8 @@ Lopputuloksena on kattava kaavojen vektorimuotoinen hakemistokartta. Yksittäise
 
 ### Built With
 
-* [![Python][Python-shield]][Python-url]
 * [![Jupyter][Jupyter-shield]][Jupyter-url]
+* [![Python][Python-shield]][Python-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -212,7 +212,7 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 [issues-url]: https://github.com/ubigu/vooka/issues
 [license-shield]: https://img.shields.io/github/license/ubigu/vooka.svg?style=for-the-badge
 [license-url]: https://github.com/ubigu/vooka/blob/master/LICENSE
-[Python-shield]: https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white
-[Python-url]: https://www.python.org/
 [Jupyter-shield]: https://img.shields.io/badge/jupyter-%23FA0F00.svg?style=for-the-badge&logo=jupyter&logoColor=white
 [Jupyter-url]: https://jupyter.org/
+[Python-shield]: https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white
+[Python-url]: https://www.python.org/
