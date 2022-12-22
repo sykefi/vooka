@@ -39,10 +39,10 @@ Voimassa olevat kaavat rakennetun ympäristön tietojärjestelmään -pilotti (V
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
-<h3 align="center">project_title</h3>
+<h3 align="center">VOOKA</h3>
 
   <p align="center">
-    project_description
+    Voimassa olevat kaavat rakennetun ympäristön tietojärjestelmään -pilotti
     <br />
     <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
     <br />
