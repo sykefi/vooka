@@ -134,10 +134,9 @@ Katso `requirements.txt`
 
 ETL-työkalua ajetaan notebook-järjestyksessä 1-6. Kussakin ipynb-tiedostossa on markdown-muotoista kerronnallista tekstiä, joka opastaa käyttäjää koodin ajamisessa. Koodisolut on rakennettu notebookeihin esitäytettyinä. Käyttäjän tarvitsee lisätä niihin ainoastaan tiedostopolut sekä parametrit. Lisätietoja parametreista löytyy myös kehitettyjen funktioiden docstringeista. Kaikki ETL-työkalussa hyödynnettävät funktiot löytyvät [lib-kansiosta](https://github.com/ubigu/vooka/tree/master/lib).
 
-<br />
 <div align="center">
-  <a href="https://www.syke.fi/fi-FI">
-    <img src="img/ETL-esimerkki-kaytosta.png" alt="Logo">
+  <a href="https://github.com/ubigu/vooka">
+    <img src="img/ETL-esimerkki-kaytosta.png" alt="Kuva">
   </a>
 </div>
 
