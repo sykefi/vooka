@@ -176,7 +176,9 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 <!-- OSAPUOLET -->
 ## Osapuolet
 
+Tilaaja
 * [Suomen ympäristökeskus](https://www.syke.fi/fi-FI)
+Konsultit
 * [Ubigu Oy](https://www.ubigu.fi/fi/)
 * [Gispo Oy](https://www.gispo.fi/en/)
 * [PlanDisain Oy](https://www.plandisain.fi/)
