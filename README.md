@@ -51,9 +51,9 @@
   <summary>Sisällysluettelo</summary>
   <ol>
     <li>
-      <a href="#about-the-project">Projektista</a>
+      <a href="#projektista">Projektista</a>
       <ul>
-        <li><a href="#built-with">Rakennettu</a></li>
+        <li><a href="#rakennettu">Rakennettu</a></li>
       </ul>
     </li>
     <li>
