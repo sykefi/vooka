@@ -68,7 +68,7 @@
     <li><a href="#käytöstä">Käytöstä</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="#ota-yhteyttä">Ota yhteyttä</a></li>
     <li><a href="#osapuolet">Osapuolet</a></li>
   </ol>
 </details>
@@ -162,8 +162,8 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 
 
-<!-- CONTACT -->
-## Contact
+<!-- OTA YHTEYTTÄ -->
+## Ota yhteyttä
 
 Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
 
@@ -176,7 +176,7 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 <!-- OSAPUOLET -->
 ## Osapuolet
 
-* [Suomen ympäristökeskus (tilaaja)](https://www.syke.fi/fi-FI) \
+* [Suomen ympäristökeskus (tilaaja)](https://www.syke.fi/fi-FI)
 * [Ubigu Oy](https://www.ubigu.fi/fi/)
 * [Gispo Oy](https://www.gispo.fi/en/)
 * [PlanDisain Oy](https://www.plandisain.fi/)
