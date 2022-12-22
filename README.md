@@ -32,7 +32,7 @@
     <img src="img/SYKE_tunnus_rgb_vaaka.jpg" alt="Logo">
   </a>
 
-<h2 align="center">VOOKA</h2>
+<h3 align="center">VOOKA</h3>
 
   <p align="center">
     Voimassa olevat kaavat rakennetun ympäristön tietojärjestelmään -pilotti
