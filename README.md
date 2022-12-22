@@ -90,7 +90,7 @@ Lopputuloksena on kattava kaavojen vektorimuotoinen hakemistokartta. Yksittäise
 * [![Jupyter][Jupyter-shield]][Jupyter-url]
 * [![Python][Python-shield]][Python-url]
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right"><a href="#readme-top">Takaisin alkuun</a></p>
 
 
 
@@ -120,7 +120,7 @@ Katso [requirements.txt](https://github.com/ubigu/vooka/blob/master/requirements
    ```
 4. Käynnistä .ipynb listauksen mukaisesti
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right"><a href="#readme-top">Takaisin alkuun</a></p>
 
 
 
@@ -131,7 +131,7 @@ Use this space to show useful examples of how a project can be used. Additional 
 
 _For more examples, please refer to the [Documentation](https://example.com)_
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right"><a href="#readme-top">Takaisin alkuun</a></p>
 
 
 
@@ -145,7 +145,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 
 See the [open issues](https://github.com/github_username/repo_name/issues) for a full list of proposed features (and known issues).
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right"><a href="#readme-top">Takaisin alkuun</a></p>
 
 
 
@@ -163,7 +163,7 @@ Don't forget to give the project a star! Thanks again!
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right"><a href="#readme-top">Takaisin alkuun</a></p>
 
 
 
@@ -172,7 +172,7 @@ Don't forget to give the project a star! Thanks again!
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right"><a href="#readme-top">Takaisin alkuun</a></p>
 
 
 
@@ -183,7 +183,7 @@ Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_
 
 Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right"><a href="#readme-top">Takaisin alkuun</a></p>
 
 
 
@@ -194,7 +194,7 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 * []()
 * []()
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right"><a href="#readme-top">Takaisin alkuun</a></p>
 
 
 
