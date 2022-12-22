@@ -88,7 +88,7 @@ Lopputuloksena on kattava kaavojen vektorimuotoinen hakemistokartta. Yksittäise
 ### Built With
 
 * [![Python][Python-shield]][Python-url]
-* [![React][React.js]][React-url]
+* [![Jupyter][Jupyter-shield]][Jupyter-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -214,5 +214,5 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 [license-url]: https://github.com/ubigu/vooka/blob/master/LICENSE
 [Python-shield]: https://img.shields.io/badge/Python-3.7.11-brightgreen.svg
 [Python-url]: https://www.python.org/
-[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
-[React-url]: https://reactjs.org/
+[Jupyter-shield]: https://img.shields.io/badge/Jupyter%20Notebook-6.5.2-orange.svg
+[Jupyter-url]: https://jupyter.org/
