@@ -65,7 +65,7 @@
         <li><a href="#asennus">Asennus</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
+    <li><a href="#käyttöesimerkit">Käyttöesimerkit</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
@@ -113,7 +113,7 @@ Katso [requirements.txt](https://github.com/ubigu/vooka/blob/master/requirements
    ```
 3. Käynnistä Jupyter Notebook
    ```sh
-   conda activate <käyttämäsi python>
+   conda activate <käyttämäsi python env>
    ```
    ```sh
    jupyter notebook
@@ -124,8 +124,8 @@ Katso [requirements.txt](https://github.com/ubigu/vooka/blob/master/requirements
 
 
 
-<!-- USAGE EXAMPLES -->
-## Usage
+<!-- KÄYTTÖESIMERKIT -->
+## Käyttöesimerkit
 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
