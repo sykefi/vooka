@@ -102,22 +102,23 @@ Katso [requirements.txt](https://github.com/ubigu/vooka/blob/master/requirements
 
 ### Asennus
 
-1. Kloonaa repo
+1. Kloonaa repo haluamaasi kansioon
    ```sh
    git clone https://github.com/ubigu/vooka.git
    ```
-2. Asenna ennakkoehtoihin listatut moduulit. Esimerkiksi:
-   ```sh
-   conda install -c conda-forge geopandas=0.6.1
-   ```
-3. Käynnistä käyttämäsi Python env ja Jupyter Notebook
+2. Käynnistä käyttämäsi Python env
    ```sh
    conda activate <python env>
    ```
+3. Asenna ennakkoehtoihin listatut moduulit. Esimerkiksi:
+   ```sh
+   conda install -c conda-forge geopandas=0.6.1
+   ```
+4. Käynnistä Jupyter Notebook
    ```sh
    jupyter notebook
    ```
-4. Käynnistä .ipynb listauksen mukaisesti
+5. Käynnistä .ipynb listauksen mukaisesti kansiosta, johon kloonasit repon
 
 <p align="right"><a href="#readme-top">Takaisin alkuun</a></p>
 
