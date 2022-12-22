@@ -93,7 +93,6 @@ Lopputuloksena on kattava kaavojen vektorimuotoinen hakemistokartta. Yksittäise
 * [![Jupyter][Jupyter-shield]][Jupyter-url]
 * [![Anaconda][Anaconda-shield]][Anaconda-url]
 * [![Python][Python-shield]][Python-url]
-* [![Pandas][Pandas-shield]][Pandas-url]
 
 <p align="right"><a href="#readme-top">Takaisin alkuun</a></p>
 
@@ -209,5 +208,3 @@ p. 040 547 9806
 [Anaconda-url]: https://www.anaconda.com/
 [Python-shield]: https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54
 [Python-url]: https://www.python.org/
-[Pandas-shield]: https://img.shields.io/badge/pandas-%23150458.svg?style=for-the-badge&logo=pandas&logoColor=white
-[Pandas-url]: https://pandas.pydata.org/
