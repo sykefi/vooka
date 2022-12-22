@@ -51,7 +51,7 @@
   <summary>Sisällysluettelo</summary>
   <ol>
     <li>
-      <a href="#about-the-project">About The Project</a>
+      <a href="#about-the-project">Projektista</a>
       <ul>
         <li><a href="#built-with">Built With</a></li>
       </ul>
@@ -74,14 +74,14 @@
 
 
 
-<!-- ABOUT THE PROJECT -->
-## About The Project
+<!-- PROJEKTISTA -->
+## Projektista
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+VOOKA-hankkeen tavoitteena oli viedä kaikkien Suomessa voimassa olevien asema-, ranta- ja yleiskaavojen kaavarajat valtakunnallisesti yhteentoimivaan tietomallimuotoon ja siirtää aineisto rakennetun ympäristön tietojärjestelmään.
 
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
+Lopputuloksena on kattava kaavojen vektorimuotoinen hakemistokartta. Yksittäiseen kaavaan liitetään yksilöivä tunniste, muut tunnistetiedot sekä kaavarajaus. Rajaukseen linkitetään kaavakartta, kaavamääräykset ja kaavaselostus. Työ tehdään tiiviissä yhteistyössä kuntien kanssa.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#readme-top">takaisin ylös</a>)</p>
 
 
 
