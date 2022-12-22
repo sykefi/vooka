@@ -218,9 +218,9 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [contributors-shield]: https://img.shields.io/github/contributors/ubigu/vooka?color=brightgreen&style=for-the-badge
 [contributors-url]: https://github.com/ubigu/vooka/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/github_username/repo_name.svg?style=for-the-badge
-[forks-url]: https://github.com/github_username/repo_name/network/members
-[issues-shield]: https://img.shields.io/github/issues/ubigu/vooka?color=blue&style=for-the-badge
+[forks-shield]: https://img.shields.io/github/forks/ubigu/vooka?color=blue&style=for-the-badge
+[forks-url]: https://github.com/ubigu/vooka/network/members
+[issues-shield]: https://img.shields.io/github/issues/ubigu/vooka?color=yellow&style=for-the-badge
 [issues-url]: https://github.com/ubigu/vooka/issues
 [license-shield]: https://img.shields.io/github/license/ubigu/vooka.svg?style=for-the-badge
 [license-url]: https://github.com/ubigu/vooka/blob/master/LICENSE
