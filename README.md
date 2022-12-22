@@ -81,9 +81,6 @@ VOOKA-hankkeen tavoitteena oli viedä kaikkien Suomessa voimassa olevien asema-,
 
 Lopputuloksena on kattava kaavojen vektorimuotoinen hakemistokartta. Yksittäiseen kaavaan liitetään yksilöivä tunniste, muut tunnistetiedot sekä kaavarajaus. Rajaukseen linkitetään kaavakartta, kaavamääräykset ja kaavaselostus. Työ tehdään tiiviissä yhteistyössä kuntien kanssa.
 
-<p align="right"><a href="#readme-top">Takaisin alkuun</a></p>
-
-
 
 ### Ohjelmointi
 
