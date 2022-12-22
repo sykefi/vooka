@@ -91,8 +91,9 @@ Lopputuloksena on kattava kaavojen vektorimuotoinen hakemistokartta. Yksittäise
 ### Ohjelmointi
 
 * [![Jupyter][Jupyter-shield]][Jupyter-url]
-* [![Python][Python-shield]][Python-url]
 * [![Anaconda][Anaconda-shield]][Anaconda-url]
+* [![Python][Python-shield]][Python-url]
+* [![Pandas][Pandas-shield]][Pandas-url]
 
 <p align="right"><a href="#readme-top">Takaisin alkuun</a></p>
 
@@ -204,7 +205,9 @@ p. 040 547 9806
 [license-url]: https://github.com/ubigu/vooka/blob/master/LICENSE
 [Jupyter-shield]: https://img.shields.io/badge/jupyter-%23FA0F00.svg?style=for-the-badge&logo=jupyter&logoColor=white
 [Jupyter-url]: https://jupyter.org/
-[Python-shield]: https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54
-[Python-url]: https://www.python.org/
 [Anaconda-shield]: https://img.shields.io/badge/Anaconda-%2344A833.svg?style=for-the-badge&logo=anaconda&logoColor=white
 [Anaconda-url]: https://www.anaconda.com/
+[Python-shield]: https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54
+[Python-url]: https://www.python.org/
+[Pandas-shield]: https://img.shields.io/badge/pandas-%23150458.svg?style=for-the-badge&logo=pandas&logoColor=white
+[Pandas-url]: https://pandas.pydata.org/
