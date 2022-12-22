@@ -36,7 +36,7 @@
 
   <p align="center">
     Voimassa olevat kaavat rakennetun ympäristön tietojärjestelmään -pilotti 06/2022-02/2023
-    <br 06/2022-02/2023 </br>
+    <br> 06/2022-02/2023
     <br />
     <a href="https://www.syke.fi/fi-FI/Tutkimus__kehittaminen/Tutkimus_ja_kehittamishankkeet/Hankkeet/Voimassa_olevat_kaavat_rakennetun_ympariston_tietojarjestelmaan_VOOKA"><strong>Tutustu hankkeeseen »</strong></a>
     <br />
