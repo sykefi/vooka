@@ -143,16 +143,15 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- JATKOKEHITTÄMINEN -->
 ## Jatkokehittäminen
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+Kaikki VOOKA-pilotissa kehitetyt ohjelmakoodit ovat avoimesti hyödynnettävissä ja jatkokehitettävissä. **Arvostamme suuresti** kaikkea tulevaisuuden jatkokehittämistä!
 
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
+Jos sinulla on ehdotuksia, joilla ETL-työkalua voisi parantaa, forkkaa repo ja tee pull request. Voit myös avata issuen tagilla "parannus". Älä unohda antaa projektille tähteä! Kiitos!
 
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+1. Forkkaa projekti
+2. Luo Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Committaa muutokset (`git commit -m 'Add some AmazingFeature'`)
+4. Push Branch (`git push origin feature/AmazingFeature`)
+5. Avaa Pull Request
 
 <p align="right"><a href="#readme-top">Takaisin alkuun</a></p>
 
