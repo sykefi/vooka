@@ -53,13 +53,13 @@
     <li>
       <a href="#projektista">Projektista</a>
       <ul>
-        <li><a href="#ohjelmointi">1.1 Ohjelmointi</a></li>
+        <li><a href="#ohjelmointi">Ohjelmointi</a></li>
       </ul>
     </li>
     <li>
       <a href="#aloitus">Aloitus</a>
       <ul>
-        <li><a href="#ennakkoehdot">2.1 Ennakkoehdot</a></li>
+        <li><a href="#ennakkoehdot">Ennakkoehdot</a></li>
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
@@ -75,7 +75,7 @@
 
 
 <!-- PROJEKTISTA -->
-## 1. Projektista
+## Projektista
 
 VOOKA-hankkeen tavoitteena oli viedä kaikkien Suomessa voimassa olevien asema-, ranta- ja yleiskaavojen kaavarajat valtakunnallisesti yhteentoimivaan tietomallimuotoon ja siirtää aineisto rakennetun ympäristön tietojärjestelmään.
 
@@ -85,7 +85,7 @@ Lopputuloksena on kattava kaavojen vektorimuotoinen hakemistokartta. Yksittäise
 
 
 
-### 1.1 Ohjelmointi
+### Ohjelmointi
 
 * [![Jupyter][Jupyter-shield]][Jupyter-url]
 * [![Python][Python-shield]][Python-url]
@@ -95,12 +95,12 @@ Lopputuloksena on kattava kaavojen vektorimuotoinen hakemistokartta. Yksittäise
 
 
 <!-- ALOITUS -->
-## 2. Aloitus
+## Aloitus
 
 This is an example of how you may give instructions on setting up your project locally.
 To get a local copy up and running follow these simple example steps.
 
-### 2.1 Ennakkoehdot
+### Ennakkoehdot
 
 This is an example of how to list things you need to use the software and how to install them.
 * npm
