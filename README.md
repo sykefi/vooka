@@ -148,9 +148,9 @@ Kaikki VOOKA-pilotissa kehitetyt ohjelmakoodit on avoimesti hyödynnettävissä 
 Jos sinulla on ehdotuksia, joilla ETL-työkalua voisi parantaa, forkkaa repo ja tee pull request. Voit myös avata issuen tagilla "parannus". Älä unohda antaa projektille tähteä! Kiitos!
 
 1. Forkkaa projekti
-2. Luo feature branch (`git checkout -b feature/AmazingFeature`)
-3. Committaa muutokset (`git commit -m 'Add some AmazingFeature'`)
-4. Push branch (`git push origin feature/AmazingFeature`)
+2. Luo feature branch (`git checkout -b feature/HuippuFeature`)
+3. Committaa muutokset (`git commit -m 'Lisätään HuippuFeature'`)
+4. Push branch (`git push origin feature/HuippuFeature`)
 5. Avaa pull request
 
 <p align="right"><a href="#readme-top">Takaisin alkuun</a></p>
