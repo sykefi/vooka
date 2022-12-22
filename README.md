@@ -85,7 +85,7 @@ Lopputuloksena on kattava kaavojen vektorimuotoinen hakemistokartta. Yksittäise
 
 
 
-### Rakennettu
+### Ohjelmointityökalut ja kielet
 
 * [![Jupyter][Jupyter-shield]][Jupyter-url]
 * [![Python][Python-shield]][Python-url]
