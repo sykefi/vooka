@@ -67,9 +67,8 @@
     </li>
     <li><a href="#käytöstä">Käytöstä</a></li>
     <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#lisenssi">Lisenssi</a></li>
     <li><a href="#ota-yhteyttä">Ota yhteyttä</a></li>
-    <li><a href="#konsultit">Konsultit</a></li>
+    <li><a href="#konsulttiryhmittymä">Konsulttiryhmittymä</a></li>
   </ol>
 </details>
 
@@ -153,28 +152,27 @@ Don't forget to give the project a star! Thanks again!
 
 
 
-<!-- LISENSSI -->
-## Lisenssi
-
-MIT-lisenssi. Katso lisätietoja `LICENSE`
-
-<p align="right"><a href="#readme-top">Takaisin alkuun</a></p>
-
-
-
 <!-- OTA YHTEYTTÄ -->
 ## Ota yhteyttä
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
+### Konsultti
+Ilpo Tammi (toimitusjohtaja)
+Ubigu Oy, pilottivaiheen konsulttiryhmittymän yhteyshenkilö
+etunimi.sukunimi@ubigu.fi
+p. 050 434 7939
 
-Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
+### Tilaaja
+Kaarina Vartiainen (erikoistutkija)
+Suomen ympäristökeskus SYKE, VOOKA-hankkeen projektipäällikkö
+etunimi.sukunimi@syke.fi
+p. 050 436 1796
 
 <p align="right"><a href="#readme-top">Takaisin alkuun</a></p>
 
 
 
-<!-- KONSULTIT -->
-## Konsultit
+<!-- KONSULTTIRYHMITTYMÄ -->
+## Konsulttiryhmittymä
 
 * [Ubigu Oy](https://www.ubigu.fi/fi/)
 * [Gispo Oy](https://www.gispo.fi/en/)
