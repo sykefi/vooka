@@ -155,17 +155,18 @@ Don't forget to give the project a star! Thanks again!
 <!-- OTA YHTEYTTÄ -->
 ## Ota yhteyttä
 
+### Tilaaja
+Kaarina Vartiainen (erikoistutkija) \
+Suomen ympäristökeskus SYKE, VOOKA-hankkeen projektipäällikkö \
+etunimi.sukunimi@syke.fi \
+p. 050 436 1796
+
 ### Konsultti
-Ilpo Tammi (toimitusjohtaja)
-Ubigu Oy, pilottivaiheen konsulttiryhmittymän yhteyshenkilö
-etunimi.sukunimi@ubigu.fi
+Ilpo Tammi (toimitusjohtaja) \
+Ubigu Oy, pilottivaiheen konsulttiryhmittymän yhteyshenkilö \
+etunimi.sukunimi@ubigu.fi \
 p. 050 434 7939
 
-### Tilaaja
-Kaarina Vartiainen (erikoistutkija)
-Suomen ympäristökeskus SYKE, VOOKA-hankkeen projektipäällikkö
-etunimi.sukunimi@syke.fi
-p. 050 436 1796
 
 <p align="right"><a href="#readme-top">Takaisin alkuun</a></p>
 
