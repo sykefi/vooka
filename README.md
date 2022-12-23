@@ -89,11 +89,11 @@ VOOKA-hankkeessa tunnistettiin tarve ETL-tyyppisen (Extract, Transform, Load) ty
 
 ETL-työkalun kehittäminen perustui täysin avoimeen lähdekoodiin ja on tämän sivuston kautta hyödynnettävissä Jupyter Notebookina. ETL-työkalu koostuu kuudesta osasta:
 1. [Tiedonkeruu ja esikäsittely](https://github.com/ubigu/vooka/blob/master/1-tiedonkeruu-ja-esikasittely.ipynb)
-2. Tiedon yhdistely
-3. Tiedon korjaukset
-4. Tiedon vertailu
-5. PDF-linkityskonversio
-6. Kaavatietomallin implementointi
+2. [Tiedon yhdistely](https://github.com/ubigu/vooka/blob/master/2-tiedon-yhdistely.ipynb)
+3. [Tiedon korjaukset](https://github.com/ubigu/vooka/blob/master/3-tiedon-korjaukset.ipynb)
+4. [Tiedon vertailu](https://github.com/ubigu/vooka/blob/master/4-tiedon-vertailu.ipynb)
+5. [PDF-linkityskonversio](https://github.com/ubigu/vooka/blob/master/5-pdf-linkityskonversio.ipynb)
+6. [Kaavatietomallin implementointi](https://github.com/ubigu/vooka/blob/master/6-kaavatietomallin-implementointi.ipynb)
 
 Työ toteutettiin tiiviissä yhteistyössä Etelä-Savon ELY-keskuksen sekä kuntien kanssa.
 
