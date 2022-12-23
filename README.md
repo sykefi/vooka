@@ -141,7 +141,7 @@ Katso `requirements.txt`
 <!-- KÄYTÖSTÄ -->
 ## Käytöstä
 
-ETL-työkalua ajetaan Jupyter Notebook-järjestyksessä 1-6. Kussakin ipynb-tiedostossa on markdown-muotoista kerronnallista tekstiä, joka opastaa käyttäjää koodin ajamisessa. Koodisolut on rakennettu notebookeihin esitäytettyinä. Käyttäjän tarvitsee lisätä niihin ainoastaan tiedostopolut sekä parametrit. Lisätietoja parametreista löytyy myös kehitettyjen funktioiden docstringeista.
+ETL-työkalua ajetaan Jupyter Notebook -järjestyksessä 1-6. Kussakin ipynb-tiedostossa on markdown-muotoista kerronnallista tekstiä, joka opastaa käyttäjää koodin ajamisessa. Koodisolut on rakennettu notebookeihin esitäytettyinä. Käyttäjän tarvitsee lisätä niihin ainoastaan tiedostopolut sekä parametrit. Lisätietoja parametreista löytyy myös kehitettyjen funktioiden docstringeista.
 
 Kaikki ETL-työkaluun kehitetyt funktiot löytyvät [GitHubin lib-kansiosta](https://github.com/ubigu/vooka/tree/master/lib).
 
