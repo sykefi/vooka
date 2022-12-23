@@ -88,7 +88,7 @@ Suomen ympäristökeskuksen (SYKE) tilaaman VOOKA-hankkeen tavoitteena oli tuott
 VOOKA-hankkeessa tunnistettiin tarve ETL-tyyppisen (Extract, Transform, Load) työkalun kehittämiselle ja testaukselle. Suomessa kaavojen ulkorajatietoja on perinteisesti kerätty ELY-keskuksiin sekä Maanmittauslaitokselle (MML) kunnan kaavaindeksien muodostamisprosessien ohessa. Laadukkaan tietomallimuotoisen aineiston tuottaminen vaatii näiden aineistojen vertailua sekä geometris-topologisen laadun arviointia. 
 
 ETL-työkalun kehittäminen perustui täysin avoimeen lähdekoodiin ja on tämän sivuston kautta hyödynnettävissä Jupyter Notebookina. ETL-työkalu koostuu kuudesta osasta:
-1. Tiedonkeruu ja esikäsittely
+1. [Tiedonkeruu ja esikäsittely](https://github.com/ubigu/vooka/blob/master/1-tiedonkeruu-ja-esikasittely.ipynb)
 2. Tiedon yhdistely
 3. Tiedon korjaukset
 4. Tiedon vertailu
