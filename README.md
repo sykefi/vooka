@@ -83,10 +83,13 @@
 <!-- PROJEKTISTA -->
 ## Projektista
 
-Suomen ympäristökeskuksen (SYKE) tilaaman VOOKA-hankkeen tavoitteena oli viedä kaikkien Suomessa voimassa olevien asema-, ranta- ja yleiskaavojen kaavarajat valtakunnallisesti yhteentoimivaan tietomallimuotoon ja siirtää aineisto rakennetun ympäristön tietojärjestelmään.
+Suomen ympäristökeskuksen (SYKE) tilaaman VOOKA-hankkeen tavoitteena oli tuottaa Etelä-Savon ELY-keskuksen alueen kuntien voimassa olevien asema- ja yleiskaavojen kaavarajoista valtakunnallisesti yhteentoimiva, tietomallimuotoinen aineisto, jossa mukaan on linkitetty myös kaavan liitteet (esim. kaavakartta). Työ oli osa Ryhti-hanketta, jossa tavoitellaan rakennetun ympäristön keskeisten tietojen kokoamista keskitetysti ja laadukkaasti uuteen Rakennetun ympäristön tietojärjestelmään (RYTJ).
 
-Lopputuloksena on kattava kaavojen vektorimuotoinen hakemistokartta. Yksittäiseen kaavaan liitetään yksilöivä tunniste, muut tunnistetiedot sekä kaavarajaus. Rajaukseen linkitetään kaavakartta, kaavamääräykset ja kaavaselostus. Työ tehdään tiiviissä yhteistyössä kuntien kanssa.
+VOOKA-hankkeessa tunnistettiin tarve ETL-tyyppisen (Extract, Transform, Load) työkalun kehittämiselle ja testaukselle. Suomessa kaavojen ulkorajatietoja on perinteisesti kerätty ELY-keskuksiin sekä Maanmittauslaitokselle (MML) kunnan kaavaindeksien muodostamisprosessien ohessa. Laadukkaan tietomallimuotoisen aineiston tuottaminen vaatii näiden aineistojen vertailua sekä geometris-topologisen laadun arviointia. 
 
+ETL-työkalun kehittäminen perustui täysin avoimeen lähdekoodiin ja on tämän sivuston kautta hyödynnettävissä Jupyter Notebookina.
+
+Työ toteutettiin tiiviissä yhteistyössä Etelä-Savon ELY-keskuksen sekä kuntien kanssa.
 
 ### Ohjelmointi
 
