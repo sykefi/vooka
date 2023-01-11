@@ -72,14 +72,73 @@ def declareMultipage(data, master_dir, kuntakoodi, kaavalaji):
     
     return(data_copy)
 
-data = pd.read_csv(r"<insert filepath here>", delimiter=',',  usecols = [i for i in range(12)])
-kaava_data = gpd.read_file(r"<insert filepath here>", layer="<insert layer>")
+def createNewAttachmentName(kaava_data, kaavatunnus_column, table_data, table_tunnus_column):
+    
+    kopio_table = table_data.copy()
+    kopio_table['New_name'] = None
+    
+    for index, row in kaava_data.iterrows():
+    
+        kuntakoodi = row['kuntakoodi']
+        kaavalaji = row['kaavalaji']
+        kaavatunnus = row[kaavatunnus_column]
+        
+        for idx, rivi in table_data.iterrows():
+            
+            if rivi[table_tunnus_column] == kaavatunnus:
+                
+                if str(rivi['Dokumentin tyyppi2']) == '1':
+                    asiakirjan_laji = '0304'
+                elif str(rivi['Dokumentin tyyppi2']) == '2':
+                    asiakirjan_laji = '03'
+                elif str(rivi['Dokumentin tyyppi2']) == '3':
+                    asiakirjan_laji = '04'
+                elif str(rivi['Dokumentin tyyppi2']) == '4':
+                    asiakirjan_laji = '05'
+                elif str(rivi['Dokumentin tyyppi2']) == '5':
+                    asiakirjan_laji = '13'
+                else:
+                    asiakirjan_laji = '99'
+                
+                new_name = str(kuntakoodi) + '-' + str(kaavalaji) + '-' + str(asiakirjan_laji) + '-' + str(kaavatunnus) + '.pdf'
+                
+                kopio_table.at[idx, 'New_name'] = new_name
 
-testi = declareMultipage(data=data,
-                         master_dir=r"<insert filepath here>",
-                         kuntakoodi="740",
-                         kaavalaji="ak")
+    return(kopio_table)
 
+def renamePdfAttachments(data, master_dir, kuntakoodi, kaavalaji):
+    
+    import glob, os
+    
+    folder = os.path.join(master_dir, kuntakoodi, kaavalaji)
+    os.chdir(folder)
+    
+    filelist = glob.glob("*.pdf")
+    
+    for file in filelist:
+        
+        new_name = file
+        
+        for index, row in data.iterrows():
+            
+            if row['Original filename'] == str(file):
+                new_name = str(row['New_name'])
+                break
+        
+        input_file = os.path.join(folder, file)
+        output_file = os.path.join(folder, new_name)
+        
+        if new_name != file:
+            print(file, 'uudelleennimetty!')
+            try:
+                os.rename(input_file, output_file)
+            except FileNotFoundError:
+                print(file, " tiedostoa ei löydy tai sitä ei voida lukea!")
+            except FileExistsError:
+                new_name = '2-' + new_name
+                output_file = os.path.join(folder, new_name)
+                os.rename(input_file, output_file)
+    return()
 
 ## PDF-LINKITTÄJÄ ALLA (VAIHEESSA!)
 
