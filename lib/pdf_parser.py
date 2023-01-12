@@ -74,6 +74,24 @@ def declareMultipage(data, master_dir, kuntakoodi, kaavalaji):
 
 def createNewAttachmentName(kaava_data, kaavatunnus_column, table_data, table_tunnus_column):
     
+    """
+    Parameters
+    --------------------
+    kaava_data: <gpd.GeoDataframe>
+        Input kaavadata as a GeoPandas GeoDataFrame.
+    kaavadata_tunnus_column: <str>
+        Kaavatunnus column name as a string value.
+    table_data: <pd.Dataframe>
+        Input data as a Pandas Dataframe containing names of the PDF-files in individual rows.
+    table_tunnus_column: <str>
+        Kaavatunnus column as a string value. KTJ unless rekisterinpitäjäkunta.
+    
+    Output
+    ------
+    <pd.Dataframe>
+        table_data with new attachment names.
+    """
+    
     kopio_table = table_data.copy()
     kopio_table['New_name'] = None
     
@@ -107,6 +125,21 @@ def createNewAttachmentName(kaava_data, kaavatunnus_column, table_data, table_tu
     return(kopio_table)
 
 def renamePdfAttachments(data, master_dir, kuntakoodi, kaavalaji):
+    
+    """
+    A Function for renamining pdf filenames in directory.
+    
+    Parameters
+    --------------------
+    data: <pd.Dataframe>
+        Input data as a Pandas Dataframe containing names of the PDF-files in individual rows.
+    master_dir: <str>
+        Filepath to a directory in which all the PDF-files are. Can include subfolders named 'ak', 'rak', 'yk'.
+    kuntakoodi: <str>
+        Kuntakoodi for the wanted municipality.
+    kaavalaji: <str>
+        Type of kaavadata to be examined. Refers to subfolder names. Either 'ak', 'rak', or 'yk'.
+    """
     
     import glob, os
     
