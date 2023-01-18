@@ -72,7 +72,7 @@ def declareMultipage(data, master_dir, kuntakoodi, kaavalaji):
     
     return(data_copy)
 
-def createNewAttachmentName(kaava_data, kaavatunnus_column, table_data, table_tunnus_column):
+def createNewAttachmentName(kaava_data, kaavadata_tunnus_column, table_data, table_tunnus_column):
     
     """
     Parameters
@@ -93,17 +93,19 @@ def createNewAttachmentName(kaava_data, kaavatunnus_column, table_data, table_tu
     """
     
     kopio_table = table_data.copy()
-    kopio_table['New_name'] = None
+    
+    if 'New_name' not in kopio_table:
+        kopio_table['New_name'] = None
     
     for index, row in kaava_data.iterrows():
     
         kuntakoodi = row['kuntakoodi']
         kaavalaji = row['kaavalaji']
-        kaavatunnus = row[kaavatunnus_column]
+        kaavatunnus = row[kaavadata_tunnus_column]
         
         for idx, rivi in table_data.iterrows():
             
-            if rivi[table_tunnus_column] == kaavatunnus:
+            if rivi[table_tunnus_column] == kaavatunnus and rivi['kunta'] == int(kuntakoodi):
                 
                 if str(rivi['Dokumentin tyyppi2']) == '1':
                     asiakirjan_laji = '0304'
@@ -120,7 +122,8 @@ def createNewAttachmentName(kaava_data, kaavatunnus_column, table_data, table_tu
                 
                 new_name = str(kuntakoodi) + '-' + str(kaavalaji) + '-' + str(asiakirjan_laji) + '-' + str(kaavatunnus) + '.pdf'
                 
-                kopio_table.at[idx, 'New_name'] = new_name
+                if kopio_table.at[idx, 'New_name'] is None:
+                    kopio_table.at[idx, 'New_name'] = new_name
 
     return(kopio_table)
 
@@ -154,28 +157,32 @@ def renamePdfAttachments(data, master_dir, kuntakoodi, kaavalaji):
         
         for index, row in data.iterrows():
             
-            if row['Original filename'] == str(file):
-                new_name = str(row['New_name'])
-                break
+            if row['Original filename'] == str(file) and str(row['kunta']) == kuntakoodi:
+                if row['New_name'] is not None:
+                    new_name = str(row['New_name'])
+                    break
         
         input_file = os.path.join(folder, file)
         output_file = os.path.join(folder, new_name)
         
         if new_name != file:
-            print(file, 'uudelleennimetty!')
+            
             try:
                 os.rename(input_file, output_file)
+                #print(file, 'uudelleennimetty!')
             except FileNotFoundError:
                 print(file, " tiedostoa ei löydy tai sitä ei voida lukea!")
             except FileExistsError:
                 new_name = '2-' + new_name
                 output_file = os.path.join(folder, new_name)
-                os.rename(input_file, output_file)
+                try:
+                    os.rename(input_file, output_file)
+                    #print(file, 'uudelleennimetty toistamiseen liukuvalla numeroinnilla!')
+                except FileExistsError:
+                    print("Saman niminen tiedosto on jo kaksi kertaa! Ei nimetä enää uudelleen!")
     return()
 
-## PDF-LINKITTÄJÄ ALLA (VAIHEESSA!)
-
-def joinPDFsToKaavadata(kaavadata, link_table, kuntakoodi, kaavalaji):
+def joinPDFsToKaavadata(kaavadata, link_table, kuntakoodi, kaavalaji, kaavadata_tunnus_column, table_tunnus_column):
 
     """
     A function for linking PDF-appendices to each kaava.
@@ -190,16 +197,24 @@ def joinPDFsToKaavadata(kaavadata, link_table, kuntakoodi, kaavalaji):
         Kuntakoodi for the wanted municipality.
     kaavalaji: <str>
         Type of kaavadata to be examined. Either 'ak', 'rak', or 'yk'.
+    kaavadata_tunnus_column: <str>
+        Kaavatunnus column name as a string value.
+    table_tunnus_column: <str>
+        Kaavatunnus column as a string value. KTJ unless rekisterinpitäjäkunta.
     
     Output
     ------
     <pd.Dataframe>
         Output dataframe containing information if PDF-file contains multiple pages.
-    """ 
-    
-    link_pala = link_table.loc[link_table['Kunta'] == float(kuntakoodi)]
+    """    
+
+    if 'kaavakartta_maar' not in kaavadata:
+        kaavadata['kaavakartta_maar'] = None
+
+    link_pala = link_table.loc[link_table['kunta'] == int(kuntakoodi)]
     link_pala = link_pala.loc[link_pala['Kaavalaji'] == kaavalaji]
     link_pala = link_pala.loc[link_pala['Tila'] == 'ok'] #selivitettävä myöhemmässä vaiheessa vielä 'ei ok' rivit
+    link_pala = link_pala.loc[link_pala['Voimassa oleva'] == True]
     
     kaava_pala = kaavadata.loc[kaavadata['kuntakoodi'] == kuntakoodi]
     
@@ -213,8 +228,6 @@ def joinPDFsToKaavadata(kaavadata, link_table, kuntakoodi, kaavalaji):
     else:
         sys.exit("Kaavalaji must be either 'ak', 'rak' or 'yk'!")
     
-    copy_kaavapala = kaava_pala.copy()
-    
     i = 1
     
     for index, row in kaava_pala.iterrows():
@@ -223,93 +236,96 @@ def joinPDFsToKaavadata(kaavadata, link_table, kuntakoodi, kaavalaji):
         
         item_dict = {"kaavakartta_sis_maar":[], "kaavakartta":[], "maaraykset": [], "selostus": [], "oas": [], "muu": []}
         
-        kaavatunnus = row['kaavatunnus']
-        """
-        try:
-            if int(kaavatunnus) < 10:
-                kaavatunnus = '0' + str(kaavatunnus)
-        except ValueError:
-            None
-        """
+        kaavatunnus = row[kaavadata_tunnus_column]
+
         for idx, rivi in link_pala.iterrows():
             
             try:
                 
-                if int(kaavatunnus) == int(rivi['Kunnan indeksitunnus']):
+                if str(kaavatunnus) == str(rivi[table_tunnus_column]):
                     
                     if int(rivi['Dokumentin tyyppi2']) == 1:
-                        item_dict['kaavakartta_sis_maar'].append(rivi['Original filename'])
+                        item_dict['kaavakartta_sis_maar'].append(rivi['New_name'])
                     elif int(rivi['Dokumentin tyyppi2']) == 2:
-                        item_dict['kaavakartta'].append(rivi['Original filename'])
+                        item_dict['kaavakartta'].append(rivi['New_name'])
                     elif int(rivi['Dokumentin tyyppi2']) == 3:
-                        item_dict['maaraykset'].append(rivi['Original filename'])
+                        item_dict['maaraykset'].append(rivi['New_name'])
                     elif int(rivi['Dokumentin tyyppi2']) == 4:
-                        item_dict['selostus'].append(rivi['Original filename'])                
+                        item_dict['selostus'].append(rivi['New_name'])                
                     elif int(rivi['Dokumentin tyyppi2']) == 5:
-                        item_dict['oas'].append(rivi['Original filename'])
+                        item_dict['oas'].append(rivi['New_name'])
                     elif int(rivi['Dokumentin tyyppi2']) == 6:
-                        item_dict['muu'].append(rivi['Original filename'])
+                        item_dict['muu'].append(rivi['New_name'])
                     else:
                         None
                         
             except ValueError:
                 
-                if kaavatunnus == rivi['Kunnan indeksitunnus']:
+                if str(kaavatunnus) == str(rivi[table_tunnus_column]):
                     
                     if int(rivi['Dokumentin tyyppi2']) == 1:
-                        item_dict['kaavakartta_sis_maar'].append(rivi['Original filename'])
+                        item_dict['kaavakartta_sis_maar'].append(rivi['New_name'])
                     elif int(rivi['Dokumentin tyyppi2']) == 2:
-                        item_dict['kaavakartta'].append(rivi['Original filename'])
+                        item_dict['kaavakartta'].append(rivi['New_name'])
                     elif int(rivi['Dokumentin tyyppi2']) == 3:
-                        item_dict['maaraykset'].append(rivi['Original filename'])
+                        item_dict['maaraykset'].append(rivi['New_name'])
                     elif int(rivi['Dokumentin tyyppi2']) == 4:
-                        item_dict['selostus'].append(rivi['Original filename'])                
+                        item_dict['selostus'].append(rivi['New_name'])                
                     elif int(rivi['Dokumentin tyyppi2']) == 5:
-                        item_dict['oas'].append(rivi['Original filename'])
+                        item_dict['oas'].append(rivi['New_name'])
                     elif int(rivi['Dokumentin tyyppi2']) == 6:
-                        item_dict['muu'].append(rivi['Original filename'])
+                        item_dict['muu'].append(rivi['New_name'])
                     else:
                         None
             
         # Skenaario 1: kaavakartta (sis. määräykset)
         if len(item_dict['kaavakartta_sis_maar']) == 1:
-            copy_kaavapala.at[index, 'kaavakartta'] = item_dict['kaavakartta_sis_maar'][0]
-            copy_kaavapala.at[index, 'maaraykset'] = item_dict['kaavakartta_sis_maar'][0]
+            kaavadata.at[index, 'kaavakartta_maar'] = item_dict['kaavakartta_sis_maar'][0]
         elif len(item_dict['kaavakartta_sis_maar']) == 0:
             None
         else:
-            sys.exit("Samalle kohteelle löytyi useampi kaavakartta, joissa on mukana myös määräykset!")
+            #sys.exit("Samalle kohteelle löytyi useampi kaavakartta, joissa on mukana myös määräykset!")
+            str_item_dict = ', '.join(item_dict['kaavakartta_sis_maar'])
+            kaavadata.at[index, 'kaavakartta_maar'] = str_item_dict
         
         # Skenaario 2: kaavakartta (ei määräyksiä)
         if len(item_dict['kaavakartta']) == 1:
-            copy_kaavapala.at[index, 'kaavakartta'] = item_dict['kaavakartta'][0]
+            kaavadata.at[index, 'kaavakartta'] = item_dict['kaavakartta'][0]
         elif len(item_dict['kaavakartta']) == 0:
             None
         else:
-            sys.exit("Samalle kohteelle löytyi useampi kaavakartta, joissa ei ole mukana määräyksiä!")
+            #sys.exit("Samalle kohteelle löytyi useampi kaavakartta, joissa ei ole mukana määräyksiä!")
+            str_item_dict = ', '.join(item_dict['kaavakartta'])
+            kaavadata.at[index, 'kaavakartta'] = str_item_dict
         
-        # Skenaario 3: määräykset (yliajaa skenaarion 1 määräykset tarvittaessa)
+        # Skenaario 3: määräykset
         if len(item_dict['maaraykset']) == 1:
-            copy_kaavapala.at[index, 'maaraykset'] = item_dict['maaraykset'][0]
+            kaavadata.at[index, 'maaraykset'] = item_dict['maaraykset'][0]
         elif len(item_dict['maaraykset']) == 0:
             None
         else:
-            sys.exit("Samalle kohteelle löytyi useampi kaavamääräys!")
+            #sys.exit("Samalle kohteelle löytyi useampi kaavamääräys!")
+            str_item_dict = ', '.join(item_dict['maaraykset'])
+            kaavadata.at[index, 'maaraykset'] = str_item_dict
         
         # Skenaario 4: selostukset
         if len(item_dict['selostus']) == 1:
-            copy_kaavapala.at[index, 'selostus'] = item_dict['selostus'][0]
+            kaavadata.at[index, 'selostus'] = item_dict['selostus'][0]
         elif len(item_dict['selostus']) == 0:
             None
         else:
-            sys.exit("Samalle kohteelle löytyi useampi kaavaselostus!")
+            #sys.exit("Samalle kohteelle löytyi useampi kaavaselostus!")
+            str_item_dict = ', '.join(item_dict['selostus'])
+            kaavadata.at[index, 'selostus'] = str_item_dict
     
         i = i + 1
         
-    return(copy_kaavapala)
+    return(kaavadata)
     
-joined = joinPDFsToKaavadata(kaavadata=kaava_data,
-                         link_table=data,
-                         kuntakoodi="178",
-                         kaavalaji="ak")
+joined = joinPDFsToKaavadata(kaavadata=kaava_data_yk,
+                             link_table=kopio,
+                             kuntakoodi="588",
+                             kaavalaji="yk",
+                             kaavadata_tunnus_column="kaavatunnus_1",
+                             table_tunnus_column='KTJ-indeksitunnus')
    
