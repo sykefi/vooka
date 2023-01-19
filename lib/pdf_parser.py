@@ -96,6 +96,8 @@ def createNewAttachmentName(kaava_data, kaavadata_tunnus_column, table_data, tab
     
     if 'New_name' not in kopio_table:
         kopio_table['New_name'] = None
+        
+    name_list = []
     
     for index, row in kaava_data.iterrows():
     
@@ -121,6 +123,18 @@ def createNewAttachmentName(kaava_data, kaavadata_tunnus_column, table_data, tab
                     asiakirjan_laji = '99'
                 
                 new_name = str(kuntakoodi) + '-' + str(kaavalaji) + '-' + str(asiakirjan_laji) + '-' + str(kaavatunnus) + '.pdf'
+                
+                if new_name not in name_list:
+                    name_list.append(new_name)
+                else:
+                    i = 2
+                    while True:
+                        new_name2 = str(i) + '-' + new_name
+                        i = i + 1
+                        if new_name2 not in name_list:
+                            new_name = new_name2
+                            name_list.append(new_name)
+                            break
                 
                 if kopio_table.at[idx, 'New_name'] is None:
                     kopio_table.at[idx, 'New_name'] = new_name
@@ -173,13 +187,7 @@ def renamePdfAttachments(data, master_dir, kuntakoodi, kaavalaji):
             except FileNotFoundError:
                 print(file, " tiedostoa ei löydy tai sitä ei voida lukea!")
             except FileExistsError:
-                new_name = '2-' + new_name
-                output_file = os.path.join(folder, new_name)
-                try:
-                    os.rename(input_file, output_file)
-                    #print(file, 'uudelleennimetty toistamiseen liukuvalla numeroinnilla!')
-                except FileExistsError:
-                    print("Saman niminen tiedosto on jo kaksi kertaa! Ei nimetä enää uudelleen!")
+                print("Saman niminen tiedosto löytyy jo! Ei nimetä uudelleen!")
     return()
 
 def joinPDFsToKaavadata(kaavadata, link_table, kuntakoodi, kaavalaji, kaavadata_tunnus_column, table_tunnus_column):
