@@ -329,11 +329,3 @@ def joinPDFsToKaavadata(kaavadata, link_table, kuntakoodi, kaavalaji, kaavadata_
         i = i + 1
         
     return(kaavadata)
-    
-joined = joinPDFsToKaavadata(kaavadata=kaava_data_yk,
-                             link_table=kopio,
-                             kuntakoodi="588",
-                             kaavalaji="yk",
-                             kaavadata_tunnus_column="kaavatunnus_1",
-                             table_tunnus_column='KTJ-indeksitunnus')
-   
