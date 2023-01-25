@@ -122,22 +122,24 @@ def createNewAttachmentName(kaava_data, kaavadata_tunnus_column, table_data, tab
                 else:
                     asiakirjan_laji = '99'
                 
-                new_name = str(kuntakoodi) + '-' + str(kaavalaji) + '-' + str(asiakirjan_laji) + '-' + str(kaavatunnus) + '.pdf'
+                new_name = str(kuntakoodi) + '-' + str(kaavalaji) + '-' + str(asiakirjan_laji) + '-' + str(kaavatunnus) + '-1'
+                file_format = '.pdf'
                 
                 if new_name not in name_list:
+                    new_name_format = new_name + file_format
                     name_list.append(new_name)
                 else:
                     i = 2
                     while True:
-                        new_name2 = str(i) + '-' + new_name
+                        new_name2 = new_name[:-1] + str(i)
                         i = i + 1
                         if new_name2 not in name_list:
-                            new_name = new_name2
-                            name_list.append(new_name)
+                            new_name_format = new_name2 + file_format
+                            name_list.append(new_name2)
                             break
                 
                 if kopio_table.at[idx, 'New_name'] is None:
-                    kopio_table.at[idx, 'New_name'] = new_name
+                    kopio_table.at[idx, 'New_name'] = new_name_format
 
     return(kopio_table)
 
