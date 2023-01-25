@@ -7,25 +7,8 @@ Created on Wed Nov 23 13:23:18 2022
 
 def dataToGeoJSON(kaavadata, kaavatunnus_col):
     
-    """
-    A function for converting GeoPandas GeoDataframe data to GeoJSON.
+    import ast
     
-    Parameters
-    --------------------
-    kaavadata: <gpd.GeoDataFrame>
-        Input kaavadata as a Geopandas Geodataframe.
-    kaavatunnus_col: <str>
-        Name of the kaavatunnus column.
-    
-    Output
-    ------
-    <json>
-        Input data as GeoJSON.
-    """
-
-    import json
-    from collections import OrderedDict
-
     # Function to order GeoJSON keys properly
     def ordered(d, desired_key_order):
         return OrderedDict([(key, d[key]) for key in desired_key_order])
@@ -73,24 +56,39 @@ def dataToGeoJSON(kaavadata, kaavatunnus_col):
         
         kopio.at[index, 'laji'] = "http://uri.suomi.fi/codelist/rytj/RY_Kaavalaji/code/" + row['kaavalaji']
         kopio.at[index, 'digitaalinenAlkupera'] = "https://koodistot.suomi.fi/code;registryCode=rytj;schemeCode=RY_DigitaalinenAlkupera;codeCode=04"
-        kopio.at[index, 'alueellaSijaitsevaKiinteisto'] = row['kohderekisteriyksikot']
+        try:
+            kopio.at[index, 'alueellaSijaitsevaKiinteisto'] = ast.literal_eval(row['kohderekisteriyksikot'])
+        except ValueError:
+            None
         kopio.at[index, 'nimi'] = row['kuntanimi'] #?
         kopio.at[index, 'kuvaus'] = row['kaavaselite']
         kopio.at[index, 'vireilletuloAika'] = row['hyvaksymispvm']
         
         try:
+            dictionary['kaavakartta_sis_maaraykset'] = row['kaavakartta_maar']
+        except KeyError:
+            None
+        try:
             dictionary['kaavakartta'] = row['kaavakartta']
         except KeyError:
             None
         try:
-            dictionary['maarays'] = row['maaraykset']
+            dictionary['maaraykset'] = row['maaraykset']
         except KeyError:
             None
         try:
-            dictionary['selostus'] = row['selostukset']
+            dictionary['selostus'] = row['selostus']
         except KeyError:
             None
-        
+        try:
+            dictionary['oas'] = row['oas']
+        except KeyError:
+            None
+        try:
+            dictionary['muu'] = row['muu']
+        except KeyError:
+            None
+             
         kopio.at[index, 'asianLiite'] = dictionary
         kopio.at[index, 'paikallinenTunnus'] = row[kaavatunnus_col]
     
