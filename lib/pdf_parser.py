@@ -220,7 +220,13 @@ def joinPDFsToKaavadata(kaavadata, link_table, kuntakoodi, kaavalaji, kaavadata_
 
     if 'kaavakartta_maar' not in kaavadata:
         kaavadata['kaavakartta_maar'] = None
-
+    
+    if 'oas' not in kaavadata:
+        kaavadata['oas'] = None
+        
+    if 'muu' not in kaavadata:
+        kaavadata['muu'] = None
+    
     link_pala = link_table.loc[link_table['kunta'] == int(kuntakoodi)]
     link_pala = link_pala.loc[link_pala['Kaavalaji'] == kaavalaji]
     link_pala = link_pala.loc[link_pala['Tila'] == 'ok'] #selivitettävä myöhemmässä vaiheessa vielä 'ei ok' rivit
@@ -327,7 +333,27 @@ def joinPDFsToKaavadata(kaavadata, link_table, kuntakoodi, kaavalaji, kaavadata_
             #sys.exit("Samalle kohteelle löytyi useampi kaavaselostus!")
             str_item_dict = ', '.join(item_dict['selostus'])
             kaavadata.at[index, 'selostus'] = str_item_dict
-    
+        
+        # Skenaario 5: osallistamis- ja arviointisuunnitelmat
+        if len(item_dict['oas']) == 1:
+            kaavadata.at[index, 'oas'] = item_dict['oas'][0]
+        elif len(item_dict['oas']) == 0:
+            None
+        else:
+            #sys.exit("Samalle kohteelle löytyi useampi kaavaselostus!")
+            str_item_dict = ', '.join(item_dict['oas'])
+            kaavadata.at[index, 'oas'] = str_item_dict
+            
+        # Skenaario 6: muu
+        if len(item_dict['muu']) == 1:
+            kaavadata.at[index, 'muu'] = item_dict['muu'][0]
+        elif len(item_dict['muu']) == 0:
+            None
+        else:
+            #sys.exit("Samalle kohteelle löytyi useampi kaavaselostus!")
+            str_item_dict = ', '.join(item_dict['muu'])
+            kaavadata.at[index, 'muu'] = str_item_dict
+        
         i = i + 1
         
     return(kaavadata)
