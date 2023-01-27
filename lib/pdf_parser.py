@@ -122,22 +122,24 @@ def createNewAttachmentName(kaava_data, kaavadata_tunnus_column, table_data, tab
                 else:
                     asiakirjan_laji = '99'
                 
-                new_name = str(kuntakoodi) + '-' + str(kaavalaji) + '-' + str(asiakirjan_laji) + '-' + str(kaavatunnus) + '.pdf'
+                new_name = str(kuntakoodi) + '-' + str(kaavalaji) + '-' + str(asiakirjan_laji) + '-' + str(kaavatunnus) + '-1'
+                file_format = '.pdf'
                 
                 if new_name not in name_list:
+                    new_name_format = new_name + file_format
                     name_list.append(new_name)
                 else:
                     i = 2
                     while True:
-                        new_name2 = str(i) + '-' + new_name
+                        new_name2 = new_name[:-1] + str(i)
                         i = i + 1
                         if new_name2 not in name_list:
-                            new_name = new_name2
-                            name_list.append(new_name)
+                            new_name_format = new_name2 + file_format
+                            name_list.append(new_name2)
                             break
                 
                 if kopio_table.at[idx, 'New_name'] is None:
-                    kopio_table.at[idx, 'New_name'] = new_name
+                    kopio_table.at[idx, 'New_name'] = new_name_format
 
     return(kopio_table)
 
@@ -218,7 +220,13 @@ def joinPDFsToKaavadata(kaavadata, link_table, kuntakoodi, kaavalaji, kaavadata_
 
     if 'kaavakartta_maar' not in kaavadata:
         kaavadata['kaavakartta_maar'] = None
-
+    
+    if 'oas' not in kaavadata:
+        kaavadata['oas'] = None
+        
+    if 'muu' not in kaavadata:
+        kaavadata['muu'] = None
+    
     link_pala = link_table.loc[link_table['kunta'] == int(kuntakoodi)]
     link_pala = link_pala.loc[link_pala['Kaavalaji'] == kaavalaji]
     link_pala = link_pala.loc[link_pala['Tila'] == 'ok'] #selivitettävä myöhemmässä vaiheessa vielä 'ei ok' rivit
@@ -325,15 +333,27 @@ def joinPDFsToKaavadata(kaavadata, link_table, kuntakoodi, kaavalaji, kaavadata_
             #sys.exit("Samalle kohteelle löytyi useampi kaavaselostus!")
             str_item_dict = ', '.join(item_dict['selostus'])
             kaavadata.at[index, 'selostus'] = str_item_dict
-    
+        
+        # Skenaario 5: osallistamis- ja arviointisuunnitelmat
+        if len(item_dict['oas']) == 1:
+            kaavadata.at[index, 'oas'] = item_dict['oas'][0]
+        elif len(item_dict['oas']) == 0:
+            None
+        else:
+            #sys.exit("Samalle kohteelle löytyi useampi kaavaselostus!")
+            str_item_dict = ', '.join(item_dict['oas'])
+            kaavadata.at[index, 'oas'] = str_item_dict
+            
+        # Skenaario 6: muu
+        if len(item_dict['muu']) == 1:
+            kaavadata.at[index, 'muu'] = item_dict['muu'][0]
+        elif len(item_dict['muu']) == 0:
+            None
+        else:
+            #sys.exit("Samalle kohteelle löytyi useampi kaavaselostus!")
+            str_item_dict = ', '.join(item_dict['muu'])
+            kaavadata.at[index, 'muu'] = str_item_dict
+        
         i = i + 1
         
     return(kaavadata)
-    
-joined = joinPDFsToKaavadata(kaavadata=kaava_data_yk,
-                             link_table=kopio,
-                             kuntakoodi="588",
-                             kaavalaji="yk",
-                             kaavadata_tunnus_column="kaavatunnus_1",
-                             table_tunnus_column='KTJ-indeksitunnus')
-   
