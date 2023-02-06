@@ -7,6 +7,10 @@ Created on Wed Nov 23 13:23:18 2022
 
 def dataToGeoJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
     
+    import geopandas as gpd
+    import json
+    from collections import OrderedDict
+    import sys
     import ast
     
     # Function to order GeoJSON keys properly
@@ -73,8 +77,10 @@ def dataToGeoJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
         # kuvaus
         if aineistolahde == "KTJ":
             kopio.at[index, "kuvaus"] = "Aluerajaus KTJ-aineistosta, asiakirjat kunnalta"
-        else:
+        elif aineistolahde == "kunta":
             kopio.at[index, "kuvaus"] = "Aluerajaus ja asiakirjat kunnalta"
+        else:
+            sys.exit("Your 'aineistolahde' parameter must be either 'KTJ' or 'kunta'!")
         
         # vireilletuloAika
         try:
@@ -184,14 +190,29 @@ def dataToGeoJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
         kopio.at[index, 'asianLiite'] = liite_lista
         
         # paikallinenTunnus
-        kopio.at[index, 'paikallinenTunnus'] = kunta_kaavatunnus #row[kunta_kaavatunnus]
+        try:
+            if type(row[kunta_kaavatunnus]) != None:
+                kopio.at[index, 'paikallinenTunnus'] = row[kunta_kaavatunnus]
+            else:
+                None
+        except KeyError:
+            None
 
         # tuottajakohtainenTunnus
-        kopio.at[index, 'tuottajakohtainenTunnus'] = row[ktj_kaavatunnus]
+        try:
+            if type(row[ktj_kaavatunnus]) != None:
+                kopio.at[index, 'tuottajakohtainenTunnus'] = row[ktj_kaavatunnus]
+            else:
+                None
+        except KeyError:
+            None
         
         ## kaavasuunnitelma
         # kaavalaji
-        kaavasuun_dict["laji"] = "http://uri.suomi.fi/codelist/rytj/RY_Kaavalaji/code/" + row['kaavalaji']
+        if row['kaavalaji'] == '21':
+            kaavasuun_dict["laji"] = "http://uri.suomi.fi/codelist/rytj/RY_Kaavalaji/code/23"
+        else:
+            kaavasuun_dict["laji"] = "http://uri.suomi.fi/codelist/rytj/RY_Kaavalaji/code/" + row['kaavalaji']
         
         # oikeusvaikutteisuus
         if row['kaavalaji'] != '25':
@@ -218,11 +239,14 @@ def dataToGeoJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
         kaavasuun_dict['alueellaSijaitsevaKiinteisto'] = kiinteisto_lista
         
         # kaavanKuvaus
-        if len(row['kaavaselite']) > 0:
-            kaavasuun_dict["kaavanKuvaus"] = row['kaavaselite']
-        else:
+        try:
+            if len(row['kaavaselite']) > 0:
+                kaavasuun_dict["kaavanKuvaus"] = row['kaavaselite']
+            else:
+                None
+        except TypeError:
             None
-        
+            
         kaavasuun_lista.append(kaavasuun_dict)
         kopio.at[index, 'kaavasuunnitelma'] = kaavasuun_lista
     
@@ -240,8 +264,5 @@ def dataToGeoJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
     # Set GeoJSON keys in proper order    
     entity_desired_key_order = ('type', 'name', 'crs', 'features')
     result = ordered(json_data, entity_desired_key_order)
-    
-    # GeoJSON "pretty print"
-    #result = json.dumps(result, indent=4)
     
     return(result)
