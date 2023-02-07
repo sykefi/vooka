@@ -8,7 +8,7 @@ Created on Wed Aug 17 16:42:00 2022
 def kuntaGMLToGDF():
     
     """
-    A Function for parsing municipality 593 WFS KuntaGML to geopandas GeoDataFrame.
+    A function for parsing municipality 593 WFS KuntaGML to geopandas GeoDataFrame.
     
     Output
     ------
