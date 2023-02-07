@@ -17,15 +17,15 @@ def updateOldKuntakoodi(ktj_data):
     
     for index, row in ktj_data.iterrows():
         
-        #Mikkeli
+        #491
         if row['kaavatunnuksenkuntanumero'] == '085' or row['kaavatunnuksenkuntanumero'] == '492' or row['kaavatunnuksenkuntanumero'] == '696' or row['kaavatunnuksenkuntanumero'] == '775':
             ktj_data.at[index, 'validkuntanro'] ='491'
             
-        #Savonlinna
+        #740
         elif row['kaavatunnuksenkuntanumero'] == '246' or row['kaavatunnuksenkuntanumero'] == '618' or row['kaavatunnuksenkuntanumero'] == '741':
             ktj_data.at[index, 'validkuntanro'] = '740'
        
-        #Pieksämäki
+        #593
         elif row['kaavatunnuksenkuntanumero'] == '184' or row['kaavatunnuksenkuntanumero'] == '594' or row['kaavatunnuksenkuntanumero'] == '640' or row['kaavatunnuksenkuntanumero'] == '937':
             ktj_data.at[index, 'validkuntanro'] = '593'
             
