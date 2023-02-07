@@ -7,6 +7,26 @@ Created on Wed Nov 23 13:23:18 2022
 
 def dataToGeoJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
     
+    """
+    A function for creating a GeoJSON file (collections.OrderedDict) from Geopandas GeoDataFrame.
+    
+    Parameters
+    --------------------
+    kaavadata: <gpd.GeoDataframe>
+        Input kaavadata as a GeoPandas GeoDataFrame.
+    aineistolahde: <str>
+        Informs the data source. Either "KTJ" or "kunta".
+    ktj_kaavatunnus: <str>
+        KTJ-kaavatunnus column name as a string value.
+    kunta_kaavatunnus: <str>
+        Municipality's kaavatunnus column as a string value.
+    
+    Output
+    ------
+    <collections.OrderedDict>
+        Output kaavadata as a Python OrderedDict (equivalent to JSON, can be saved as such).
+    """    
+    
     import geopandas as gpd
     import json
     from collections import OrderedDict
