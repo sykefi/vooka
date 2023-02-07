@@ -229,18 +229,18 @@ def stringColumnToDate(input_df, date_column):
             date_str = row[date_column]
             
             if date_str != None:
-                # Juvalta yksi erilliskäsittely
+                # 178 yksi erilliskäsittely
                 if date_str[0:5] == 'xx.xx' and row['kaavaselite'] == 'Kirkonseutu Jukajärvi rakennuskaavan muutos':
                     date_str = '10.2.1983'
-                # Kangasniemeltä kirjausvirhe
+                # 213 kirjausvirhe
                 elif date_str == '20042208' and row['kaavaselite'] == 'Reinikkalan ranta-asemakaavan muutos 2004':
                     date_str = '20041108'
-                # Pertunmaalta pari erilliskäsittelyä
-                elif date_str[0:8].lower() == 'e-sympk.' and row['kuntanimi'] == 'Pertunmaa':
+                # 588 pari erilliskäsittelyä
+                elif date_str[0:8].lower() == 'e-sympk.' and row['kuntakoodi'] == '588':
                     date_str = date_str[0:-14]
-                elif date_str[0:20].lower() == 'osittain vahv. ymp.k' and row['kuntanimi'] == 'Pertunmaa':
+                elif date_str[0:20].lower() == 'osittain vahv. ymp.k' and row['kuntakoodi'] == '588':
                     date_str = date_str[-9:]
-                # Hirvensalmelta yksi erilliskäsittely
+                # 097 yksi erilliskäsittely
                 elif date_str == '1977, 1988' and row['kaavaselite'] == 'ETUNIEMEN RANTAKAAVAN MUUTOS':
                     date_str = '1.1.' + date_str[-4:]
                 # Vain vuosi ilmoitettu
