@@ -5,10 +5,6 @@ Created on Mon Nov  7 10:31:35 2022
 @author: smassine
 """
 
-import pandas as pd
-import geopandas as gpd
-import sys
-
 def declareMultipage(data, master_dir, kuntakoodi, kaavalaji):
     
     """
@@ -217,7 +213,9 @@ def joinPDFsToKaavadata(kaavadata, link_table, kuntakoodi, kaavalaji, kaavadata_
     <pd.Dataframe>
         Output dataframe containing information if PDF-file contains multiple pages.
     """    
-
+    
+    import sys
+    
     if 'kaavakartta_maar' not in kaavadata:
         kaavadata['kaavakartta_maar'] = None
     
