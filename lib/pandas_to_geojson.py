@@ -129,9 +129,11 @@ def dataToGeoJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
                               "nimi": None,
                               "laji": None,
                               "lisatietolinkki": None,
-                              "metatietokuvaus": None}
+                              "metatietokuvaus": None,
+                              "asiakirjanJulkisuusluokka": None}
                 liite_dict['nimi'] = str(item)
                 liite_dict['laji'] = ["https://koodistot.suomi.fi/code;registryCode=rytj;schemeCode=RY_AsiakirjanLaji_YKAK;codeCode=03", "https://koodistot.suomi.fi/code;registryCode=rytj;schemeCode=RY_AsiakirjanLaji_YKAK;codeCode=04"]
+                liite_dict['asiakirjanJulkisuusluokka'] = "https://koodistot.suomi.fi/code;registryCode=rytj;schemeCode=julkisuus;codeCode=1" #lähtökohtaisesti kaikki julkisia!
                 liite_lista.append(liite_dict)
         
         # Kaavakartta
@@ -142,9 +144,11 @@ def dataToGeoJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
                               "nimi": None,
                               "laji": None,
                               "lisatietolinkki": None,
-                              "metatietokuvaus": None}
+                              "metatietokuvaus": None,
+                              "asiakirjanJulkisuusluokka": None}
                 liite_dict['nimi'] = str(item)
                 liite_dict['laji'] = "https://koodistot.suomi.fi/code;registryCode=rytj;schemeCode=RY_AsiakirjanLaji_YKAK;codeCode=03"
+                liite_dict['asiakirjanJulkisuusluokka'] = "https://koodistot.suomi.fi/code;registryCode=rytj;schemeCode=julkisuus;codeCode=1" #lähtökohtaisesti kaikki julkisia!
                 liite_lista.append(liite_dict)
         
         # Maaraykset
@@ -155,9 +159,11 @@ def dataToGeoJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
                               "nimi": None,
                               "laji": None,
                               "lisatietolinkki": None,
-                              "metatietokuvaus": None}
+                              "metatietokuvaus": None,
+                              "asiakirjanJulkisuusluokka": None}
                 liite_dict['nimi'] = str(item)
                 liite_dict['laji'] = "https://koodistot.suomi.fi/code;registryCode=rytj;schemeCode=RY_AsiakirjanLaji_YKAK;codeCode=04"
+                liite_dict['asiakirjanJulkisuusluokka'] = "https://koodistot.suomi.fi/code;registryCode=rytj;schemeCode=julkisuus;codeCode=1" #lähtökohtaisesti kaikki julkisia!
                 liite_lista.append(liite_dict)
        
         # Selostukset
@@ -168,9 +174,11 @@ def dataToGeoJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
                               "nimi": None,
                               "laji": None,
                               "lisatietolinkki": None,
-                              "metatietokuvaus": None}
+                              "metatietokuvaus": None,
+                              "asiakirjanJulkisuusluokka": None}
                 liite_dict['nimi'] = str(item)
                 liite_dict['laji'] = "https://koodistot.suomi.fi/code;registryCode=rytj;schemeCode=RY_AsiakirjanLaji_YKAK;codeCode=05"
+                liite_dict['asiakirjanJulkisuusluokka'] = "https://koodistot.suomi.fi/code;registryCode=rytj;schemeCode=julkisuus;codeCode=1" #lähtökohtaisesti kaikki julkisia!
                 liite_lista.append(liite_dict) 
         
         # OAS
@@ -181,9 +189,11 @@ def dataToGeoJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
                               "nimi": None,
                               "laji": None,
                               "lisatietolinkki": None,
-                              "metatietokuvaus": None}
+                              "metatietokuvaus": None,
+                              "asiakirjanJulkisuusluokka": None}
                 liite_dict['nimi'] = str(item)
                 liite_dict['laji'] = "https://koodistot.suomi.fi/code;registryCode=rytj;schemeCode=RY_AsiakirjanLaji_YKAK;codeCode=13"
+                liite_dict['asiakirjanJulkisuusluokka'] = "https://koodistot.suomi.fi/code;registryCode=rytj;schemeCode=julkisuus;codeCode=1" #lähtökohtaisesti kaikki julkisia!
                 liite_lista.append(liite_dict)
         
         # Muu
@@ -194,9 +204,11 @@ def dataToGeoJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
                               "nimi": None,
                               "laji": None,
                               "lisatietolinkki": None,
-                              "metatietokuvaus": None}
+                              "metatietokuvaus": None,
+                              "asiakirjanJulkisuusluokka": None}
                 liite_dict['nimi'] = str(item)
                 liite_dict['laji'] = "https://koodistot.suomi.fi/code;registryCode=rytj;schemeCode=RY_AsiakirjanLaji_YKAK;codeCode=99"
+                liite_dict['asiakirjanJulkisuusluokka'] = "https://koodistot.suomi.fi/code;registryCode=rytj;schemeCode=julkisuus;codeCode=1" #lähtökohtaisesti kaikki julkisia!
                 liite_lista.append(liite_dict)
        
         if len(liite_lista) == 0:
@@ -204,7 +216,8 @@ def dataToGeoJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
                           "nimi": None,
                           "laji": None,
                           "lisatietolinkki": None,
-                          "metatietokuvaus": None}
+                          "metatietokuvaus": None,
+                          "asiakirjanJulkisuusluokka": None}
             liite_lista.append(liite_dict)
         
         kopio.at[index, 'asianLiite'] = liite_lista
