@@ -123,7 +123,7 @@ def dataToGeoJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
         
         # Kaavakartta sis. maar
         if kaavakartta_maar != None:
-            apu_lista = kaavakartta_maar.split(",")
+            apu_lista = kaavakartta_maar.split(", ")
             for item in apu_lista:
                 liite_dict = {"asiakirjanTunnus": None,
                               "nimi": None,
@@ -132,13 +132,13 @@ def dataToGeoJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
                               "metatietokuvaus": None,
                               "asiakirjanJulkisuusluokka": None}
                 liite_dict['nimi'] = str(item)
-                liite_dict['laji'] = ["https://koodistot.suomi.fi/code;registryCode=rytj;schemeCode=RY_AsiakirjanLaji_YKAK;codeCode=03", "https://koodistot.suomi.fi/code;registryCode=rytj;schemeCode=RY_AsiakirjanLaji_YKAK;codeCode=04"]
+                liite_dict['laji'] = "https://koodistot.suomi.fi/code;registryCode=rytj;schemeCode=RY_AsiakirjanLaji_YKAK;codeCode=05"
                 liite_dict['asiakirjanJulkisuusluokka'] = "https://koodistot.suomi.fi/code;registryCode=rytj;schemeCode=julkisuus;codeCode=1" #lähtökohtaisesti kaikki julkisia!
                 liite_lista.append(liite_dict)
         
         # Kaavakartta
         if kaavakartta != None:
-            apu_lista = kaavakartta.split(",")
+            apu_lista = kaavakartta.split(", ")
             for item in apu_lista:
                 liite_dict = {"asiakirjanTunnus": None,
                               "nimi": None,
@@ -153,7 +153,7 @@ def dataToGeoJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
         
         # Maaraykset
         if maarays != None:
-            apu_lista = maarays.split(",")
+            apu_lista = maarays.split(", ")
             for item in apu_lista:
                 liite_dict = {"asiakirjanTunnus": None,
                               "nimi": None,
@@ -168,7 +168,7 @@ def dataToGeoJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
        
         # Selostukset
         if selostus != None:
-            apu_lista = selostus.split(",")
+            apu_lista = selostus.split(", ")
             for item in apu_lista:
                 liite_dict = {"asiakirjanTunnus": None,
                               "nimi": None,
@@ -177,13 +177,13 @@ def dataToGeoJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
                               "metatietokuvaus": None,
                               "asiakirjanJulkisuusluokka": None}
                 liite_dict['nimi'] = str(item)
-                liite_dict['laji'] = "https://koodistot.suomi.fi/code;registryCode=rytj;schemeCode=RY_AsiakirjanLaji_YKAK;codeCode=05"
+                liite_dict['laji'] = "https://koodistot.suomi.fi/code;registryCode=rytj;schemeCode=RY_AsiakirjanLaji_YKAK;codeCode=06"
                 liite_dict['asiakirjanJulkisuusluokka'] = "https://koodistot.suomi.fi/code;registryCode=rytj;schemeCode=julkisuus;codeCode=1" #lähtökohtaisesti kaikki julkisia!
                 liite_lista.append(liite_dict) 
         
         # OAS
         if oas != None:
-            apu_lista = oas.split(",")
+            apu_lista = oas.split(", ")
             for item in apu_lista:
                 liite_dict = {"asiakirjanTunnus": None,
                               "nimi": None,
@@ -192,13 +192,13 @@ def dataToGeoJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
                               "metatietokuvaus": None,
                               "asiakirjanJulkisuusluokka": None}
                 liite_dict['nimi'] = str(item)
-                liite_dict['laji'] = "https://koodistot.suomi.fi/code;registryCode=rytj;schemeCode=RY_AsiakirjanLaji_YKAK;codeCode=13"
+                liite_dict['laji'] = "https://koodistot.suomi.fi/code;registryCode=rytj;schemeCode=RY_AsiakirjanLaji_YKAK;codeCode=14"
                 liite_dict['asiakirjanJulkisuusluokka'] = "https://koodistot.suomi.fi/code;registryCode=rytj;schemeCode=julkisuus;codeCode=1" #lähtökohtaisesti kaikki julkisia!
                 liite_lista.append(liite_dict)
         
         # Muu
         if muu != None:
-            apu_lista = muu.split(",")
+            apu_lista = muu.split(", ")
             for item in apu_lista:
                 liite_dict = {"asiakirjanTunnus": None,
                               "nimi": None,
