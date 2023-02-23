@@ -314,7 +314,7 @@ def jsonToGPKG(inputfp, outputfp):
     
     Output
     ------
-    <gpd.GeoDataFram>
+    <gpd.GeoDataFrame>
         Saved gpkg-file as a GeoPandas GeoDataFrame.
     """    
     
