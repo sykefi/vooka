@@ -5,15 +5,10 @@ Created on Wed Aug 17 16:42:00 2022
 @author: smassine
 """
 
-import requests
-import xmltodict
-from shapely.geometry import Polygon
-import geopandas as gpd
-
-def pieksamakiAsemakaavaToGDF():
+def kuntaGMLToGDF():
     
     """
-    A Function for parsing Pieksämäki WFS KuntaGML to geopandas GeoDataFrame.
+    A function for parsing municipality 593 WFS KuntaGML to geopandas GeoDataFrame.
     
     Output
     ------
@@ -21,7 +16,12 @@ def pieksamakiAsemakaavaToGDF():
         A geopandas GeoDataFrame.
     """
     
-    # Connect to Pieksämäki WFS
+    import requests
+    import xmltodict
+    from shapely.geometry import Polygon
+    import geopandas as gpd
+    
+    # Connect to municipality 593 WFS
     url = "https://kartat.pieksamaki.fi/teklaogcweb/WFS.ashx?service=WFS&request=getfeature&typename=akaava:Kaava"
     response = requests.get(url)
     data = xmltodict.parse(response.content)
