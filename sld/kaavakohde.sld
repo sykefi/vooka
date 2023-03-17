@@ -1057,7 +1057,37 @@
             </se:Stroke>
           </se:PolygonSymbolizer>
           <se:TextSymbolizer>
-            <se:Label>K</se:Label>
+            <se:Label>KTY</se:Label>
+            <se:Font>
+              <se:SvgParameter name="font-family">Arial</se:SvgParameter>
+              <se:SvgParameter name="font-size">29</se:SvgParameter>
+              <se:SvgParameter name="font-style">normal</se:SvgParameter>
+              <se:SvgParameter name="font-weight">bold</se:SvgParameter>
+            </se:Font>
+          </se:TextSymbolizer>
+        </se:Rule>
+
+        <se:Rule>
+          <se:Name>Työpaikkojen alue</se:Name>
+          <!-- MRL YK ja MKK -->
+          <ogc:Filter>
+            <ogc:PropertyIsEqualTo>
+              <ogc:PropertyName>laji</ogc:PropertyName>
+              <ogc:Literal>tyopaikkojenAlue</ogc:Literal>
+            </ogc:PropertyIsEqualTo>
+          </ogc:Filter>
+          <se:PolygonSymbolizer>
+            <se:Fill>
+              <se:SvgParameter name="fill">#f48c9a</se:SvgParameter>
+            </se:Fill>
+            <se:Stroke>
+              <se:SvgParameter name="stroke">#000000</se:SvgParameter>
+              <se:SvgParameter name="stroke-width">4</se:SvgParameter>
+              <se:SvgParameter name="stroke-linejoin">round</se:SvgParameter>
+            </se:Stroke>
+          </se:PolygonSymbolizer>
+          <se:TextSymbolizer>
+            <se:Label>TP</se:Label>
             <se:Font>
               <se:SvgParameter name="font-family">Arial</se:SvgParameter>
               <se:SvgParameter name="font-size">29</se:SvgParameter>
