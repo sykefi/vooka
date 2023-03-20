@@ -42,7 +42,7 @@
     <a href="https://www.syke.fi/fi-FI/Tutkimus__kehittaminen/Tutkimus_ja_kehittamishankkeet/Hankkeet/Voimassa_olevat_kaavat_rakennetun_ympariston_tietojarjestelmaan_VOOKA"><strong>Tutustu hankkeeseen »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/ubigu/vooka/issues">Raportoi bugi</a>
+    <a href="https://github.com/sykefi/vooka/issues">Raportoi bugi</a>
   </p>
 </div>
 
