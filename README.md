@@ -143,10 +143,10 @@ Katso `requirements.txt`
 
 ETL-työkalua ajetaan Jupyter Notebook -järjestyksessä 1-6. Kussakin ipynb-tiedostossa on markdown-muotoista kerronnallista tekstiä, joka opastaa käyttäjää koodin ajamisessa. Koodisolut on rakennettu notebookeihin esitäytettyinä. Käyttäjän tarvitsee lisätä niihin ainoastaan tiedostopolut sekä parametrit. Lisätietoja parametreista löytyy myös kehitettyjen funktioiden docstringeista.
 
-Kaikki ETL-työkaluun kehitetyt funktiot löytyvät [GitHubin lib-kansiosta](https://github.com/ubigu/vooka/tree/master/lib).
+Kaikki ETL-työkaluun kehitetyt funktiot löytyvät [GitHubin lib-kansiosta](https://github.com/sykefi/vooka/tree/master/lib).
 
 <div align="center">
-  <a href="https://github.com/ubigu/vooka">
+  <a href="https://github.com/sykefi/vooka">
     <img src="img/ETL-esimerkki-kaytosta.png" alt="Kuva">
   </a>
 </div>
@@ -211,14 +211,14 @@ p. 040 547 9806
 
 <!-- MARKDOWN LINKIT & KUVAT -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/ubigu/vooka?color=brightgreen&style=for-the-badge
-[contributors-url]: https://github.com/ubigu/vooka/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/ubigu/vooka?color=blue&style=for-the-badge
-[forks-url]: https://github.com/ubigu/vooka/network/members
-[issues-shield]: https://img.shields.io/github/issues/ubigu/vooka?color=yellow&style=for-the-badge
-[issues-url]: https://github.com/ubigu/vooka/issues
-[license-shield]: https://img.shields.io/github/license/ubigu/vooka.svg?style=for-the-badge
-[license-url]: https://github.com/ubigu/vooka/blob/master/LICENSE
+[contributors-shield]: https://img.shields.io/github/contributors/sykefi/vooka?color=brightgreen&style=for-the-badge
+[contributors-url]: https://github.com/sykefi/vooka/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/sykefi/vooka?color=blue&style=for-the-badge
+[forks-url]: https://github.com/sykefi/vooka/network/members
+[issues-shield]: https://img.shields.io/github/issues/sykefi/vooka?color=yellow&style=for-the-badge
+[issues-url]: https://github.com/sykefi/vooka/issues
+[license-shield]: https://img.shields.io/github/license/sykefi/vooka.svg?style=for-the-badge
+[license-url]: https://github.com/sykefi/vooka/blob/master/LICENSE
 [Jupyter-shield]: https://img.shields.io/badge/jupyter-%23FA0F00.svg?style=for-the-badge&logo=jupyter&logoColor=white
 [Jupyter-url]: https://jupyter.org/
 [Anaconda-shield]: https://img.shields.io/badge/Anaconda-%2344A833.svg?style=for-the-badge&logo=anaconda&logoColor=white
