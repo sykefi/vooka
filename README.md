@@ -118,7 +118,7 @@ Katso `requirements.txt`
 
 1. Kloonaa repo haluamaasi kansioon
    ```sh
-   git clone https://github.com/sykefi/vooka.git
+   git clone https://github.com/ubigu/vooka.git
    ```
 2. Käynnistä käyttämäsi Python env
    ```sh
