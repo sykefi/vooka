@@ -35,11 +35,10 @@
 <h3 align="center">VOOKA</h3>
 
   <p align="center">
-    Voimassa olevat kaavat rakennetun ympäristön tietojärjestelmään - Pohjois-Savo
-    <br> 06/2023-02/2024
+    Voimassa olevat kaavat rakennetun ympäristön tietojärjestelmään
     <br />
     <br />
-    <a href="https://www.syke.fi/fi-FI/Tutkimus__kehittaminen/Tutkimus_ja_kehittamishankkeet/Hankkeet/Voimassa_olevat_kaavat_rakennetun_ympariston_tietojarjestelmaan_VOOKA"><strong>Tutustu hankkeeseen »</strong></a>
+    <a href="https://www.syke.fi/hankkeet/vooka"><strong>Tutustu hankkeeseen »</strong></a>
     <br />
     <br />
     <a href="https://github.com/ubigu/vooka/issues">Raportoi bugi</a>
@@ -83,11 +82,11 @@
 <!-- PROJEKTISTA -->
 ## Projektista
 
-Suomen ympäristökeskuksen (SYKE) VOOKA-hankkeen tavoitteena oli tuottaa Etelä-Savon ELY-keskuksen alueen kuntien voimassa olevien asema- ja yleiskaavojen kaavarajoista valtakunnallisesti yhteentoimiva, tietomallimuotoinen aineisto. Mukaan on linkitetty myös kaavan liitteet (esim. kaavakartat ja -määräykset). Työ oli osa Ryhti-hanketta, jossa tavoitellaan rakennetun ympäristön keskeisten tietojen kokoamista keskitetysti ja laadukkaasti uuteen Rakennetun ympäristön tietojärjestelmään (Ryhti).
+Suomen ympäristökeskuksen (SYKE) VOOKA-hankkeen tavoitteena on tuottaa kaikkien Suomessa voimassa olevien asema- ja yleiskaavojen kaavarajat valtakunnalliseen yhteentoimivaan tietomallimuotoon (tietomallit.ymparisto.fi) ja siirtää aineisto rakennetun ympäristön tietojärjestelmään (Ryhti). Työhön sisältyvät myös ranta-asemakaavat ja rantayleiskaavat.
 
-VOOKA-hankkeessa tunnistettiin tarve ETL-tyyppisen (Extract, Transform, Load) työkalun kehittämiselle ja testaukselle. Suomessa kaavojen ulkorajatietoja on perinteisesti kerätty ELY-keskuksiin sekä Maanmittauslaitokselle (MML) kunnan kaavaindeksien muodostamisprosessien ohessa. Laadukkaan tietomallimuotoisen aineiston tuottaminen vaatii näiden aineistojen vertailua sekä geometris-topologisen laadun arviointia. 
+VOOKA-pilottihankkeessa tunnistettiin tarve ETL-tyyppisen (Extract, Transform, Load) työkalun kehittämiselle ja testaukselle, jota jatkokehitetään uusissa VOOKA-hankkeissa. Suomessa kaavojen ulkorajatietoja on perinteisesti kerätty ELY-keskuksiin sekä Maanmittauslaitokselle (MML) kunnan kaavaindeksien muodostamisprosessien ohessa. Laadukkaan tietomallimuotoisen aineiston tuottaminen vaatii näiden aineistojen vertailua sekä geometris-topologisen laadun arviointia. 
 
-ETL-työkalun kehittäminen perustui avoimeen lähdekoodiin ja on tämän sivuston kautta hyödynnettävissä Jupyter Notebookina. ETL-työkalu koostuu kuudesta osasta:
+ETL-työkalun kehittäminen perustuu avoimeen lähdekoodiin ja on tämän sivuston kautta hyödynnettävissä Jupyter Notebookina. ETL-työkalu koostuu kuudesta osasta:
 1. [Tiedonkeruu ja esikäsittely](https://github.com/ubigu/vooka/blob/master/1-tiedonkeruu-ja-esikasittely.ipynb)
 2. [Tiedon yhdistely](https://github.com/ubigu/vooka/blob/master/2-tiedon-yhdistely.ipynb)
 3. [Tiedon korjaukset](https://github.com/ubigu/vooka/blob/master/3-tiedon-korjaukset.ipynb)
@@ -95,7 +94,7 @@ ETL-työkalun kehittäminen perustui avoimeen lähdekoodiin ja on tämän sivust
 5. [PDF-linkityskonversio](https://github.com/ubigu/vooka/blob/master/5-pdf-linkityskonversio.ipynb)
 6. [Kaavatietomallin implementointi](https://github.com/ubigu/vooka/blob/master/6-kaavatietomallin-implementointi.ipynb)
 
-Työ toteutettiin tiiviissä yhteistyössä Etelä-Savon ELY-keskuksen sekä kuntien kanssa.
+VOOKA-hanketta toteutetaan tiiviissä yhteistyössä ELY-keskustten sekä kuntien kanssa.
 
 ### Ohjelmointi
 
@@ -160,7 +159,7 @@ _Esimerkki ETL-työkalun ajettavista koodeista Jupyter Notebookissa._
 <!-- JATKOKEHITTÄMINEN -->
 ## Jatkokehittäminen
 
-Kaikki VOOKA-pilotissa kehitetyt ohjelmakoodit on avoimesti hyödynnettävissä ja jatkokehitettävissä. **Arvostamme suuresti** kaikkea tulevaisuuden jatkokehittämistä!
+Kaikki VOOKA-hankkeessa kehitetyt ohjelmakoodit on avoimesti hyödynnettävissä ja jatkokehitettävissä. **Arvostamme suuresti** kaikkea tulevaisuuden jatkokehittämistä!
 
 Jos sinulla on ehdotuksia, joilla ETL-työkalua voisi parantaa, forkkaa repo ja tee pull request. Voit myös avata issuen tagilla "parannus". Älä unohda antaa projektille tähteä! Kiitos!
 
