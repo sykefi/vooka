@@ -28,26 +28,26 @@ Tämä koodi myös täyttää automaattisesti arvion dokumentin tyypistä (1 tai
 
 #Anna kansiopolku missä kaavaliitteet sijaitsevat
 
-kaavaliitteet = 'C:/Users/EmiliaTimlin/Documents/Meneillaan_olevat_Projektit/PohjoissavoVooka/testikansio_14/ak'
+kaavaliitteet = ''
 
 
 #Anna kansiopolku missä kunnan indeksiaineisto sijaitsee
 
-kunta_kaavaindeksi = 'C:/Users/EmiliaTimlin/Documents/Meneillaan_olevat_Projektit/PohjoissavoVooka/testikansio_14/asemakaava_kuopio_etrs_gk27_epsg_3881.gpkg'
+kunta_kaavaindeksi = ''
 
 #Anna kuntanumero
 
-kunta_numero = 297
+kunta_numero = ""
 
 #Anna kaavalajin nimi
 
-kaavalaji = "ak"
+kaavalaji = ""
 
 #Anna sarakkeen nimi, jossa indeksitieto sijaitsee
-indeksi_sarake = 'TUNNUS'
+indeksi_sarake = ''
 
 #Laita tähän sen kansion polku, johon haluat saada kaavatiedot.
-directory = 'C:/Users/EmiliaTimlin/Documents/Meneillaan_olevat_Projektit/PohjoissavoVooka/testikansio_14'
+directory = ''
 
 
 #Tässä on lista, jonka perusteella funktio määrittelee onko tiedosto kaavakartta vai määräys. Tätä listaa voi tarpeen tullen muokata
