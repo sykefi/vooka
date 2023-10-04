@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Fri Sep 30 10:32:29 2022
-
-@author: smassine
+Accessory functions for VOOKA ETL usage.
 """
 
 def readPickleData(inputfp):
