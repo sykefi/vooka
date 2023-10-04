@@ -2,7 +2,7 @@
 """
 Created on Fri Aug 12 14:07:51 2022
 
-@author: smassine
+
 """
 
 def checkGeometryValidity(data, geom_column):
