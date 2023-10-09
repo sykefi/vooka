@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Tue Oct 25 10:10:23 2022
-
-@author: smassine
+Functions for repairing datasets in the VOOKA ETL process.
 """
 
 def repairDatasetGeometries(data, geom_column):
@@ -17,7 +15,7 @@ def repairDatasetGeometries(data, geom_column):
     geom_column: <str>
         Name of the geometry column in GeoDataFrame.
     
-    Output
+    Returns
     ------
     <geopandas.GeoDataFrame>
         A GeoDataFrame with valid Shapely geometries.
@@ -47,3 +45,36 @@ def repairDatasetGeometries(data, geom_column):
             print("Manual repair required for geometry at index: " + str(index) + " (QGIS " + str(index + 1) + ").")
     
     return(data_repaired)
+
+
+def removeUnnecessaryVertices(data, geom_column, tolerance=0.001):
+    
+    """
+    A function for removing unnecessary vertices within a straight line.
+    Utilizes Shapely's simplify-function and preserves topology. 
+    
+    Parameters
+    ----------
+    data: <geopandas.GeoDataFrame>
+        A GeoDataFrame containing Shapely geometries in a geometry column.
+    geom_column: <str>
+        Name of the geometry column in the GeoDataFrame.
+    tolerance: <float or array_like>
+        By default 0.001.
+        The maximum allowed geometry displacement. 
+        The higher this value, the smaller the number of vertices in the 
+        resulting geometry.
+
+    Returns
+    -------
+    <geopandas.GeoDataFrame>
+        A GeoDataFrame in which extra vertices on a straight line 
+        have been removed.
+
+    """
+            
+    data[geom_column] = data.simplify(tolerance)
+    
+    print("Extra vertices have been succesfully removed.")
+    
+    return data
