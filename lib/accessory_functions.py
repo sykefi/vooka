@@ -3,6 +3,11 @@
 Accessory functions for VOOKA ETL usage.
 """
 
+import os
+import requests
+import pandas as pd
+
+
 def readPickleData(inputfp):
     
     """
@@ -282,3 +287,29 @@ def stringColumnToDate(input_df, date_column):
     input_df = input_df.rename(columns={'new_date_column': date_column})
 
     return(input_df)
+
+
+
+def download_file(url, save_path):
+    response = requests.get(url, stream=True)
+    if response.status_code == 200:
+        with open(save_path, 'wb') as file:
+            for chunk in response.iter_content(chunk_size=128):
+                file.write(chunk)
+        print(f"Ladattu: {save_path}")
+        print("")
+    else:
+        print(f"LATAUS EPÄONNISTUI: {url}")
+        print("")
+
+
+def create_folder(folder_path):
+    try:
+        # Try to create the folder
+        os.makedirs(folder_path)
+    except FileExistsError:
+        # If the folder already exists, catch the exception and inform the user
+        print(f"'{folder_path}' on jo olemassa.")
+        print("Poista kansio tai valitse uusi kansionimi.")
+        return False
+        
