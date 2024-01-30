@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """
+Created on Fri Sep 30 10:32:29 2022
 Accessory functions for VOOKA ETL usage.
 """
 
@@ -221,7 +222,9 @@ def stringColumnToDate(input_df, date_column):
     from dateutil import parser
     
     def contains_number(string):
-        return any(char.isdigit() for char in string)
+        if isinstance(string, (int, float)):
+            return False
+        return any(char.isdigit() for char in str(string))
     
     input_df['new_date_column'] = None
     
@@ -230,32 +233,16 @@ def stringColumnToDate(input_df, date_column):
         try:
         
             date_str = row[date_column]
-            
             if date_str != None:
-                # 178 yksi erilliskäsittely
-                if date_str[0:5] == 'xx.xx' and row['kaavaselite'] == 'Kirkonseutu Jukajärvi rakennuskaavan muutos':
-                    date_str = '10.2.1983'
-                # 213 kirjausvirhe
-                elif date_str == '20042208' and row['kaavaselite'] == 'Reinikkalan ranta-asemakaavan muutos 2004':
-                    date_str = '20041108'
-                # 588 pari erilliskäsittelyä
-                elif date_str[0:8].lower() == 'e-sympk.' and row['kuntakoodi'] == '588':
-                    date_str = date_str[0:-14]
-                elif date_str[0:20].lower() == 'osittain vahv. ymp.k' and row['kuntakoodi'] == '588':
-                    date_str = date_str[-9:]
-                # 097 yksi erilliskäsittely
-                elif date_str == '1977, 1988' and row['kaavaselite'] == 'ETUNIEMEN RANTAKAAVAN MUUTOS':
-                    date_str = '1.1.' + date_str[-4:]
                 # Vain vuosi ilmoitettu
-                elif len(date_str) == 4 and contains_number(date_str) == True:
+                if len(date_str) == 4 and contains_number(date_str) == True:
                     date_str = '1.1.' + date_str
                 else:
                     None
-            
             if str(date_str) == '0':
                 date_str = None
                     
-            if contains_number(date_str) == True:
+            if contains_number(str(date_str)) == True:
                 
                 try:
                     res = parser.parse(date_str, fuzzy=True)
@@ -287,9 +274,6 @@ def stringColumnToDate(input_df, date_column):
     input_df = input_df.rename(columns={'new_date_column': date_column})
 
     return(input_df)
-
-
-
 def download_file(url, save_path):
     response = requests.get(url, stream=True)
     if response.status_code == 200:
