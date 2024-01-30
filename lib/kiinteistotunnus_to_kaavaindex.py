@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Mon Aug 22 16:22:43 2022
-
-@author: smassine
-"""
 
 def kiinteistotunnusToKaavaIndex(kiinttunnus_data, kaava_data):
     
@@ -26,7 +21,7 @@ def kiinteistotunnusToKaavaIndex(kiinttunnus_data, kaava_data):
     import sys
     import geopandas as gpd
     from shapely.geometry import box
-
+    
     try:
         # Check to see if kaava and kiinteistötunnus data have the same CRS system
         if kaava_data.crs['init'] != kiinttunnus_data.crs['init']:
@@ -37,6 +32,9 @@ def kiinteistotunnusToKaavaIndex(kiinttunnus_data, kaava_data):
     
     # Define bbox for kiinteistotunnukset based on kaavadata
     bounds = kaava_data.total_bounds
+    if any(map(lambda x: x is None, bounds)):
+        # Handle the case where bounds are empty
+        raise ValueError("Bounding box coordinates are empty.")
     bbox = box(*bounds)
     
     # Clip kiinteistotunnukset data with bbox

@@ -33,6 +33,27 @@ def snapKuntakaavaToKuntaraja(kaavadata, palstadata, kuntakoodi, tolerance, fill
             Sulkava: 0.0005
             Savonlinna: 0.05
             
+        Best threshold values in Pohjois-Savo ELY identified in VOOKA project (PLEASE USE):
+            Iisalmi: 0.05
+            Joroinen: 0.015
+            Kaavi: 0.015
+            Keitele: 0.015
+            Kiuruvesi: 0.015
+            Kuopio: 0.0005
+            Lapinlahti: 0.015
+            Leppävirta: 0.0005
+            Pielavesi: 0.015
+            Rautavaara: 0.015
+            Rautalampi: 0.015
+            Siilinjärvi: 0.015
+            Sonkajärvi: 0.015
+            Suonenjoki: 0.015
+            Tervo: 0.015
+            Tuusniemi: 0.05
+            Varkaus: 0.015
+            Vesanto: 0.015
+            Vieremä: 0.015
+            
     Optional parameters
     -------------------
     fill_holes: <boolean>
