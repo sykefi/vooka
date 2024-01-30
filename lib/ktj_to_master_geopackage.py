@@ -9,12 +9,12 @@ def setupKTJMasterDataframe():
     
     import geopandas as gpd
     
-    master_df = gpd.GeoDataFrame(columns=["geometry", "originalref", "vanhakuntakoodi", "kuntakoodi", "kuntanimi", "kaavatunnus_1", "kaavatunnus_2", "kaavaselite", "kaavalaji",
-                                          "hyvaksymispvm", "vahvistamispvm", "voimaantulopvm", "kohderekisteriyksikot", "kaavakartta", "maaraykset", "selostus"],
+    master_df = gpd.GeoDataFrame(columns=["geometry", "originalref", "kuntakoodi", "kuntanimi", "kaavatunnus_1", "kaavatunnus_2", "kaavaselite", "kaavalaji", "hyvaksymispvm", "vahvistamispvm", "voimaantulopvm", "arkistotunnus", "kohderekisteriyksikot", "kaavakartta", "maaraykset"],
                                  geometry="geometry", crs={'init': 'epsg:3067'})
     return(master_df)
 
-def appendKTJToMaster(masterdf, ktjdata, geometry, originalref=None, kohderekisteriyksikot=None):
+
+def appendKTJToMaster(masterdf, ktjdata, geometry, originalref=None, kohderekisteriyksikot_column="None"):
     
     """
     Mandatory parameters
@@ -62,8 +62,8 @@ def appendKTJToMaster(masterdf, ktjdata, geometry, originalref=None, kohderekist
         except ValueError:
             None
     
-    # Etelä-Savon kuntakoodit
-    kuntakoodit = {'Enonkoski':'046', 'Hirvensalmi':'097', 'Juva':'178', 'Kangasniemi':'213', 'Mikkeli':'491', 'Mäntyharju':'507', 'Pertunmaa':'588', 'Pieksämäki':'593', 'Puumala':'623', 'Rantasalmi':'681', 'Savonlinna':'740', 'Sulkava':'768'}
+    # Etelä-Savon ja Pohjois-Savon kuntakoodit
+    kuntakoodit = {'Enonkoski':'046', 'Hirvensalmi':'097', 'Juva':'178', 'Kangasniemi':'213', 'Mikkeli':'491', 'Mäntyharju':'507', 'Pertunmaa':'588', 'Pieksämäki':'593', 'Puumala':'623', 'Rantasalmi':'681', 'Savonlinna':'740', 'Sulkava':'768', 'Iisalmi':'140', 'Joroinen':'171', 'Kaavi':'204', 'Keitele':'239', 'Kiuruvesi':'263', 'Kuopio':'297', 'Lapinlahti':'402', 'Leppävirta':'420', 'Pielavesi':'595', 'Rautalampi':'686', 'Rautavaara':'687', 'Siilinjärvi':'749', 'Sonkajärvi':'762', 'Suonenjoki':'778', 'Tervo':'844', 'Tuusniemi':'857', 'Varkaus':'915', 'Vesanto':'921', 'Vieremä': '925'}
     
     i = 1
     
@@ -73,35 +73,35 @@ def appendKTJToMaster(masterdf, ktjdata, geometry, originalref=None, kohderekist
         
         # Vanha kuntakoodi
         for key, item in enumerate(kuntakoodit):
-            if kuntakoodit[item][0:3] == row['kaavatunnuksenkuntanumero']:
+            if kuntakoodit[item][0:3] == row['KAAVAKNRO']:
                 vanhakuntakoodi = None
                 break
             else:
-                vanhakuntakoodi = row['kaavatunnuksenkuntanumero']
+                vanhakuntakoodi = row['KAAVAKNRO']
        
         # Kunnan nimi
         for key, item in enumerate(kuntakoodit):
-            if kuntakoodit[item][0:3] == row['validkuntanro']:
+            if kuntakoodit[item][0:3] == row['kuntakoodi']:
                 kuntanimi = item
                 break
             else:
                 kuntanimi = None
         
         # Kaavalaji
-        if row['kayttorajoitusalalaji'] == 2001:
+        if row['KAYTRAJALA'] == 2001:
             kaavalaji = 21
-        elif row['kayttorajoitusalalaji'] == 2103:
+        elif row['KAYTRAJALA'] == 2103:
             kaavalaji = 33
-        elif row['kayttorajoitusalalaji'] == 2102:
+        elif row['KAYTRAJALA'] == 2102:
             kaavalaji = 39
-        elif row['kayttorajoitusalalaji'] == 2101:
+        elif row['KAYTRAJALA'] == 2101:
             kaavalaji = 31
-        # 2150
+        # 2150, tarkentantamaton
         else:
             kaavalaji = None
-            
-        row_schema = {"geometry": row[geometry], "originalref": originalref, "vanhakuntakoodi": vanhakuntakoodi ,"kuntakoodi": row['validkuntanro'], "kuntanimi": kuntanimi, "kaavatunnus_1": row['yksilointitunnus'], "kaavatunnus_2": row['osannumero'],
-                      "kaavaselite":row['nimi'], "kaavalaji": kaavalaji, "hyvaksymispvm": row['hyvaksymispvmvahvistamispvm'], "vahvistamispvm":None, "voimaantulopvm": row['voimaantulopvm'], "kohderekisteriyksikot": row[parameter_dict['kohderekisteriyksikot']],
+        
+        row_schema = {"geometry": row[geometry], "originalref": originalref, "kuntakoodi": row['kuntakoodi'], "kuntanimi": kuntanimi, "kaavatunnus_1": row['YKSILOINTI'], "kaavatunnus_2": row['OSANNUMERO'],
+                      "kaavaselite":row['NIMI'], "kaavalaji": kaavalaji, "hyvaksymispvm": row['HYVAKPVM'], "vahvistamispvm": row['REKISTEROI'], "voimaantulopvm": row['VOIMAANPVM'], "arkistotunnus": row['ARKISTOTUN'], "kohderekisteriyksikot": row[kohderekisteriyksikot_column],
                       "kaavakartta":None, "maaraykset":None, "selostus":None}
         
         masterdf = masterdf.append(row_schema, ignore_index=True)
