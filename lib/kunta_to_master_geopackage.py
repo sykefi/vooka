@@ -10,11 +10,11 @@ def setupKuntaMasterDataframe():
     import geopandas as gpd
     
     master_df = gpd.GeoDataFrame(columns=["geometry", "originalref", "kuntakoodi", "kuntanimi", "kaavatunnus", "kaavaselite", "kaavalaji", "hyvaksymispvm",
-                                          "vahvistamispvm", "voimaantulopvm", "kohderekisteriyksikot", "kaavakartta", "maaraykset", "selostus"],
+                                          "vahvistamispvm", "voimaantulopvm", "arkistotunnus", "kohderekisteriyksikot", "kaavakartta", "maaraykset"],
                                  geometry="geometry", crs={'init': 'epsg:3067'})
     return(master_df)
 
-def appendKuntaToMaster(masterdf, kaavadata, kaavalaji, geometry, kuntakoodi, kuntanimi, originalref=None, kaavatunnus=None, kaavaselite=None, hyvaksymispvm=None, vahvistamispvm=None, voimaantulopvm=None, kohderekisteriyksikot=None, kaavakartta=None, maaraykset=None, selostus=None):
+def appendKuntaToMaster(masterdf, kaavadata, kaavalaji, geometry, kuntakoodi, kuntanimi, originalref=None, kaavatunnus=None, kaavaselite=None, hyvaksymispvm=None, vahvistamispvm=None, voimaantulopvm=None, arkistotunnus=None, kohderekisteriyksikot_column=None, kaavakartta=None, maaraykset=None, selostus=None):
     
     """
     Mandatory parameters
@@ -136,13 +136,13 @@ def appendKuntaToMaster(masterdf, kaavadata, kaavalaji, geometry, kuntakoodi, ku
                 elif 'maanalai' in row[parameter_dict['kaavaselite']].lower():
                     kaavalaji_nro = kaavalaji_dict['yleiskaava'][5]
                 else:
-                    kaavalaji_nro = kaavalaji_dict['yleiskaava'][0]
+                    kaavalaji_nro = kaavalaji_dict['yleiskaava'][2]
         else:
             sys.exit("Your kaavalaji parameter must be either 'asemakaava' or 'yleiskaava'!")
             
         row_schema = {"geometry": row[parameter_dict['geometry']], "originalref": originalref, "kuntakoodi": kuntakoodi, "kuntanimi": kuntanimi, "kaavatunnus": row[parameter_dict['kaavatunnus']],"kaavaselite": row[parameter_dict['kaavaselite']],
-                      "kaavalaji": kaavalaji_nro, "hyvaksymispvm": row[parameter_dict['hyvaksymispvm']], "vahvistamispvm": row[parameter_dict['vahvistamispvm']], "voimaantulopvm": row[parameter_dict['voimaantulopvm']],
-                      "kohderekisteriyksikot": row[parameter_dict['kohderekisteriyksikot']], "kaavakartta": row[parameter_dict['kaavakartta']], "maaraykset": row[parameter_dict['maaraykset']], "selostus": row[parameter_dict['selostus']]}
+                      "kaavalaji": kaavalaji_nro, "hyvaksymispvm": row[parameter_dict['hyvaksymispvm']], "vahvistamispvm": row[parameter_dict['vahvistamispvm']], "voimaantulopvm": row[parameter_dict['voimaantulopvm']], "arkistotunnus": row[parameter_dict['arkistotunnus']],
+                      "kohderekisteriyksikot": row[kohderekisteriyksikot_column], "kaavakartta": row[parameter_dict['kaavakartta']], "maaraykset": row[parameter_dict['maaraykset']], "selostus": row[parameter_dict['selostus']]}
 
         masterdf = masterdf.append(row_schema, ignore_index=True)
         
