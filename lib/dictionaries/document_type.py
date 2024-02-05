@@ -1,3 +1,3 @@
 # -*- coding: utf-8 -*-
 
-tyyppi_maarays = ["maaraykset", "merkinnat", "selostus", "merkinnät", "määräykset"]
+tyyppi_maarays = ["maaraykset", "merkinnat", "merkinnät", "määräykset"]
