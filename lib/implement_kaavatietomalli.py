@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Dec 15 13:45:20 2023
-
-@author: VilleHamunen
-"""
 def dataToGeoJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
     
     """
@@ -168,9 +162,9 @@ def dataToGeoJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
                         
                     
                       "planAnnex": None,
-                      "approvalDate": row['hyvaksymispvm'] if row["hyvaksymispvm"] != "NULL" else None,
+                      "approvalDate": row['hyvaksymispvm'] if row["hyvaksymispvm"] not in ["NULL", None] else None,
                       "periodOfValidity":{
-                           "begin": row['voimaantulopvm'] if row["voimaantulopvm"] != "NULL" else None,
+                           "begin": row['voimaantulopvm'] if row["voimaantulopvm"] not in ["NULL", None] else None,
                            "end": None,
                       },
                       "planCancellationInfo": [
@@ -205,7 +199,7 @@ def dataToGeoJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
         kaavasia_lista = []
         kaavasia_dict = {"planType": None,
                          "permanentPlanIdentifier": None,
-                         "producerPlanIdentifier": row['kaavatunnus'] if row["kaavatunnus"] != "NULL" else None,
+                         "producerPlanIdentifier": row['kaavatunnus'] if row["kaavatunnus"] not in ["NULL", None] else None,
                              "name": {
                                 "fin": None,
                                 "swe": None,
@@ -234,8 +228,8 @@ def dataToGeoJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
                 
         kaavasianpaatos_lista = []
         kaavasianpaatos_dict = {
-                            "decisionDate": row['voimaantulopvm'] if row["voimaantulopvm"] != "NULL" else None,
-                            "dateOfDecision": row['hyvaksymispvm'] if row["hyvaksymispvm"] != "NULL" else None,
+                            "decisionDate": row['voimaantulopvm'] if row["voimaantulopvm"] not in ["NULL", None] else None,
+                            "dateOfDecision": row['hyvaksymispvm'] if row["hyvaksymispvm"] not in ["NULL", None] else None,
                             "typeOfDecisionMaker": "http://uri.suomi.fi/codelist/rytj/PaatoksenTekija/code/02",
                             "decisionDocuments": [
                             {
@@ -253,7 +247,7 @@ def dataToGeoJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
                                 "categoryOfPublicity": None,
                                 "accessibility": None,
                                 "retentionTime": None,
-                                "confirmationDate": row['vahvistamispvm'] if row["vahvistamispvm"] != "NULL" else None,
+                                "confirmationDate": row['vahvistamispvm'] if row["vahvistamispvm"] not in ["NULL", None] else None,
                                 "languages": [],
                                 "fileKey": None,
                                 "descriptors": [
@@ -406,7 +400,7 @@ def dataToGeoJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
         
         
         # Check if 'Kaavatunnus1' exists in the row and concatenate it with existing description
-        if row['kaavatunnus_1'] != "NULL":
+        if row['kaavatunnus_1'] not in ["NULL", None]:
             description_value["fin"] += ". KTJ-tunnus: " + row['kaavatunnus_1']
 
         
@@ -429,7 +423,7 @@ def dataToGeoJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
         
         
         # Kaavakarttajamaaraykset
-        if kaavakarttajamaaraykset != "NULL":
+        if kaavakarttajamaaraykset not in ["NULL", None]:
             kaavakarttajamaaraykset_str = str(kaavakarttajamaaraykset)
             apu_lista = kaavakarttajamaaraykset_str.split(", ")
             for item in apu_lista:
@@ -445,7 +439,7 @@ def dataToGeoJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
                               "documentIdentifier": None,
                               "documentDate": None,
                               "arrivedDate": None,
-                              "confirmationDate": row["vahvistamispvm"] if row["vahvistamispvm"] != "NULL" else None,
+                              "confirmationDate": row["vahvistamispvm"] if row["vahvistamispvm"] not in ["NULL", None] else None,
                               "accessibility": None,
                               "documentType": None,
                               "documentSpecification":{
@@ -487,7 +481,7 @@ def dataToGeoJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
                 
                 
         # Kaavakartta
-        if kaavakartta != "NULL":
+        if kaavakartta not in ["NULL", None]:
             kaavakartta_str = str(kaavakartta)
             apu_lista = kaavakartta_str.split(", ")
             for item in apu_lista:
@@ -545,7 +539,7 @@ def dataToGeoJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
         
         
         # Maaraykset
-        if maarays != "NULL":
+        if maarays not in ["NULL", None]:
             maarays_str = str(maarays)
             apu_lista = maarays_str.split(", ")
             for item in apu_lista:
@@ -603,7 +597,7 @@ def dataToGeoJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
        
         
         # Muu
-        if muu != "NULL":
+        if muu not in ["NULL", None]:
             muu_str = str(muu)
             apu_lista = muu_str.split(", ")
             for item in apu_lista:
@@ -721,7 +715,7 @@ def dataToGeoJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
         
         # Yleiskaavat oikeusvaikutus
         # First check if kaavalaji is not 21 or 23, give it None
-        if row['kaavalaji'] not in ['21', '23']:
+        if row['kaavalaji'] != ['21', '23']:
             kaava_dict["legalEffectsOfLocalMasterPlan"] = None
         else:
             if row['kaavalaji'] != '25':
