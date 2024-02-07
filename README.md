@@ -82,9 +82,9 @@
 <!-- PROJEKTISTA -->
 ## Projektista
 
-Suomen ympäristökeskuksen (SYKE) VOOKA-hankkeen tavoitteena on tuottaa kaikkien Suomessa voimassa olevien asema- ja yleiskaavojen kaavarajat valtakunnalliseen yhteentoimivaan tietomallimuotoon (tietomallit.ymparisto.fi) ja siirtää aineisto rakennetun ympäristön tietojärjestelmään (Ryhti). Työhön sisältyvät myös ranta-asemakaavat ja rantayleiskaavat.
+Suomen ympäristökeskuksen (SYKE) VOOKA-hankkeiden tavoitteena oli tuottaa kaikkien Suomessa voimassa olevien asema- ja yleiskaavojen kaavarajat valtakunnalliseen yhteentoimivaan tietomallimuotoon (tietomallit.ymparisto.fi) ja siirtää aineisto rakennetun ympäristön tietojärjestelmään (Ryhti). Työhön sisältyivät myös ranta-asemakaavat ja rantayleiskaavat. VOOKA-hankkeet toteutettiin Etelä- ja Pohjois-Savon maakunnissa.
 
-VOOKA-pilottihankkeessa tunnistettiin tarve ETL-tyyppisen (Extract, Transform, Load) työkalun kehittämiselle ja testaukselle, jota jatkokehitetään uusissa VOOKA-hankkeissa. Suomessa kaavojen ulkorajatietoja on perinteisesti kerätty ELY-keskuksiin sekä Maanmittauslaitokselle (MML) kunnan kaavaindeksien muodostamisprosessien ohessa. Laadukkaan tietomallimuotoisen aineiston tuottaminen vaatii näiden aineistojen vertailua sekä geometris-topologisen laadun arviointia. 
+VOOKA-pilottihankkeessa (Etelä-Savo) tunnistettiin tarve ETL-tyyppisen (Extract, Transform, Load) työkalun kehittämiselle ja testaukselle, jota jatkokehitettiin Pohjois-Savon VOOKA-hankkeessa. Suomessa kaavojen ulkorajatietoja on perinteisesti kerätty ELY-keskuksiin sekä Maanmittauslaitokselle (MML) kunnan kaavaindeksien muodostamisprosessien ohessa. Laadukkaan tietomallimuotoisen aineiston tuottaminen vaatii näiden aineistojen vertailua sekä geometris-topologisen laadun arviointia. 
 
 ETL-työkalun kehittäminen perustuu avoimeen lähdekoodiin ja on tämän sivuston kautta hyödynnettävissä Jupyter Notebookina. ETL-työkalu koostuu kuudesta osasta:
 1. [Tiedonkeruu ja esikäsittely](https://github.com/ubigu/vooka/blob/master/1-tiedonkeruu-ja-esikasittely.ipynb)
@@ -94,7 +94,7 @@ ETL-työkalun kehittäminen perustuu avoimeen lähdekoodiin ja on tämän sivust
 5. [PDF-linkityskonversio](https://github.com/ubigu/vooka/blob/master/5-pdf-linkityskonversio.ipynb)
 6. [Kaavatietomallin implementointi](https://github.com/ubigu/vooka/blob/master/6-kaavatietomallin-implementointi.ipynb)
 
-VOOKA-hanketta toteutetaan tiiviissä yhteistyössä ELY-keskustten sekä kuntien kanssa.
+VOOKA-hankkeita toteutettiin tiiviissä yhteistyössä ELY-keskusten sekä kuntien kanssa.
 
 ### Ohjelmointi
 
