@@ -35,7 +35,7 @@ def getDataFromAPI(url, username, password, outfp):
     dataframe = gpd.GeoDataFrame()
 
     # Request URL as JSON with Pohjois-savo bounding box
-    url = url + "?f=json&bbox=26.0,61.5,29.1,64.1"
+    url = url + "?f=json&bbox=26.0,61.5,29.1,64.1" # Etelä-Savo "?f=json&bbox=26.2207,61.0,29.6968,62.6570" #61.1520
     
     #---------------------------------------------
     #Request URL and list data in dict
