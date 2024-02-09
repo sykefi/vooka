@@ -106,15 +106,17 @@ def createNewAttachmentName(kaava_data, kaavadata_tunnus_column, table_data, tab
             if rivi[table_tunnus_column] == kaavatunnus and rivi['kunta'] == int(kuntakoodi):
                 
                 if str(rivi['Dokumentin tyyppi2']) == '1':
-                    asiakirjan_laji = '0304'
+                    asiakirjan_laji = '05'
                 elif str(rivi['Dokumentin tyyppi2']) == '2':
                     asiakirjan_laji = '03'
                 elif str(rivi['Dokumentin tyyppi2']) == '3':
                     asiakirjan_laji = '04'
                 elif str(rivi['Dokumentin tyyppi2']) == '4':
-                    asiakirjan_laji = '05'
+                    asiakirjan_laji = '06'
                 elif str(rivi['Dokumentin tyyppi2']) == '5':
-                    asiakirjan_laji = '13'
+                    asiakirjan_laji = '14'
+                elif str(rivi['Dokumentin tyyppi2']) == '6':
+                    asiakirjan_laji = '99'
                 else:
                     asiakirjan_laji = '99'
                 
