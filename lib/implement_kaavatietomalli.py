@@ -5,10 +5,10 @@ Modified on Fri Dec 15 13:45:20 2023
 
 """
 
-def dataToGeoJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
+def dataToJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
     
     """
-    A function for creating a GeoJSON file (collections.OrderedDict) from Geopandas GeoDataFrame.
+    A function for creating a JSON file (collections.OrderedDict) from Geopandas GeoDataFrame.
     
     Parameters
     --------------------
@@ -35,7 +35,7 @@ def dataToGeoJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
     import ast
     import geopandas as gpd
     
-    # Function to order GeoJSON keys properly
+    # Function to order JSON keys properly
     def ordered(d, desired_key_order):
         return OrderedDict([(key, d[key]) for key in desired_key_order])
     
@@ -740,14 +740,37 @@ def dataToGeoJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
     # Drop unnecessary columns
     kopio = kopio.drop(col_list, axis=1)
     
-    # Pandas to GeoJSON
+    # Pandas to JSON
     geojson = kopio.to_json()
     json_data = json.loads(geojson)
     
-    # Extract "features" part from GeoJSON
+    # Extract "features" part from JSON
     features_only = json_data.get("features", [])
     
     # Extract only "properties" part from each feature
     properties_only = [feature.get("properties", {}) for feature in features_only]
+
+    # Remove unnecessary 'type' and 'properties' keys under plans --> geographicalArea
+    for item in properties_only:
+        for phase in item.get('planMatterPhases', []):
+            for decision in phase.get('planMatterDecisions', []):
+                for plan in decision.get('plans', []):
+                    geo_area = plan.get('geographicalArea', {})
+                    # Use pop with a default value to avoid KeyError if the key doesn't exist
+                    geo_area.pop('type', None)
+                    geo_area.pop('properties', None)
+                    
+                    # Reorder keys, 'srid' first
+                    if 'srid' in geo_area:
+                        # Create a new dictionary with 'srid' as the first key
+                        reordered_geo_area = {'srid': geo_area['srid']}
+                        # Add the remaining items, excluding 'srid' since it's already added
+                        for key, value in geo_area.items():
+                            if key != 'srid':
+                                reordered_geo_area[key] = value
+                    
+                        plan['geographicalArea'] = reordered_geo_area
+                    else:
+                        plan['geographicalArea'] = geo_area
 
     return(properties_only)
