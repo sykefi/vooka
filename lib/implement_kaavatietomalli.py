@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Wed Nov 23 13:23:18 2022
-Modified on Fri Dec 15 13:45:20 2023
+Modified on Tue Feb 20 15:32:20 2024
 
 """
 
@@ -30,14 +30,37 @@ def dataToJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
     import json
     from collections import OrderedDict
     from shapely.geometry import Polygon, MultiPolygon
-    import geojson
+    from shapely.geometry import mapping
+    from shapely.ops import transform
     import sys
-    import ast
     import geopandas as gpd
+    
+    # Function to remove Z coordinate from any geometry
+    def remove_z(geometry):
+        if geometry.has_z:
+            # Create a 2D geometry without the Z dimension
+            return transform(lambda x, y, z=None: (x, y), geometry)
+        else:
+            return geometry
+
+    # Function to convert MultiPolygon to Polygon if it contains only one Polygon, and remove Z values
+    def convert_multipolygon_and_remove_z(geometry):
+        # Remove Z values first
+        geometry_no_z = remove_z(geometry)
+        
+        # Then check if it's a MultiPolygon with only one Polygon
+        if isinstance(geometry_no_z, MultiPolygon) and len(geometry_no_z.geoms) == 1:
+            # Return the first Polygon without Z values
+            return geometry_no_z.geoms[0]
+        else:
+            return geometry_no_z
     
     # Function to order JSON keys properly
     def ordered(d, desired_key_order):
         return OrderedDict([(key, d[key]) for key in desired_key_order])
+    
+    # Validate geometries and remove unnecessary z values
+    kaavadata['geometry'] = kaavadata['geometry'].apply(convert_multipolygon_and_remove_z)
     
     # Storing columns to be dropped later
     col_list = kaavadata.columns
@@ -45,20 +68,19 @@ def dataToJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
     
     # Adding new columns based on kaavatietomalli
     # https://tietomallit.ymparisto.fi/kaavatiedot/v1.1/looginenmalli/uml/doc/
-    new_columns = [      "planType",
-                         "permanentPlanIdentifier",
-                         "producerPlanIdentifier",
-                         "name",
-                         "description",
-                         "caseIdentifier",
-                         "recordNumbers",
-                         "timeOfInitiation",
-                         "digitalOrigin",
-                         "administrativeAreaIdentifiers",
-                         "permanentBindingPlotDivisionIdentifier",
-                         "matterAnnexes",
-                         "planMatterPhases",
-    ]    
+    new_columns = [     "permanentPlanIdentifier",
+                        "planType",
+                        "name",
+                        "timeOfInitiation",
+                        "description",
+                        "producerPlanIdentifier",
+                        "caseIdentifiers",
+                        "bindingPlotDivisionIdentifier",
+                        "recordNumbers",
+                        "administrativeAreaIdentifiers",
+                        "digitalOrigin",
+                        "planMatterPhases",
+                  ]    
     
     for item in new_columns:
         kaavadata[item] = None
@@ -68,323 +90,132 @@ def dataToJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
     
     # Iterate over kaavadata and change it to kaavatietomalli
     for index, row in kaavadata.iterrows():
-
         
-        plantype_definition = {}
-        if row['kaavalaji'] == '21':
-            plantype_definition = "http://uri.suomi.fi/codelist/rytj/RY_Kaavalaji/code/23"
+        # planMatter
+        kopio.at[index, "planType"] = "http://uri.suomi.fi/codelist/rytj/RY_Kaavalaji/code/" + row['kaavalaji']
+        
+        name_value = {
+                        "fin": None,
+                        "swe": None,
+                        "smn": None,
+                        "sms": None,
+                        "sme": None,
+                        "eng": None,
+                     }
+        
+        if row['kaavaselite'] in ["NULL", None]:
+            if row['kaavalaji'] == '21':
+                name_value["fin"] = "Yleiskaava " + row["kaavatunnus"]
+            elif row['kaavalaji'] == '22':
+                name_value["fin"] = "Vaiheyleiskaava " + row["kaavatunnus"]
+            elif row['kaavalaji'] == '23':
+                name_value["fin"] = "Osayleiskaava " + row["kaavatunnus"]
+            elif row['kaavalaji'] == '24':
+                name_value["fin"] = "Kuntien yhteinen yleiskaava " + row["kaavatunnus"]
+            elif row['kaavalaji'] == '25':
+                name_value["fin"] = "Maanalainen yleiskaava " + row["kaavatunnus"]
+            elif row['kaavalaji'] == '31':
+                name_value["fin"] = "Asemakaava " + row["kaavatunnus"]
+            elif row['kaavalaji'] == '32':
+                name_value["fin"] = "Vaiheasemakaava " + row["kaavatunnus"]
+            elif row['kaavalaji'] == '33':
+                name_value["fin"] = "Ranta-asemakaava " + row["kaavatunnus"]
+            elif row['kaavalaji'] == '34':
+                name_value["fin"] = "Vaiheranta-asemakaava " + row["kaavatunnus"]
+            elif row['kaavalaji'] == '35':
+                name_value["fin"] = "Maanalaisten tilojen asemakaava " + row["kaavatunnus"]
+            elif row['kaavalaji'] == '39':
+                name_value["fin"] = "Asemakaava (ohjeellinen tonttijako) " + row["kaavatunnus"]
+            else:
+                sys.exit("You have invalid 'kaavalaji' in your data!")
         else:
-            plantype_definition = "http://uri.suomi.fi/codelist/rytj/RY_Kaavalaji/code/" + row['kaavalaji']
+            name_value["fin"] = row['kaavaselite']
         
+        kopio.at[index, "name"] = name_value
         
-        nimi_definition = {
-                                "fin": None,
-                                "swe": None,
-                                "smn": None,
-                                "sms": None,
-                                "sme": None,
-                                "eng": None,
-                                }
+        kopio.at[index, "timeOfInitiation"] = "1900-01-01"
+        kopio.at[index, "producerPlanIdentifier"] = row['kaavatunnus'] if row["kaavatunnus"] not in ["NULL", None] else None
+        kopio.at[index, "caseIdentifiers"] = []
+        kopio.at[index, "recordNumbers"] = []
+        kopio.at[index, "administrativeAreaIdentifiers"] = [row['kuntakoodi']]
+        kopio.at[index, "digitalOrigin"] = "http://uri.suomi.fi/codelist/rytj/RY_DigitaalinenAlkupera/code/04"
         
-        
-        matterannex_lista = []
-        matterAnnex_dict =  {
-            "name": {
-                "fin": None,
-                "swe": None,
-                "smn": None,
-                "sms": None,
-                "sme": None,
-                "eng": None,
-            },
-            "languages": [],
-            "documentIdentifier": None,
-            "documentDate": None,
-            "arrivedDate": None,
-            "confirmationDate": None,
-            "accessibility": None,
-            "documentType": None,
-            "documentSpecification": {
-                "fin": None,
-                "swe": None,
-                "smn": None,
-                "sms": None,
-                "sme": None,
-                "eng": None
-            },
-            "fileKey": None,
-            "categoryOfPublicity": None,
-            "retentionTime": None,
-            "personalDataContent": None,
-            "attachmentDocumentKey": None,
-            "descriptors": [
-                {
-                    "descriptorIdentifier": None,
-                    "vocabulary": None,
-                    "descriptor": None,
-                }
-            ],
-            "typeOfAttachment": None,
-            "documentCreatorOperators": [
-                {
-                    "planOperatorKey": None,
-                    "firstName": None,
-                    "lastName": None,
-                    "title": None,
-                    "organizationName": None,
-                    "businessId": None,
-                }
-            ]
-        }
-
+        # plan
         kaava_lista = []
-        kaava_dict = {"planKey": None,
-                      "planDescription": None,
-                      "lifeCycleStatus": "http://uri.suomi.fi/codelist/rytj/kaavaelinkaari/code/13",
-                      "legalEffectsOfLocalMasterPlan": None,
-                      "scale": None,
-                      "planMaps": [
-                          {
-                              "planMapKey": None,
-                              "name": {
-                                "fin": None,
-                                "swe": None,
-                                "smn": None,
-                                "sms": None,
-                                "sme": None,
-                                "eng": None
-                                },
-                                "fileKey": None,
-                                "coordinateSystem": None
-                              }
-                          ],
-                      
+        kaava_dict = {
+                        "planKey": None,
+                        "lifeCycleStatus": "http://uri.suomi.fi/codelist/rytj/kaavaelinkaari/code/13",
+                        "legalEffectsOfLocalMasterPlan": "http://uri.suomi.fi/codelist/rytj/oikeusvaik_YK/code/1" if row['kaavalaji'] in ["21", "22", "23", "24", "25"] else None,
+                        "scale": None,
                         "geographicalArea": {
-                        "srid": "3067"
-                        #"geometry": {
-                            #"type": None,
-                           # "coordinates": None
-                        #}
-              },
-                        
-                    
-                      "planAnnex": None,
-                      "approvalDate": row['hyvaksymispvm'] if row["hyvaksymispvm"] not in ["NULL", None] else None,
-                      "periodOfValidity":{
-                           "begin": row['voimaantulopvm'] if row["voimaantulopvm"] not in ["NULL", None] else None,
-                           "end": None,
-                      },
-                      "planCancellationInfo": [
-                        {
-                        "planCancellationInfoKey": None,
-                        "cancelledPlanId": None,
-                        "cancelsEntirePlan": None,
-                        "cancelledPlanObjectId": [],
-                        "cancelledRegulationId": [],
-                        "cancelledGuidanceId": [],
-                        "cancelledGroupRelations": [
-                            {
-                                "planRegulationGroupKey": None,
-                                "planObjectKey": None
+                            "srid": "3067",
+                            "geometry": {
+                                "type": None,
+                                "coordinates": None
                             }
-                        ]
-                        }
-                    ],
-                        "partiallyCancellationPlanObjects": [
-                        {
-                            "partiallyCancelledPlanObjectId": None,
-                            "validityGeometry": {
-                                "srid": "3067",
-                                "geometry": {}
-                            }
-                        }
-                    ],
-                        "planInterruptedInfo": None,
-                } 
+                        },
+                        "planDescription": None,
+                        "periodOfValidity":{
+                             "begin": row['voimaantulopvm'] if row["voimaantulopvm"] not in ["NULL", None] else None,
+                             "end": None,
+                        },
+                        "approvalDate": row['hyvaksymispvm'] if row["hyvaksymispvm"] not in ["NULL", None] else None
+                     } 
         
-                
-        kaavasia_lista = []
-        kaavasia_dict = {"planType": None,
-                         "permanentPlanIdentifier": None,
-                         "producerPlanIdentifier": row['kaavatunnus'] if row["kaavatunnus"] not in ["NULL", None] else None,
-                             "name": {
-                                "fin": None,
-                                "swe": None,
-                                "smn": None,
-                                "sms": None,
-                                "sme": None,
-                                "eng": None,
-                                },
-                         "description": {
-                                "fin": None,
-                                "swe": None,
-                                "smn": None,
-                                "sms": None,
-                                "sme": None,
-                                "eng": None,
-                                },
-                         "caseIdentifier": [],
-                         "recordNumbers": [],
-                         "timeOfInitiation": None,
-                         "digitalOrigin": "http://uri.suomi.fi/codelist/rytj/RY_DigitaalinenAlkupera/code/04",
-                         "administrativeAreaIdentifiers": row['kuntakoodi'],
-                         "permanentBindingPlotDivisionIdentifier": None,
- 
-                }
-        
-                
+        # planDecisions
         kaavasianpaatos_lista = []
         kaavasianpaatos_dict = {
-                            "decisionDate": row['voimaantulopvm'] if row["voimaantulopvm"] not in ["NULL", None] else None,
-                            "dateOfDecision": row['hyvaksymispvm'] if row["hyvaksymispvm"] not in ["NULL", None] else None,
-                            "typeOfDecisionMaker": "http://uri.suomi.fi/codelist/rytj/PaatoksenTekija/code/02",
-                            "decisionDocuments": [
-                            {
-                                "attachmentDocumentKey": None,
-                                "documentIdentifier": None,
-                                "name": {
-                                    "fin": None,
-                                    "swe": None,
-                                    "smn": None,
-                                    "sms": None,
-                                    "sme": None,
-                                    "eng": None,
-                                },
-                                "personalDataContent": None,
-                                "categoryOfPublicity": None,
-                                "accessibility": None,
-                                "retentionTime": None,
-                                "confirmationDate": row['vahvistamispvm'] if row["vahvistamispvm"] not in ["NULL", None] else None,
-                                "languages": [],
-                                "fileKey": None,
-                                "descriptors": [
-                                    {
-                                      "descriptorIdentifier": None,
-                                      "vocabulary": None,
-                                      "descriptor": None,
-                                    }
-                                ],
-                                "documentDate": None,
-                                "arrivedDate": None,
-                                "typeOfAttachment": None,
-                                "documentSpecification": {
-                                    "fin": None,
-                                    "swe": None,
-                                    "smn": None,
-                                    "sms": None,
-                                    "sme": None,
-                                    "eng": None
-                                },
-                                "documentCreatorOperators": [
-                                    {
-                                      "planOperatorKey": None,
-                                      "firstName": None,
-                                      "lastName": None,
-                                      "title": None,
-                                      "organizationName": None,
-                                      "businessId": None,
-                }
-            ]
-        }
-    ],                      "decisionText": {
-                                    "fin": None,
-                                    "swe": None,
-                                    "smn": None,
-                                    "sms": None,
-                                    "sme": None,
-                                    "eng": None
-                                },
-                            "decisionArticle": {
-                                    "fin": None,
-                                    "swe": None,
-                                    "smn": None,
-                                    "sms": None,
-                                    "sme": None,
-                                    "eng": None
-                                },
-                            "name": "http://uri.suomi.fi/codelist/rytj/kaavpaatnimi/code/11A",
-                            "decisionIdentifier": None,
-                            "planDecisionKey": None,
-                            "statutes": [
-                                {
-                                "nameOfStatutes": {
-                                    "fin": None,
-                                    "swe": None,
-                                    "smn": None,
-                                    "sms": None,
-                                    "sme": None,
-                                    "eng": None
-                                },
-                                "numberOfStatuteCollection": None,
-                                "yearOfStatuteCollection": None,
-                                "chapter": None,
-                                "section": None,
-                                "subsection": [],
-                                "paragraph": [],
-                                "subparagraph": [],
-                                }
-                            ],
-                            "plans": kaava_lista
+                                    "planDecisionKey": None,
+                                    "name": "http://uri.suomi.fi/codelist/rytj/kaavpaatnimi/code/11A",
+                                    "decisionDate": row['voimaantulopvm'] if row["voimaantulopvm"] not in ["NULL", None] else "1900-01-01",
+                                    "dateOfDecision": row['hyvaksymispvm'] if row["hyvaksymispvm"] not in ["NULL", None] else "1900-01-01",
+                                    "dateOfValidity": None,
+                                    "decisionDocuments": [], 
+                                    "decisionArticle": {
+                                        "fin": None,
+                                        "swe": None,
+                                        "smn": None,
+                                        "sms": None,
+                                        "sme": None,
+                                        "eng": None
+                                    },
+                                    "decisionText": {
+                                        "fin": None,
+                                        "swe": None,
+                                        "smn": None,
+                                        "sms": None,
+                                        "sme": None,
+                                        "eng": None
+                                    },
+                                    "typeOfDecisionMaker": "http://uri.suomi.fi/codelist/rytj/PaatoksenTekija/code/02",
+                                    "decisionIdentifier": None,
+                                    "plans": kaava_lista
             }
                             
                 
-                
+        # planMatterPhases
         kaavasianvaihe_lista = []
         kaavasianvaihe_dict = {
             "planMatterPhaseKey": None,
             "lifeCycleStatus": "http://uri.suomi.fi/codelist/rytj/kaavaelinkaari/code/13",
             "geographicalArea": {
                 "srid": None,
-                "geometry": None,    
-            },
-            "planMatterDecisions": kaavasianpaatos_lista
-        }
-    
-        
-        toimija_lista = []
-        toimija_dict = {
-                      "firstName": None,
-                      "lastName": None,
-                      "title": None,
-                      "organisationName": None,
-                      "businessId": None,
-                      "planOperatorKey": None
+                "geometry": {}
+              },
+            "planDecisions": kaavasianpaatos_lista
         }
         
-        #plantype
-        kopio.at[index, "planType"] = plantype_definition
-        
-        
-        #producerplanidentifier
-        kopio.at[index, "producerPlanIdentifier"] = row['kaavatunnus']
-        
-        
-        # Kaava
+        # plan
         kaava_lista.append(kaava_dict)
-
-
-        # Kaava-asia
-        kaavasia_lista.append(kaavasia_dict)
         
-        # Kaava-asian päätös
+        # planDecisions
         kaavasianpaatos_lista.append(kaavasianpaatos_dict)        
         
-        
-        # Kaava-asian vaihe
+        # planMatterPhases
         kaavasianvaihe_lista.append(kaavasianvaihe_dict)
         kopio.at[index,"planMatterPhases"] = kaavasianvaihe_lista
         
-        #matterannex
-        matterannex_lista.append(matterAnnex_dict)
-        kopio.at[index,"matterAnnexes"] = matterannex_lista
-        
-        #nimi
-        kopio.at[index, "name"] = nimi_definition
-        
-        # Toimija
-        toimija_lista.append(toimija_dict)      
-        
-        # kuvaus
+        # description
         description_value = {
             "fin": None,
             "swe": None,
@@ -400,25 +231,15 @@ def dataToJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
         else:
             sys.exit("Your 'aineistolahde' parameter must be either 'KTJ' or 'kunta'!")
         
-
        # Check if 'Kuvaus' exists in the row and concatenate it with existing description
         if 'Kuvaus' in row:
             description_value["fin"] += ". " + row['Kuvaus']
-        
         
         # Check if 'Kaavatunnus1' exists in the row and concatenate it with existing description
         if row['kaavatunnus_1'] not in ["NULL", None]:
             description_value["fin"] += ". KTJ-tunnus: " + row['kaavatunnus_1']
 
-        
-        #description
         kopio.at[index, "description"] = description_value
-        
-        #administrativeareaidentifiers
-        kopio.at[index, "administrativeAreaIdentifiers"] = row['kuntakoodi']
-    
-        #digitalorigin
-        kopio.at[index, "digitalOrigin"] = "http://uri.suomi.fi/codelist/rytj/RY_DigitaalinenAlkupera/code/04"
         
         # documents
         liite_lista = []
@@ -434,56 +255,36 @@ def dataToJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
             kaavakarttajamaaraykset_str = str(kaavakarttajamaaraykset)
             apu_lista = kaavakarttajamaaraykset_str.split(", ")
             for item in apu_lista:
-                liite_dict = {"name": {
-                                "fin": None,
-                                "swe": None,
-                                "smn": None,
-                                "sms": None,
-                                "sme": None,
-                                "eng": None,
-                                },
-                              "languages": [],
-                              "documentIdentifier": None,
-                              "documentDate": None,
-                              "arrivedDate": None,
-                              "confirmationDate": row["vahvistamispvm"] if row["vahvistamispvm"] not in ["NULL", None] else None,
-                              "accessibility": None,
-                              "documentType": None,
-                              "documentSpecification":{
-                                "fin": None,
-                                "swe": None,
-                                "smn": None,
-                                "sms": None,
-                                "sme": None,
-                                "eng": None
-                              },
-                              "fileKey": None,
-                              "categoryOfPublicity": None,
-                              "retentionTime": None,
-                              "personalDataContent": None,
-                              "attachmentDocumentKey": None,
-                              "descriptors": [
-                                  {
-                                  "descriptorIdentifier": None,
-                                  "vocabulary": None,
-                                  "descriptor": None,
-                                  }
-                              ],
-                              "typeOfAttachment": None,
-                              "documentCreatorOperators": [
-                    {
-                      "planOperatorKey": None,
-                      "firstName": None,
-                      "lastName": None,
-                      "title": None,
-                      "organizationName": None,
-                      "businessId": None,
-                    }
-                  ]
+                liite_dict = {
+                    "attachmentDocumentKey": None,
+                    "documentIdentifier": row['arkistotunnus'] if row["arkistotunnus"] not in ["NULL", None] else None,
+                    "name": {
+                        "fin": "Kaavakartta ja kaavamääräykset, " + str(item),
+                        "swe": None,
+                        "smn": None,
+                        "sms": None,
+                        "sme": None,
+                        "eng": None,
+                    },
+                    "personalDataContent": "http://uri.suomi.fi/codelist/rytj/henkilotietosisalto/code/1",
+                    "categoryOfPublicity": "http://uri.suomi.fi/codelist/rytj/julkisuus/code/1",
+                    "accessibility": True,
+                    "retentionTime": "http://uri.suomi.fi/codelist/rytj/sailytysaika/code/01",
+                    "confirmationDate": row['vahvistamispvm'] if row["vahvistamispvm"] not in ["NULL", None] else None,
+                    "languages": ["http://uri.suomi.fi/codelist/rytj/ryhtikielet/code/fi"],
+                    "fileKey": None,
+                    "documentDate": "1900-01-01",
+                    "arrivedDate": None,
+                    "typeOfAttachment": "http://uri.suomi.fi/codelist/rytj/RY_AsiakirjanLaji_YKAK/code/05",
+                    "documentSpecification": {
+                        "fin": None,
+                        "swe": None,
+                        "smn": None,
+                        "sms": None,
+                        "sme": None,
+                        "eng": None
+                      }
                 }
-                liite_dict['name']['fin'] = str(item)
-                liite_dict['documentType'] = "http://uri.suomi.fi/codelist/rytj/RY_AsiakirjanLaji_YKAK/code/05"
-                liite_dict['categoryOfPublicity'] = "http://uri.suomi.fi/codelist/rytj/julkisuus/code/1" #lähtökohtaisesti kaikki julkisia!
                 liite_lista.append(liite_dict)
                 
                 
@@ -492,56 +293,36 @@ def dataToJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
             kaavakartta_str = str(kaavakartta)
             apu_lista = kaavakartta_str.split(", ")
             for item in apu_lista:
-                liite_dict = {"name": {
-                                "fin": None,
-                                "swe": None,
-                                "smn": None,
-                                "sms": None,
-                                "sme": None,
-                                "eng": None,
-                                },
-                              "languages": [],
-                              "documentIdentifier": None,
-                              "documentDate": None,
-                              "arrivedDate": None,
-                              "confirmationDate": None,
-                              "accessibility": None,
-                              "documentType": None,
-                              "documentSpecification":{
-                                "fin": None,
-                                "swe": None,
-                                "smn": None,
-                                "sms": None,
-                                "sme": None,
-                                "eng": None
-                              },
-                              "fileKey": None,
-                              "categoryOfPublicity": None,
-                              "retentionTime": None,
-                              "personalDataContent": None,
-                              "attachmentDocumentKey": None,
-                              "descriptors": [
-                                  {
-                                  "descriptorIdentifier": None,
-                                  "vocabulary": None,
-                                  "descriptor": None,
-                                  }
-                              ],
-                              "typeOfAttachment": None,
-                              "documentCreatorOperators": [
-                    {
-                      "planOperatorKey": None,
-                      "firstName": None,
-                      "lastName": None,
-                      "title": None,
-                      "organizationName": None,
-                      "businessId": None,
-                    }
-                  ]
+                liite_dict = {
+                    "attachmentDocumentKey": None,
+                    "documentIdentifier": row['arkistotunnus'] if row["arkistotunnus"] not in ["NULL", None] else None,
+                    "name": {
+                        "fin": "Kaavakartta, " + str(item),
+                        "swe": None,
+                        "smn": None,
+                        "sms": None,
+                        "sme": None,
+                        "eng": None,
+                    },
+                    "personalDataContent": "http://uri.suomi.fi/codelist/rytj/henkilotietosisalto/code/1",
+                    "categoryOfPublicity": "http://uri.suomi.fi/codelist/rytj/julkisuus/code/1",
+                    "accessibility": True,
+                    "retentionTime": "http://uri.suomi.fi/codelist/rytj/sailytysaika/code/01",
+                    "confirmationDate": row['vahvistamispvm'] if row["vahvistamispvm"] not in ["NULL", None] else None,
+                    "languages": ["http://uri.suomi.fi/codelist/rytj/ryhtikielet/code/fi"],
+                    "fileKey": None,
+                    "documentDate": "1900-01-01",
+                    "arrivedDate": None,
+                    "typeOfAttachment": "http://uri.suomi.fi/codelist/rytj/RY_AsiakirjanLaji_YKAK/code/03",
+                    "documentSpecification": {
+                        "fin": None,
+                        "swe": None,
+                        "smn": None,
+                        "sms": None,
+                        "sme": None,
+                        "eng": None
+                      }
                 }
-                liite_dict['name']['fin'] = str(item)
-                liite_dict['documentType'] = "http://uri.suomi.fi/codelist/rytj/RY_AsiakirjanLaji_YKAK/code/03"
-                liite_dict['categoryOfPublicity'] = "http://uri.suomi.fi/codelist/rytj/julkisuus/code/1" #lähtökohtaisesti kaikki julkisia!
                 liite_lista.append(liite_dict)
         
         
@@ -550,56 +331,36 @@ def dataToJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
             maarays_str = str(maarays)
             apu_lista = maarays_str.split(", ")
             for item in apu_lista:
-                liite_dict = {"name": {
-                                "fin": None,
-                                "swe": None,
-                                "smn": None,
-                                "sms": None,
-                                "sme": None,
-                                "eng": None,
-                                },
-                              "languages": [],
-                              "documentIdentifier": None,
-                              "documentDate": None,
-                              "arrivedDate": None,
-                              "confirmationDate": None,
-                              "accessibility": None,
-                              "documentType": None,
-                              "documentSpecification":{
-                                "fin": None,
-                                "swe": None,
-                                "smn": None,
-                                "sms": None,
-                                "sme": None,
-                                "eng": None
-                              },
-                              "fileKey": None,
-                              "categoryOfPublicity": None,
-                              "retentionTime": None,
-                              "personalDataContent": None,
-                              "attachmentDocumentKey": None,
-                              "descriptors": [
-                                  {
-                                  "descriptorIdentifier": None,
-                                  "vocabulary": None,
-                                  "descriptor": None,
-                                  }
-                              ],
-                              "typeOfAttachment": None,
-                              "documentCreatorOperators": [
-                    {
-                      "planOperatorKey": None,
-                      "firstName": None,
-                      "lastName": None,
-                      "title": None,
-                      "organizationName": None,
-                      "businessId": None,
-                    }
-                  ]
+                liite_dict = {
+                    "attachmentDocumentKey": None,
+                    "documentIdentifier": row['arkistotunnus'] if row["arkistotunnus"] not in ["NULL", None] else None,
+                    "name": {
+                        "fin": "Kaavamääräykset, " + str(item),
+                        "swe": None,
+                        "smn": None,
+                        "sms": None,
+                        "sme": None,
+                        "eng": None,
+                    },
+                    "personalDataContent": "http://uri.suomi.fi/codelist/rytj/henkilotietosisalto/code/1",
+                    "categoryOfPublicity": "http://uri.suomi.fi/codelist/rytj/julkisuus/code/1",
+                    "accessibility": True,
+                    "retentionTime": "http://uri.suomi.fi/codelist/rytj/sailytysaika/code/01",
+                    "confirmationDate": row['vahvistamispvm'] if row["vahvistamispvm"] not in ["NULL", None] else None,
+                    "languages": ["http://uri.suomi.fi/codelist/rytj/ryhtikielet/code/fi"],
+                    "fileKey": None,
+                    "documentDate": "1900-01-01",
+                    "arrivedDate": None,
+                    "typeOfAttachment": "http://uri.suomi.fi/codelist/rytj/RY_AsiakirjanLaji_YKAK/code/04",
+                    "documentSpecification": {
+                        "fin": None,
+                        "swe": None,
+                        "smn": None,
+                        "sms": None,
+                        "sme": None,
+                        "eng": None
+                      }
                 }
-                liite_dict['name']['fin'] = str(item)
-                liite_dict['documentType'] = "http://uri.suomi.fi/codelist/rytj/RY_AsiakirjanLaji_YKAK/code/04"
-                liite_dict['categoryOfPublicity'] = "http://uri.suomi.fi/codelist/rytj/julkisuus/code/1" #lähtökohtaisesti kaikki julkisia!
                 liite_lista.append(liite_dict)
        
         
@@ -608,169 +369,67 @@ def dataToJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
             muu_str = str(muu)
             apu_lista = muu_str.split(", ")
             for item in apu_lista:
-                liite_dict = {"name": {
-                                "fin": None,
-                                "swe": None,
-                                "smn": None,
-                                "sms": None,
-                                "sme": None,
-                                "eng": None,
-                                },
-                              "languages": [],
-                              "documentIdentifier": None,
-                              "documentDate": None,
-                              "arrivedDate": None,
-                              "confirmationDate": None,
-                              "accessibility": None,
-                              "documentType": None,
-                              "documentSpecification":{
-                                "fin": None,
-                                "swe": None,
-                                "smn": None,
-                                "sms": None,
-                                "sme": None,
-                                "eng": None
-                              },
-                              "fileKey": None,
-                              "categoryOfPublicity": None,
-                              "retentionTime": None,
-                              "personalDataContent": None,
-                              "attachmentDocumentKey": None,
-                              "descriptors": [
-                                  {
-                                  "descriptorIdentifier": None,
-                                  "vocabulary": None,
-                                  "descriptor": None,
-                                  }
-                              ],
-                              "typeOfAttachment": None,
-                              "documentCreatorOperators": [
-                    {
-                      "planOperatorKey": None,
-                      "firstName": None,
-                      "lastName": None,
-                      "title": None,
-                      "organizationName": None,
-                      "businessId": None,
-                    }
-                  ]
-                }
-                liite_dict['name']['fin'] = str(item)
-                liite_dict['documentType'] = "http://uri.suomi.fi/codelist/rytj/RY_AsiakirjanLaji_YKAK/code/99"
-                liite_dict['categoryOfPublicity'] = "http://uri.suomi.fi/codelist/rytj/julkisuus/code/1" #lähtökohtaisesti kaikki julkisia!
-                liite_lista.append(liite_dict)
-       
-       
-        if len(liite_lista) == 0:
-                liite_dict = {"name": {
-                                "fin": None,
-                                "swe": None,
-                                "smn": None,
-                                "sms": None,
-                                "sme": None,
-                                "eng": None,
-                                },
-                              "languages": [],
-                              "documentIdentifier": None,
-                              "documentDate": None,
-                              "arrivedDate": None,
-                              "confirmationDate": None,
-                              "accessibility": None,
-                              "documentType": None,
-                              "documentSpecification":{
-                                "fin": None,
-                                "swe": None,
-                                "smn": None,
-                                "sms": None,
-                                "sme": None,
-                                "eng": None
-                              },
-                              "fileKey": None,
-                              "categoryOfPublicity": None,
-                              "retentionTime": None,
-                              "personalDataContent": None,
-                              "attachmentDocumentKey": None,
-                              "descriptors": [
-                                  {
-                                  "descriptorIdentifier": None,
-                                  "vocabulary": None,
-                                  "descriptor": None,
-                                  }
-                              ],
-                              "typeOfAttachment": None,
-                              "documentCreatorOperators": [
-                    {
-                      "planOperatorKey": None,
-                      "firstName": None,
-                      "lastName": None,
-                      "title": None,
-                      "organizationName": None,
-                      "businessId": None,
-                    }
-                  ]
+                liite_dict = {
+                    "attachmentDocumentKey": None,
+                    "documentIdentifier": row['arkistotunnus'] if row["arkistotunnus"] not in ["NULL", None] else None,
+                    "name": {
+                        "fin": "Muu asiakirja, " + str(item),
+                        "swe": None,
+                        "smn": None,
+                        "sms": None,
+                        "sme": None,
+                        "eng": None,
+                    },
+                    "personalDataContent": "http://uri.suomi.fi/codelist/rytj/henkilotietosisalto/code/1",
+                    "categoryOfPublicity": "http://uri.suomi.fi/codelist/rytj/julkisuus/code/1",
+                    "accessibility": True,
+                    "retentionTime": "http://uri.suomi.fi/codelist/rytj/sailytysaika/code/01",
+                    "confirmationDate": row['vahvistamispvm'] if row["vahvistamispvm"] not in ["NULL", None] else None,
+                    "languages": ["http://uri.suomi.fi/codelist/rytj/ryhtikielet/code/fi"],
+                    "fileKey": None,
+                    "documentDate": "1900-01-01",
+                    "arrivedDate": None,
+                    "typeOfAttachment": "http://uri.suomi.fi/codelist/rytj/RY_AsiakirjanLaji_YKAK/code/99",
+                    "documentSpecification": {
+                        "fin": None,
+                        "swe": None,
+                        "smn": None,
+                        "sms": None,
+                        "sme": None,
+                        "eng": None
+                      }
                 }
                 liite_lista.append(liite_dict)
         
-        kaava_dict["planAnnex"] = liite_lista
-
+        kaavasianpaatos_dict["decisionDocuments"] = liite_lista
         
-        # kaavalaji
-        if row['kaavalaji'] == '21':
-            kaavasia_dict["planType"] = "http://uri.suomi.fi/codelist/rytj/RY_Kaavalaji/code/23"
-        else:
-            kaavasia_dict["planType"] = "http://uri.suomi.fi/codelist/rytj/RY_Kaavalaji/code/" + row['kaavalaji']
+        # Convert Shapely geometry into GeoJSON
+        row_geometry_json = mapping(row['geometry'])
         
-        # Yleiskaavat oikeusvaikutus
-        # First check if kaavalaji is not 21 or 23, give it None
-        if row['kaavalaji'] != ['21', '23']:
-            kaava_dict["legalEffectsOfLocalMasterPlan"] = None
-        else:
-            if row['kaavalaji'] != '25':
-                kaava_dict["legalEffectsOfLocalMasterPlan"] = "http://uri.suomi.fi/codelist/rytj/RY_OikeusvaikutteisuudenLaji/code/01"
-            else:
-                kaava_dict["legalEffectsOfLocalMasterPlan"] = "http://uri.suomi.fi/codelist/rytj/RY_OikeusvaikutteisuudenLaji/code/02"
-    
-    
-        kaava_dict["geographicalArea"] = geojson.Feature(geometry=row['geometry'])
         kaava_dict["geographicalArea"]["srid"] = "3067"
-
-    #kaava_dict["geographicalArea"]["geometry"] = mapping(row['geometry'])
+        kaava_dict["geographicalArea"]["geometry"]["type"] = row_geometry_json['type']
+        kaava_dict["geographicalArea"]["geometry"]["coordinates"] = row_geometry_json['coordinates']
         
         
     # Drop unnecessary columns
     kopio = kopio.drop(col_list, axis=1)
     
     # Pandas to JSON
-    geojson = kopio.to_json()
-    json_data = json.loads(geojson)
+    geo_json = kopio.to_json()
+    json_data = json.loads(geo_json)
     
     # Extract "features" part from JSON
     features_only = json_data.get("features", [])
     
     # Extract only "properties" part from each feature
     properties_only = [feature.get("properties", {}) for feature in features_only]
-
-    # Remove unnecessary 'type' and 'properties' keys under plans --> geographicalArea
+    
+    # Sort objects accordingly
+    keyorder = ('permanentPlanIdentifier', 'planType', 'name', 'timeOfInitiation', 'description', 'producerPlanIdentifier', 'caseIdentifiers', 'bindingPlotDivisionIdentifier', 'recordNumbers', 'administrativeAreaIdentifiers', 'digitalOrigin', 'planMatterPhases')
+    sorted_list = []
+    
     for item in properties_only:
-        for phase in item.get('planMatterPhases', []):
-            for decision in phase.get('planMatterDecisions', []):
-                for plan in decision.get('plans', []):
-                    geo_area = plan.get('geographicalArea', {})
-                    # Use pop with a default value to avoid KeyError if the key doesn't exist
-                    geo_area.pop('type', None)
-                    geo_area.pop('properties', None)
-                    
-                    # Reorder keys, 'srid' first
-                    if 'srid' in geo_area:
-                        # Create a new dictionary with 'srid' as the first key
-                        reordered_geo_area = {'srid': geo_area['srid']}
-                        # Add the remaining items, excluding 'srid' since it's already added
-                        for key, value in geo_area.items():
-                            if key != 'srid':
-                                reordered_geo_area[key] = value
-                    
-                        plan['geographicalArea'] = reordered_geo_area
-                    else:
-                        plan['geographicalArea'] = geo_area
-
-    return(properties_only)
+        new_item = ordered(item, keyorder)
+        sorted_list.append(new_item)
+    
+    return(sorted_list)
