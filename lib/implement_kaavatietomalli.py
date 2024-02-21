@@ -34,6 +34,7 @@ def dataToJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
     from shapely.ops import transform
     import sys
     import geopandas as gpd
+    import uuid
     
     # Function to remove Z coordinate from any geometry
     def remove_z(geometry):
@@ -54,6 +55,19 @@ def dataToJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
             return geometry_no_z.geoms[0]
         else:
             return geometry_no_z
+    
+    # Function to recursively search and update dictionary keys
+    def update_guids(obj):
+        if isinstance(obj, dict):
+            for key, value in obj.items():
+                if isinstance(value, (dict, list)):
+                    update_guids(value)
+                # Define the condition for assigning a new GUID (= if key ends with 'Key')
+                if key.endswith('Key'):
+                    obj[key] = str(uuid.uuid4())
+        elif isinstance(obj, list):
+            for item in obj:
+                update_guids(item)
     
     # Function to order JSON keys properly
     def ordered(d, desired_key_order):
@@ -105,27 +119,27 @@ def dataToJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
         
         if row['kaavaselite'] in ["NULL", None]:
             if row['kaavalaji'] == '21':
-                name_value["fin"] = "Yleiskaava " + row["kaavatunnus"]
+                name_value["fin"] = "Yleiskaava " + (row["kaavatunnus"] if row["kaavatunnus"] not in ["NULL", None] else row["kaavatunnus_1"])
             elif row['kaavalaji'] == '22':
-                name_value["fin"] = "Vaiheyleiskaava " + row["kaavatunnus"]
+                name_value["fin"] = "Vaiheyleiskaava " + (row["kaavatunnus"] if row["kaavatunnus"] not in ["NULL", None] else row["kaavatunnus_1"])
             elif row['kaavalaji'] == '23':
-                name_value["fin"] = "Osayleiskaava " + row["kaavatunnus"]
+                name_value["fin"] = "Osayleiskaava " + (row["kaavatunnus"] if row["kaavatunnus"] not in ["NULL", None] else row["kaavatunnus_1"])
             elif row['kaavalaji'] == '24':
-                name_value["fin"] = "Kuntien yhteinen yleiskaava " + row["kaavatunnus"]
+                name_value["fin"] = "Kuntien yhteinen yleiskaava " + (row["kaavatunnus"] if row["kaavatunnus"] not in ["NULL", None] else row["kaavatunnus_1"])
             elif row['kaavalaji'] == '25':
-                name_value["fin"] = "Maanalainen yleiskaava " + row["kaavatunnus"]
+                name_value["fin"] = "Maanalainen yleiskaava " + (row["kaavatunnus"] if row["kaavatunnus"] not in ["NULL", None] else row["kaavatunnus_1"])
             elif row['kaavalaji'] == '31':
-                name_value["fin"] = "Asemakaava " + row["kaavatunnus"]
+                name_value["fin"] = "Asemakaava " + (row["kaavatunnus"] if row["kaavatunnus"] not in ["NULL", None] else row["kaavatunnus_1"])
             elif row['kaavalaji'] == '32':
-                name_value["fin"] = "Vaiheasemakaava " + row["kaavatunnus"]
+                name_value["fin"] = "Vaiheasemakaava " + (row["kaavatunnus"] if row["kaavatunnus"] not in ["NULL", None] else row["kaavatunnus_1"])
             elif row['kaavalaji'] == '33':
-                name_value["fin"] = "Ranta-asemakaava " + row["kaavatunnus"]
+                name_value["fin"] = "Ranta-asemakaava " + (row["kaavatunnus"] if row["kaavatunnus"] not in ["NULL", None] else row["kaavatunnus_1"])
             elif row['kaavalaji'] == '34':
-                name_value["fin"] = "Vaiheranta-asemakaava " + row["kaavatunnus"]
+                name_value["fin"] = "Vaiheranta-asemakaava " + (row["kaavatunnus"] if row["kaavatunnus"] not in ["NULL", None] else row["kaavatunnus_1"])
             elif row['kaavalaji'] == '35':
-                name_value["fin"] = "Maanalaisten tilojen asemakaava " + row["kaavatunnus"]
+                name_value["fin"] = "Maanalaisten tilojen asemakaava " + (row["kaavatunnus"] if row["kaavatunnus"] not in ["NULL", None] else row["kaavatunnus_1"])
             elif row['kaavalaji'] == '39':
-                name_value["fin"] = "Asemakaava (ohjeellinen tonttijako) " + row["kaavatunnus"]
+                name_value["fin"] = "Asemakaava (ohjeellinen tonttijako) " + (row["kaavatunnus"] if row["kaavatunnus"] not in ["NULL", None] else row["kaavatunnus_1"])
             else:
                 sys.exit("You have invalid 'kaavalaji' in your data!")
         else:
@@ -237,7 +251,7 @@ def dataToJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
         
         # Check if 'Kaavatunnus1' exists in the row and concatenate it with existing description
         if row['kaavatunnus_1'] not in ["NULL", None]:
-            description_value["fin"] += ". KTJ-tunnus: " + row['kaavatunnus_1']
+            description_value["fin"] += " KTJ-tunnus: " + row['kaavatunnus_1']
 
         kopio.at[index, "description"] = description_value
         
@@ -257,7 +271,7 @@ def dataToJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
             for item in apu_lista:
                 liite_dict = {
                     "attachmentDocumentKey": None,
-                    "documentIdentifier": row['arkistotunnus'] if row["arkistotunnus"] not in ["NULL", None] else None,
+                    "documentIdentifier": "Ei tiedossa",
                     "name": {
                         "fin": "Kaavakartta ja kaavamääräykset, " + str(item),
                         "swe": None,
@@ -295,7 +309,7 @@ def dataToJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
             for item in apu_lista:
                 liite_dict = {
                     "attachmentDocumentKey": None,
-                    "documentIdentifier": row['arkistotunnus'] if row["arkistotunnus"] not in ["NULL", None] else None,
+                    "documentIdentifier": "Ei tiedossa",
                     "name": {
                         "fin": "Kaavakartta, " + str(item),
                         "swe": None,
@@ -333,7 +347,7 @@ def dataToJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
             for item in apu_lista:
                 liite_dict = {
                     "attachmentDocumentKey": None,
-                    "documentIdentifier": row['arkistotunnus'] if row["arkistotunnus"] not in ["NULL", None] else None,
+                    "documentIdentifier": "Ei tiedossa",
                     "name": {
                         "fin": "Kaavamääräykset, " + str(item),
                         "swe": None,
@@ -371,7 +385,7 @@ def dataToJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
             for item in apu_lista:
                 liite_dict = {
                     "attachmentDocumentKey": None,
-                    "documentIdentifier": row['arkistotunnus'] if row["arkistotunnus"] not in ["NULL", None] else None,
+                    "documentIdentifier": "Ei tiedossa",
                     "name": {
                         "fin": "Muu asiakirja, " + str(item),
                         "swe": None,
@@ -423,6 +437,9 @@ def dataToJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
     
     # Extract only "properties" part from each feature
     properties_only = [feature.get("properties", {}) for feature in features_only]
+    
+    # Update GUIDs in the loaded data
+    update_guids(properties_only)
     
     # Sort objects accordingly
     keyorder = ('permanentPlanIdentifier', 'planType', 'name', 'timeOfInitiation', 'description', 'producerPlanIdentifier', 'caseIdentifiers', 'bindingPlotDivisionIdentifier', 'recordNumbers', 'administrativeAreaIdentifiers', 'digitalOrigin', 'planMatterPhases')
