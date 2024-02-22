@@ -185,22 +185,8 @@ def dataToJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
                                     "dateOfDecision": row['hyvaksymispvm'] if row["hyvaksymispvm"] not in ["NULL", None] else "1900-01-01",
                                     "dateOfValidity": "1900-01-01",
                                     "decisionDocuments": [], 
-                                    "decisionArticle": {
-                                        "fin": None,
-                                        "swe": None,
-                                        "smn": None,
-                                        "sms": None,
-                                        "sme": None,
-                                        "eng": None
-                                    },
-                                    "decisionText": {
-                                        "fin": None,
-                                        "swe": None,
-                                        "smn": None,
-                                        "sms": None,
-                                        "sme": None,
-                                        "eng": None
-                                    },
+                                    "decisionArticle": None,
+                                    "decisionText": None,
                                     "typeOfDecisionMaker": "http://uri.suomi.fi/codelist/rytj/PaatoksenTekija/code/02",
                                     "decisionIdentifier": None,
                                     "plans": kaava_lista
@@ -290,14 +276,7 @@ def dataToJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
                     "documentDate": "1900-01-01",
                     "arrivedDate": None,
                     "typeOfAttachment": "http://uri.suomi.fi/codelist/rytj/RY_AsiakirjanLaji_YKAK/code/05",
-                    "documentSpecification": {
-                        "fin": None,
-                        "swe": None,
-                        "smn": None,
-                        "sms": None,
-                        "sme": None,
-                        "eng": None
-                      }
+                    "documentSpecification": None
                 }
                 liite_lista.append(liite_dict)
                 
@@ -328,14 +307,7 @@ def dataToJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
                     "documentDate": "1900-01-01",
                     "arrivedDate": None,
                     "typeOfAttachment": "http://uri.suomi.fi/codelist/rytj/RY_AsiakirjanLaji_YKAK/code/03",
-                    "documentSpecification": {
-                        "fin": None,
-                        "swe": None,
-                        "smn": None,
-                        "sms": None,
-                        "sme": None,
-                        "eng": None
-                      }
+                    "documentSpecification": None
                 }
                 liite_lista.append(liite_dict)
         
@@ -366,14 +338,7 @@ def dataToJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
                     "documentDate": "1900-01-01",
                     "arrivedDate": None,
                     "typeOfAttachment": "http://uri.suomi.fi/codelist/rytj/RY_AsiakirjanLaji_YKAK/code/04",
-                    "documentSpecification": {
-                        "fin": None,
-                        "swe": None,
-                        "smn": None,
-                        "sms": None,
-                        "sme": None,
-                        "eng": None
-                      }
+                    "documentSpecification": None
                 }
                 liite_lista.append(liite_dict)
        
@@ -404,14 +369,7 @@ def dataToJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
                     "documentDate": "1900-01-01",
                     "arrivedDate": None,
                     "typeOfAttachment": "http://uri.suomi.fi/codelist/rytj/RY_AsiakirjanLaji_YKAK/code/99",
-                    "documentSpecification": {
-                        "fin": None,
-                        "swe": None,
-                        "smn": None,
-                        "sms": None,
-                        "sme": None,
-                        "eng": None
-                      }
+                    "documentSpecification": None
                 }
                 liite_lista.append(liite_dict)
         
