@@ -62,8 +62,8 @@ def dataToJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
             for key, value in obj.items():
                 if isinstance(value, (dict, list)):
                     update_guids(value)
-                # Define the condition for assigning a new GUID (= if key ends with 'Key')
-                if key.endswith('Key'):
+                # Define the condition for assigning a new GUID (= if key ends with 'Key' and is not 'fileKey')
+                if key.endswith('Key') and key != 'fileKey':
                     obj[key] = str(uuid.uuid4())
         elif isinstance(obj, list):
             for item in obj:
@@ -170,7 +170,7 @@ def dataToJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
                         },
                         "planDescription": None,
                         "periodOfValidity":{
-                             "begin": row['voimaantulopvm'] if row["voimaantulopvm"] not in ["NULL", None] else None,
+                             "begin": row['voimaantulopvm'] if row["voimaantulopvm"] not in ["NULL", None] else "1900-01-01",
                              "end": None,
                         },
                         "approvalDate": row['hyvaksymispvm'] if row["hyvaksymispvm"] not in ["NULL", None] else None
@@ -183,7 +183,7 @@ def dataToJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
                                     "name": "http://uri.suomi.fi/codelist/rytj/kaavpaatnimi/code/11A",
                                     "decisionDate": row['voimaantulopvm'] if row["voimaantulopvm"] not in ["NULL", None] else "1900-01-01",
                                     "dateOfDecision": row['hyvaksymispvm'] if row["hyvaksymispvm"] not in ["NULL", None] else "1900-01-01",
-                                    "dateOfValidity": None,
+                                    "dateOfValidity": "1900-01-01",
                                     "decisionDocuments": [], 
                                     "decisionArticle": {
                                         "fin": None,
