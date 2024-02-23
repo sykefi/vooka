@@ -162,7 +162,7 @@ def dataToJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
                         "legalEffectsOfLocalMasterPlan": "http://uri.suomi.fi/codelist/rytj/oikeusvaik_YK/code/1" if row['kaavalaji'] in ["21", "22", "23", "24", "25"] else None,
                         "scale": None,
                         "geographicalArea": {
-                            "srid": "3067",
+                            "srid": kaavadata.crs['init'][-4:],
                             "geometry": {
                                 "type": None,
                                 "coordinates": None
@@ -199,8 +199,10 @@ def dataToJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
             "planMatterPhaseKey": None,
             "lifeCycleStatus": "http://uri.suomi.fi/codelist/rytj/kaavaelinkaari/code/13",
             "geographicalArea": {
-                "srid": None,
-                "geometry": {}
+                "srid": kaavadata.crs['init'][-4:],
+                "geometry": {
+                    "type": None,
+                    "coordinates": None}
               },
             "planDecisions": kaavasianpaatos_lista
         }
@@ -378,10 +380,13 @@ def dataToJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
         # Convert Shapely geometry into GeoJSON
         row_geometry_json = mapping(row['geometry'])
         
-        kaava_dict["geographicalArea"]["srid"] = "3067"
+        # plan geometry
         kaava_dict["geographicalArea"]["geometry"]["type"] = row_geometry_json['type']
         kaava_dict["geographicalArea"]["geometry"]["coordinates"] = row_geometry_json['coordinates']
         
+        # planMatterPhase geometry
+        kaavasianvaihe_dict["geographicalArea"]["geometry"]["type"] = row_geometry_json['type']
+        kaavasianvaihe_dict["geographicalArea"]["geometry"]["coordinates"] = row_geometry_json['coordinates']
         
     # Drop unnecessary columns
     kopio = kopio.drop(col_list, axis=1)
