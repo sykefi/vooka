@@ -5,7 +5,7 @@ Modified on Tue Feb 20 15:32:20 2024
 
 """
 
-def dataToJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
+def dataToJSON(kaavadata):
     
     """
     A function for creating a JSON file (collections.OrderedDict) from Geopandas GeoDataFrame.
@@ -14,12 +14,6 @@ def dataToJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
     --------------------
     kaavadata: <gpd.GeoDataframe>
         Input kaavadata as a GeoPandas GeoDataFrame.
-    aineistolahde: <str>
-        Informs the data source. Either "KTJ" or "kunta".
-    ktj_kaavatunnus: <str>
-        KTJ-kaavatunnus column name as a string value.
-    kunta_kaavatunnus: <str>
-        Municipality's kaavatunnus column as a string value.
     
     Output
     ------
@@ -119,27 +113,27 @@ def dataToJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
         
         if row['kaavaselite'] in ["NULL", None]:
             if row['kaavalaji'] == '21':
-                name_value["fin"] = "Yleiskaava " + (row["kaavatunnus"] if row["kaavatunnus"] not in ["NULL", None] else row["kaavatunnus_1"])
+                name_value["fin"] = "Yleiskaava " + (row["kaavatunnus"] if row["kaavatunnus"] not in ["NULL", None] else (row["kaavatunnus_1"] if row["kaavatunnus_1"] not in ["NULL", None] else ", ei kaavatunnusta"))
             elif row['kaavalaji'] == '22':
-                name_value["fin"] = "Vaiheyleiskaava " + (row["kaavatunnus"] if row["kaavatunnus"] not in ["NULL", None] else row["kaavatunnus_1"])
+                name_value["fin"] = "Vaiheyleiskaava " + (row["kaavatunnus"] if row["kaavatunnus"] not in ["NULL", None] else (row["kaavatunnus_1"] if row["kaavatunnus_1"] not in ["NULL", None] else ", ei kaavatunnusta"))
             elif row['kaavalaji'] == '23':
-                name_value["fin"] = "Osayleiskaava " + (row["kaavatunnus"] if row["kaavatunnus"] not in ["NULL", None] else row["kaavatunnus_1"])
+                name_value["fin"] = "Osayleiskaava " + (row["kaavatunnus"] if row["kaavatunnus"] not in ["NULL", None] else (row["kaavatunnus_1"] if row["kaavatunnus_1"] not in ["NULL", None] else ", ei kaavatunnusta"))
             elif row['kaavalaji'] == '24':
-                name_value["fin"] = "Kuntien yhteinen yleiskaava " + (row["kaavatunnus"] if row["kaavatunnus"] not in ["NULL", None] else row["kaavatunnus_1"])
+                name_value["fin"] = "Kuntien yhteinen yleiskaava " + (row["kaavatunnus"] if row["kaavatunnus"] not in ["NULL", None] else (row["kaavatunnus_1"] if row["kaavatunnus_1"] not in ["NULL", None] else ", ei kaavatunnusta"))
             elif row['kaavalaji'] == '25':
-                name_value["fin"] = "Maanalainen yleiskaava " + (row["kaavatunnus"] if row["kaavatunnus"] not in ["NULL", None] else row["kaavatunnus_1"])
+                name_value["fin"] = "Maanalainen yleiskaava " + (row["kaavatunnus"] if row["kaavatunnus"] not in ["NULL", None] else (row["kaavatunnus_1"] if row["kaavatunnus_1"] not in ["NULL", None] else ", ei kaavatunnusta"))
             elif row['kaavalaji'] == '31':
-                name_value["fin"] = "Asemakaava " + (row["kaavatunnus"] if row["kaavatunnus"] not in ["NULL", None] else row["kaavatunnus_1"])
+                name_value["fin"] = "Asemakaava " + (row["kaavatunnus"] if row["kaavatunnus"] not in ["NULL", None] else (row["kaavatunnus_1"] if row["kaavatunnus_1"] not in ["NULL", None] else ", ei kaavatunnusta"))
             elif row['kaavalaji'] == '32':
-                name_value["fin"] = "Vaiheasemakaava " + (row["kaavatunnus"] if row["kaavatunnus"] not in ["NULL", None] else row["kaavatunnus_1"])
+                name_value["fin"] = "Vaiheasemakaava " + (row["kaavatunnus"] if row["kaavatunnus"] not in ["NULL", None] else (row["kaavatunnus_1"] if row["kaavatunnus_1"] not in ["NULL", None] else ", ei kaavatunnusta"))
             elif row['kaavalaji'] == '33':
-                name_value["fin"] = "Ranta-asemakaava " + (row["kaavatunnus"] if row["kaavatunnus"] not in ["NULL", None] else row["kaavatunnus_1"])
+                name_value["fin"] = "Ranta-asemakaava " + (row["kaavatunnus"] if row["kaavatunnus"] not in ["NULL", None] else (row["kaavatunnus_1"] if row["kaavatunnus_1"] not in ["NULL", None] else ", ei kaavatunnusta"))
             elif row['kaavalaji'] == '34':
-                name_value["fin"] = "Vaiheranta-asemakaava " + (row["kaavatunnus"] if row["kaavatunnus"] not in ["NULL", None] else row["kaavatunnus_1"])
+                name_value["fin"] = "Vaiheranta-asemakaava " + (row["kaavatunnus"] if row["kaavatunnus"] not in ["NULL", None] else (row["kaavatunnus_1"] if row["kaavatunnus_1"] not in ["NULL", None] else ", ei kaavatunnusta"))
             elif row['kaavalaji'] == '35':
-                name_value["fin"] = "Maanalaisten tilojen asemakaava " + (row["kaavatunnus"] if row["kaavatunnus"] not in ["NULL", None] else row["kaavatunnus_1"])
+                name_value["fin"] = "Maanalaisten tilojen asemakaava " + (row["kaavatunnus"] if row["kaavatunnus"] not in ["NULL", None] else (row["kaavatunnus_1"] if row["kaavatunnus_1"] not in ["NULL", None] else ", ei kaavatunnusta"))
             elif row['kaavalaji'] == '39':
-                name_value["fin"] = "Asemakaava (ohjeellinen tonttijako) " + (row["kaavatunnus"] if row["kaavatunnus"] not in ["NULL", None] else row["kaavatunnus_1"])
+                name_value["fin"] = "Asemakaava (ohjeellinen tonttijako) " + (row["kaavatunnus"] if row["kaavatunnus"] not in ["NULL", None] else (row["kaavatunnus_1"] if row["kaavatunnus_1"] not in ["NULL", None] else ", ei kaavatunnusta"))
             else:
                 sys.exit("You have invalid 'kaavalaji' in your data!")
         else:
@@ -226,20 +220,17 @@ def dataToJSON(kaavadata, aineistolahde, ktj_kaavatunnus, kunta_kaavatunnus):
             "sme": None,
             "eng": None
             }
-        if aineistolahde == "KTJ":
-            description_value["fin"] = "Aluerajaus KTJ-aineistosta, asiakirjat kunnalta"
-        elif aineistolahde == "kunta":
-            description_value["fin"] = "Aluerajaus ja asiakirjat kunnalta"
-        else:
-            sys.exit("Your 'aineistolahde' parameter must be either 'KTJ' or 'kunta'!")
         
-       # Check if 'Kuvaus' exists in the row and concatenate it with existing description
+       # Check if 'Kuvaus' exists in the row and add it to description
         if 'Kuvaus' in row:
-            description_value["fin"] += ". " + row['Kuvaus']
+            description_value["fin"] = row['Kuvaus']
         
-        # Check if 'Kaavatunnus1' exists in the row and concatenate it with existing description
+        # Check if 'kaavatunnus_1' exists in the row and concatenate it with existing description
         if row['kaavatunnus_1'] not in ["NULL", None]:
-            description_value["fin"] += " KTJ-tunnus: " + row['kaavatunnus_1']
+            if description_value["fin"][-1:] == ".":
+                description_value["fin"] += " KTJ-tunnus: " + row['kaavatunnus_1']
+            else:
+                description_value["fin"] += ". KTJ-tunnus: " + row['kaavatunnus_1']
 
         kopio.at[index, "description"] = description_value
         
