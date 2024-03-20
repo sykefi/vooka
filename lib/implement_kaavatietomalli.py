@@ -153,7 +153,7 @@ def dataToJSON(kaavadata):
         kaava_dict = {
                         "planKey": None,
                         "lifeCycleStatus": "http://uri.suomi.fi/codelist/rytj/kaavaelinkaari/code/13",
-                        "legalEffectsOfLocalMasterPlan": "http://uri.suomi.fi/codelist/rytj/oikeusvaik_YK/code/1" if row['kaavalaji'] in ["21", "22", "23", "24", "25"] else None,
+                        "legalEffectOfLocalMasterPlan": "http://uri.suomi.fi/codelist/rytj/oikeusvaik_YK/code/1" if row['kaavalaji'] in ["21", "22", "23", "24", "25"] else None,
                         "scale": None,
                         "geographicalArea": {
                             "srid": kaavadata.crs['init'][-4:],
