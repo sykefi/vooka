@@ -66,13 +66,7 @@
     </li>
     <li><a href="#käytöstä">Käytöstä</a></li>
     <li><a href="#jatkokehittäminen">Jatkokehittäminen</a></li>
-    <li>
-      <a href="#ota-yhteyttä">Ota yhteyttä</a>
-      <ul>
-        <li><a href="#tilaaja">Tilaaja</a></li>
-        <li><a href="#konsultti">Konsultti</a></li>
-      </ul>
-    </li>
+    <li><a href="#ota-yhteyttä">Ota yhteyttä</a></li>
     <li><a href="#konsulttiryhmittymä">Konsulttiryhmittymä</a></li>
   </ol>
 </details>
@@ -176,22 +170,10 @@ Jos sinulla on ehdotuksia, joilla ETL-työkalua voisi parantaa, forkkaa repo ja 
 <!-- OTA YHTEYTTÄ -->
 ## Ota yhteyttä
 
-### Tilaaja
 Kaarina Vartiainen (erikoistutkija) \
 Suomen ympäristökeskus SYKE, VOOKA-hankkeen projektipäällikkö \
 kaarina.vartiainen@syke.fi \
 p. 050 436 1796
-
-### Konsultti
-Ilpo Tammi (toimitusjohtaja) \
-Ubigu Oy, pilottivaiheen konsulttiryhmittymän yhteyshenkilö \
-ilpo.tammi@ubigu.fi \
-p. 050 434 7939
-
-Samuli Massinen (paikkatietoarkkitehti) \
-Ubigu Oy, pilottivaiheen ETL-työkalun kehittäjä \
-samuli.massinen@ubigu.fi \
-p. 040 547 9806
 
 <p align="right"><a href="#readme-top">Takaisin alkuun</a></p>
 
